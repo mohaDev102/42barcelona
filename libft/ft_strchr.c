@@ -20,7 +20,7 @@ char *ft_strchr(char *str, int c)
 
 /*int main()
 {
-	char c[100] = "hola que tal";
-	printf("%s\n", strchr(c, 97));
-	printf("%s\n", ft_strchr(c, 97));
+	char c[100] = "0x55ea5613e020";
+	printf("%s\n", strchr(c, "teste"));
+	printf("%s\n", ft_strchr(c, "teste"));
 }*/

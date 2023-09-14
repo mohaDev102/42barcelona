@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <stddef.h>
+#include <stdlib.h>
 int     ft_atoi(char *str);
-int     ft_strlen(char *str);
+int     ft_strlen(const char *str);
 int     ft_isalpha(int c);
 int     ft_isascii(int c);
 int     ft_isdigit(int c);
@@ -22,3 +23,4 @@ char *strnstr(const char *haystack, const char *needle, size_t len);
 int     ft_toupper(int c);
 int     ft_tolower(int c);
 size_t     ft_strlcat(char *dst, const char *src, size_t size);
+char *ft_strdup(const char *s1);
