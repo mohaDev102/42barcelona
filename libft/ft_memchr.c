@@ -21,9 +21,9 @@ void *ft_memchr(const void *s, int c, size_t n)
 /*int	main()
 {
 	char s1[10] = "";
-	//char *res = memchr(s1, 'o', 2);
-	char *res1 = ft_memchr(s1, 'o', 2);
+	//char *res = memchr(0x7ffd376c24f0, 471(d7), 44);
+	//char *res1 = ft_memchr(s1, 'o', 2);
 	//printf("%s\n", res);
-	printf("%s\n", res1);
+	//printf("%s\n", res1);
 
 }*/

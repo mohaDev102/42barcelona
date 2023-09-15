@@ -1,7 +1,11 @@
+#ifndef LIBFT_H
+#define LIBFT_H
+
 #include <stdio.h>
 #include <ctype.h>
 #include <stddef.h>
 #include <stdlib.h>
+
 int     ft_atoi(char *str);
 int     ft_strlen(const char *str);
 int     ft_isalpha(int c);
@@ -24,3 +28,5 @@ int     ft_toupper(int c);
 int     ft_tolower(int c);
 size_t     ft_strlcat(char *dst, const char *src, size_t size);
 char *ft_strdup(const char *s1);
+
+#endif

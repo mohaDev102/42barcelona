@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include "libft.h"
 void *ft_memset(void *ptr, int value, size_t num) {
     unsigned char *byte_ptr;
     unsigned char byte_value;
