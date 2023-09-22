@@ -1,18 +1,21 @@
 #include <string.h>
 #include <stdio.h>
+#include "libft.h"
+
 char	*ft_strrchr(const char *s, int c)
 {
-	const char *i;
+	const char *byte_s;
+	int i;
 
 	i = 0;
-	i = s;
-
-	while (*i != '\0')
-		i++;
-	while (i >= s)
+	byte_s = s;
+	
+	//while (*byte_s != '\0')
+	//	byte_s++;
+	while (i >= ft_strlen(byte_s))
 	{
-		if (*i == c)
-			return (char *)i;	
+		if (*byte_s == c)
+			return (char *)byte_s;	
 		i--;
 	}
 	return NULL;
