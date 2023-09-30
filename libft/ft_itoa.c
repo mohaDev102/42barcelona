@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mel-atta <mel-atta@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/25 10:37:00 by mel-atta          #+#    #+#             */
+/*   Updated: 2023/09/25 10:37:13 by mel-atta         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 
-int	ft_contar_digitos(int n)
+static int	ft_contar_digitos(int n)
 {
 	int	i;
 
@@ -19,7 +31,7 @@ int	ft_contar_digitos(int n)
 	return (i);
 }
 
-int	ft_numero_absoluto(int n)
+static int	ft_numero_absoluto(int n)
 {
 	if (n < 0)
 	{

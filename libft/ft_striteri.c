@@ -1,13 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_striteri.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mel-atta <mel-atta@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/23 00:34:35 by mel-atta          #+#    #+#             */
+/*   Updated: 2023/09/23 00:47:38 by mel-atta         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-
-void ft_striteri(char *s, void (*f)(unsigned int, char*))
+void	ft_striteri(char *s, void (*f)(unsigned int, char *))
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while (*s)
+	while (s[i])
 	{
-		f(i, s);
-		s++;
+		f(i, &s[i]);
+		i++;
 	}
 }

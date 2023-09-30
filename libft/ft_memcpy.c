@@ -1,48 +1,39 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mel-atta <mel-atta@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/17 01:05:52 by mel-atta          #+#    #+#             */
+/*   Updated: 2023/09/25 10:48:14 by mel-atta         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+#include "libft.h"
 
-#include <stdio.h>
-#include <string.h>
-
-/*void *ft_memcpy(void *dest, const void *src, size_t n)
+void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	unsigned char *byte_src;
-	unsigned char *byte_dest;
-	int i;
+	unsigned char	*byte_src;
+	unsigned char	*byte_dest;
+	size_t			i;
 
 	byte_src = (unsigned char *)src;
 	byte_dest = (unsigned char *)dest;
-	i = 0;	
-	while (byte_src[i] != '\0')
-	{
-		if (i < n)
-			byte_dest[i] = byte_src[i];
-		i++;
-	}
+	i = 0;
+	if (src == 0 && dest == 0)
+		return (NULL);
 	while (i < n)
 	{
-		byte_dest[i] = '\0';
+		byte_dest[i] = byte_src[i];
 		i++;
 	}
 	return (dest);
-
-}*/
-void *ft_memcpy(void *dest, const void *src, size_t n) 
-{
-    unsigned char *byte_src = (unsigned char *)src;
-    unsigned char *byte_dest = (unsigned char *)dest;
-    size_t i = 0;
-
-    while (i < n) {
-        byte_dest[i] = byte_src[i];
-        i++;
-    }
-
-    return dest;
 }
-/*int	main()
+/*int main()
 {
-	char src[20] = "hola";
-	char dest[20] = "que tal";
-	//memcpy(dest, src, 1);
-	ft_memcpy(dest, src, 2);
+	char *dest = (void *)0;
+	char *src = "hola";
+	ft_memcpy(src, dest, 3);
 	printf("%s", dest);
+
 }*/

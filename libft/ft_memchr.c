@@ -1,6 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mel-atta <mel-atta@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/25 10:37:28 by mel-atta          #+#    #+#             */
+/*   Updated: 2023/09/25 10:50:20 by mel-atta         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include <stdio.h>
 #include <string.h>
-void *ft_memchr(const void *s, int c, size_t n)
+#include "libft.h"
+
+void	*ft_memchr(const void *s, int c, size_t n)
 {
 	size_t			i;
 	unsigned char	*str;
@@ -9,21 +23,11 @@ void *ft_memchr(const void *s, int c, size_t n)
 	i = 0;
 	str = (unsigned char *)s;
 	to_find = (unsigned char)c;
-	while (i < n && str[i])
+	while (i < n)
 	{
-		if (str[i] == to_find)
+		if ((unsigned char)str[i] == (unsigned char)to_find)
 			return (&str[i]);
 		i++;
 	}
 	return (NULL);
-
 }
-/*int	main()
-{
-	char s1[10] = "";
-	//char *res = memchr(0x7ffd376c24f0, 471(d7), 44);
-	//char *res1 = ft_memchr(s1, 'o', 2);
-	//printf("%s\n", res);
-	//printf("%s\n", res1);
-
-}*/

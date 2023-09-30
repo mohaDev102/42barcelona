@@ -1,17 +1,17 @@
-#include <stdio.h>
-int     ft_isalpha(int c)
-{
-        if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
-                return (1);
-        return (0);
-}
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mel-atta <mel-atta@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/24 22:08:46 by mel-atta          #+#    #+#             */
+/*   Updated: 2023/09/24 22:08:52 by mel-atta         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-int     ft_isdigit(int c)
-{
-        if (c >= '0' && c <= '9')
-                return (1);
-        return (0);
-}
+#include <stdio.h>
+#include "libft.h"
 
 int	ft_isalnum(int c)
 {

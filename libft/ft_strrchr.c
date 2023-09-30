@@ -1,29 +1,29 @@
-#include <string.h>
-#include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mel-atta <mel-atta@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/16 00:46:35 by mel-atta          #+#    #+#             */
+/*   Updated: 2023/09/16 00:51:43 by mel-atta         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "libft.h"
 
 char	*ft_strrchr(const char *s, int c)
 {
-	const char *byte_s;
-	int i;
+	const char	*i;
 
 	i = 0;
-	byte_s = s;
-	
-	//while (*byte_s != '\0')
-	//	byte_s++;
-	while (i >= ft_strlen(byte_s))
+	i = s;
+	while (*i != '\0')
+		i++;
+	while (i >= s)
 	{
-		if (*byte_s == c)
-			return (char *)byte_s;	
+		if (*i == (unsigned char)c)
+			return ((char *)i);
 		i--;
 	}
-	return NULL;
+	return (NULL);
 }
-/*int	main()
-{
-	char c[100] = "hola que tal";
-	
-	printf("%s\n", strrchr(c, 'a'));
-	printf("%s\n", ft_strrchr(c, 'a'));
-}*/

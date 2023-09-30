@@ -1,26 +1,28 @@
-
-#include <stdio.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mel-atta <mel-atta@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/15 22:10:15 by mel-atta          #+#    #+#             */
+/*   Updated: 2023/09/23 01:32:40 by mel-atta         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+#include "libft.h"
 #include <string.h>
 
-char *ft_strchr(char *str, int c)
+char	*ft_strchr(const char *str, int c)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while (str[i] != '\0')
-	{
-		if (str[i] == (unsigned char)c)
-			return (&str[i]);
-		i++;
-	}
-	if ((unsigned char)c == '\0')
-		return (((char *)str + i));
-	return (NULL);
+	return (ft_memchr(str, c, ft_strlen(str) + 1));
 }
-
-/*int main()
+/*int	main(void)
 {
-	char c[100] = "0x55ea5613e020";
-	printf("%s\n", strchr(c, "teste"));
-	printf("%s\n", ft_strchr(c, "teste"));
+	char str[100] = "teste";
+	int c = 1024;
+	printf("custom: %s\n", ft_strchr(str, c));
+	printf("original: %s\n", strchr(str, c));
 }*/

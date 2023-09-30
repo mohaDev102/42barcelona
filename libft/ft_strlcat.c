@@ -1,17 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_strlcat.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mel-atta <mel-atta@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/24 15:11:46 by mel-atta          #+#    #+#             */
+/*   Updated: 2023/09/24 15:12:29 by mel-atta         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft.h"
 #include <stddef.h>
 #include <stdio.h>
 #include <unistd.h>
-#include <bsd/string.h>
 
-size_t     ft_strlcat(char *dst, const char *src, size_t size)
+size_t	ft_strlcat(char *dst, const char *src, size_t size)
 {
-	
-	size_t i;
-	size_t lensrc;
-	size_t lendst;
-	size_t maxsize;
-	
+	size_t	i;
+	size_t	lensrc;
+	size_t	lendst;
+	size_t	maxsize;
+
 	i = 0;
 	lensrc = ft_strlen(src);
 	lendst = ft_strlen(dst);
@@ -31,7 +41,7 @@ size_t     ft_strlcat(char *dst, const char *src, size_t size)
 	return (lendst + lensrc);
 }
 
-/*int	main()
+/*int	main(void)
 
 {
 	char src[100] = "lorem";
@@ -41,5 +51,4 @@ size_t     ft_strlcat(char *dst, const char *src, size_t size)
 	printf("original: %ld\n", strlcat(dest1, src, 15));
 	write(1, dest, 15);
 	write(1, dest1, 15);
-}*/	
-
+}*/
