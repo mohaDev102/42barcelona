@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 12:49:25 by mel-atta          #+#    #+#             */
-/*   Updated: 2023/10/22 11:57:14 by mel-atta         ###   ########.fr       */
+/*   Updated: 2023/10/22 12:46:12 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <fcntl.h>
@@ -36,7 +36,6 @@ char *ft_read_file(int fd, char *res)
 		res = (char *)malloc(sizeof(char) * 1);
 		if(res == NULL)
 		{
-			//free(buffer);
 			return (NULL);
 		}
 		res[0] = '\0';
@@ -80,11 +79,12 @@ char *ft_read_line(char *buffer)
 	if (!buffer || !buffer[i])
 	{
 		free(buffer);
+		buffer = 0;
 		return (NULL);
 	}
 	while (buffer[i] && buffer[i] != '\n')
 		i++;
-	line = (char *)malloc(sizeof(char) * i + 1);
+	line = (char *)malloc(sizeof(char) * i + 2);
 	if (line == NULL)
 	{
 		free(buffer);
@@ -115,6 +115,7 @@ char *ft_next_line(char *buffer)
 	if (!buffer[i++])
 	{
 		free(buffer);
+		buffer = 0;
 		return (NULL);
 	}
 	next_line = (char *)malloc(sizeof(char) * (ft_strlen(buffer) - i) + 1);
@@ -148,7 +149,7 @@ char *get_next_line(int fd)
 		line = ft_read_line(buffer);
 	if(!line)
 	{
-		free(line);
+		//free(line);
 		return (NULL);
 	}
 	buffer = ft_next_line(buffer);
