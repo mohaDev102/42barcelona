@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 12:49:25 by mel-atta          #+#    #+#             */
-/*   Updated: 2023/10/22 01:21:46 by mel-atta         ###   ########.fr       */
+/*   Updated: 2023/10/22 11:57:14 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <fcntl.h>
@@ -21,6 +21,7 @@ char	*ft_free(char *buffer, char *buf)
 
 	temp = ft_strjoin(buffer, buf);
 	free(buffer);
+	buffer = 0;
 	return (temp);
 }
 
@@ -43,7 +44,7 @@ char *ft_read_file(int fd, char *res)
 	buffer = (char *)malloc(sizeof(char) * BUFFER_SIZE + 1);
 	if (buffer == NULL)
 	{
-		//free(res);
+		free(res);
 		return (NULL);
 	}
 	while (byte_read > 0)
@@ -66,6 +67,7 @@ char *ft_read_file(int fd, char *res)
 			break;
 	}
 	free(buffer);
+	buffer = 0;
 	return (res);
 }
 
@@ -77,7 +79,7 @@ char *ft_read_line(char *buffer)
 	i = 0;
 	if (!buffer || !buffer[i])
 	{
-		//free(buffer);
+		free(buffer);
 		return (NULL);
 	}
 	while (buffer[i] && buffer[i] != '\n')
@@ -86,6 +88,7 @@ char *ft_read_line(char *buffer)
 	if (line == NULL)
 	{
 		free(buffer);
+		buffer = 0;
 		return (NULL);
 	}
 	i = 0;
@@ -125,6 +128,7 @@ char *ft_next_line(char *buffer)
 		next_line[j++] = buffer[i++];
 	next_line[j] = '\0';
 	free(buffer);
+	buffer = 0;
 	return (next_line);
 }
 
@@ -137,15 +141,21 @@ char *get_next_line(int fd)
 		return (NULL);
 	buffer = ft_read_file(fd, buffer);
 	if (buffer == NULL)
+	{
+		free(buffer);
 		return (NULL);
-	line = ft_read_line(buffer);
+	}
+		line = ft_read_line(buffer);
 	if(!line)
+	{
+		free(line);
 		return (NULL);
+	}
 	buffer = ft_next_line(buffer);
 	return (line);
 }
 
-int main()
+/*int main()
 {
 	int fd;
 	char *buffer;
@@ -159,4 +169,4 @@ int main()
 		free(buffer);
 	}
 	close(fd);
-}
+}*/
