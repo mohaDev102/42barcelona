@@ -1,8 +1,8 @@
 
 #include <stdlib.h>
 #include <stddef.h>
+#include "get_next_line_bonus.h"
 
-#include "get_next_line.h"
 size_t  ft_strlen(const char *c)
 {
         size_t  i;
