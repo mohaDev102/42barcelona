@@ -6,9 +6,12 @@
 /*   By: mel-atta <mel-atta@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 19:39:04 by mel-atta          #+#    #+#             */
-/*   Updated: 2023/11/04 00:05:23 by mel-atta         ###   ########.fr       */
+/*   Updated: 2023/11/04 02:46:43 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#ifndef BUFFER_SIZE
+# define BUFFER_SIZE 10
+#endif
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
 
