@@ -13,12 +13,13 @@
 # define GET_NEXT_LINE_BONUS_H
 
 # include <stddef.h>
+# include <string.h>
 # include <unistd.h>
-#include <string.h>
+
 char	*get_next_line(int fd);
 size_t	ft_strlen(const char *c);
-int	ft_strchr(const char *str, int c);
-char    *ft_strjoin(char *s1, char *s2);
+int		ft_strchr(const char *str, int c);
+char	*ft_strjoin(char *s1, char *s2);
 char	*ft_empty_file(char *buff);
-char    *ft_free(char *buffer, char *buf);
+char	*ft_free(char *buffer, char *buf);
 #endif

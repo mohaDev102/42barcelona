@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/08 12:49:25 by mel-atta          #+#    #+#             */
-/*   Updated: 2023/10/22 12:46:12 by mel-atta         ###   ########.fr       */
+/*   Updated: 2023/11/04 00:20:21 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include <fcntl.h>
@@ -28,11 +28,11 @@ char	*ft_free(char *buffer, char *buf)
 	return (NULL);
 }
 
-char *ft_read_file(int fd, char *res)
+char	*ft_read_file(int fd, char *res)
 {
-	int byte_read;
-	char *buffer = NULL;
-	
+	int		byte_read;
+	char	*buffer;
+
 	byte_read = 1;
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE) + 1);
 	if (!buffer)
@@ -54,17 +54,14 @@ char *ft_read_file(int fd, char *res)
 	return (res);
 }
 
-char *ft_read_line(char *buffer)
+char	*ft_read_line(char *buffer)
 {
-	char *line;
-	int i;
+	char	*line;
+	int		i;
 
 	i = 0;
 	if (!buffer)
-	{
-		buffer = 0;
 		return (NULL);
-	}
 	while (buffer[i] && buffer[i] != '\n')
 		i++;
 	if (buffer[i] && buffer[i] == '\n')
@@ -84,12 +81,12 @@ char *ft_read_line(char *buffer)
 	return (line);
 }
 
-char *ft_next_line(char *buffer)
+char	*ft_next_line(char *buffer)
 {
-	int i;
-	char *next_line;
-	int j;
-	int cant;
+	int		i;
+	char	*next_line;
+	int		j;
+	int		cant;
 
 	i = 0;
 	while (buffer[i] && buffer[i] != '\n')
@@ -110,18 +107,18 @@ char *ft_next_line(char *buffer)
 	return (next_line);
 }
 
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-	static char *buffer = NULL;
-	char *line;
+	static char	*buffer = NULL;
+	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	buffer = ft_read_file(fd, buffer);
 	if (buffer == NULL)
-		return(ft_free(buffer, 0));
+		return (ft_free(buffer, 0));
 	line = ft_read_line(buffer);
-	if(!line)
+	if (!line)
 	{
 		buffer = ft_free(buffer, 0);
 		return (NULL);

@@ -9,11 +9,11 @@
 /*   Updated: 2023/10/22 12:46:12 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <fcntl.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <unistd.h>
 #include "get_next_line_bonus.h"
+#include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 char	*ft_free(char *buffer, char *buf)
 {
@@ -28,11 +28,12 @@ char	*ft_free(char *buffer, char *buf)
 	return (NULL);
 }
 
-char *ft_read_file(int fd, char *res)
+char	*ft_read_file(int fd, char *res)
 {
-	int byte_read;
-	char *buffer = NULL;
-	
+	int		byte_read;
+	char	*buffer;
+
+	buffer = NULL;
 	byte_read = 1;
 	buffer = malloc(sizeof(char) * (BUFFER_SIZE) + 1);
 	if (!buffer)
@@ -54,17 +55,14 @@ char *ft_read_file(int fd, char *res)
 	return (res);
 }
 
-char *ft_read_line(char *buffer)
+char	*ft_read_line(char *buffer)
 {
-	char *line;
-	int i;
+	char	*line;
+	int		i;
 
 	i = 0;
 	if (!buffer)
-	{
-		buffer = 0;
 		return (NULL);
-	}
 	while (buffer[i] && buffer[i] != '\n')
 		i++;
 	if (buffer[i] && buffer[i] == '\n')
@@ -84,12 +82,12 @@ char *ft_read_line(char *buffer)
 	return (line);
 }
 
-char *ft_next_line(char *buffer)
+char	*ft_next_line(char *buffer)
 {
-	int i;
-	char *next_line;
-	int j;
-	int cant;
+	int		i;
+	char	*next_line;
+	int		j;
+	int		cant;
 
 	i = 0;
 	while (buffer[i] && buffer[i] != '\n')
@@ -110,18 +108,18 @@ char *ft_next_line(char *buffer)
 	return (next_line);
 }
 
-char *get_next_line(int fd)
+char	*get_next_line(int fd)
 {
-	static char *buffer[1024];
-	char *line;
+	static char	*buffer[1024];
+	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	buffer[fd] = ft_read_file(fd, buffer[fd]);
 	if (buffer[fd] == NULL)
-		return(ft_free(buffer[fd], 0));
+		return (ft_free(buffer[fd], 0));
 	line = ft_read_line(buffer[fd]);
-	if(!line)
+	if (!line)
 	{
 		buffer[fd] = ft_free(buffer[fd], 0);
 		return (NULL);
