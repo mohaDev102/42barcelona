@@ -31,7 +31,7 @@ char *ft_getenv(char *name, char *env[])
 }
 
 
-char *find_path(char *env[])
+char **find_path(char *env[])
 {
 
 	// buscar la ruta del comando que pongan por paramentro
@@ -42,16 +42,25 @@ char *find_path(char *env[])
 	i = 0;
 	//paths = NULL;
 	pat = ft_getenv("PATH", env);
+	paths = ft_split(pat, ':');
 	//paths = (char *)malloc(sizeof(char *) * (ft_strlen(pat) + 1));
-	while (env[i] != NULL)
+	/*while (paths[i] != NULL)
 	{
-		paths = ft_split(pat, ':');
+		return (paths[i]);
 		i++;
-	}	
-	return (*paths);
+	}	*/
+	return (paths);
 }
 
+// comprobar si el path ejecuta y en caso que no, concatenar el path con el argv y si tampoco pues comando not found
+char *ft_check_cmd(char *path, char *env[], char *argv[])
+{
+	
 
+
+
+
+}
 
 
 
@@ -71,8 +80,13 @@ int main(int argc, char *argv[], char *env[]) {
 	args[0] = "ls";
 	args[1] = "-l";
 	args[2] = NULL;
+	int i = 0;
 	// hacer un split para tener separado el comando con parametros
-	printf("%s",find_path(env));
+	while (find_path(env)[i] != NULL)
+	{
+		printf("%s\n",find_path(env)[i]);
+		i++;
+	}
 	//printf("ss");
 	// hay que cambiar el "/bin/ls" por la ruta correcta en funcion del comando que se pongo
 	//execve("/bin/ls", args, NULL);
