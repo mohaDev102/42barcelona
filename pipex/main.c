@@ -27,19 +27,40 @@ char *ft_getenv(char *name, char *env[])
 		i++;
 	}
 	//printf("%s", var[i]);
-	return NULL;
+	return (NULL);
 }
 
+void	ft_child(char *argv[], char *process_fd, char **env)
+{
+
+	
+	fd = open(argv[1], O_RDONLY, 0777);
+	if (fd == -1)
+		//exit_free();
+	dup2(fd, STDOUT_FILENO);
+	dup2(process_fd[1], 1);
+	close(process_fd[0]);
+}
+
+
+void	ft_parent(char *argv[], char *process_fd, char **env)
+{
+	
+	fd = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	if (fd == -1)
+		//exit_free();
+	dup2(fd, );
+	dup2(process_fd[0], STDIN_FILENO);
+	close(process_fd[1]);
+}
 
 char **find_path(char *env[])
 {
 
 	// buscar la ruta del comando que pongan por paramentro
 	char **paths;
-	int i;
 	char *pat;
 
-	i = 0;
 	//paths = NULL;
 	pat = ft_getenv("PATH", env);
 	paths = ft_split(pat, ':');
@@ -53,46 +74,71 @@ char **find_path(char *env[])
 }
 
 // comprobar si el path ejecuta y en caso que no, concatenar el path con el argv y si tampoco pues comando not found
-char *ft_check_cmd(char *path, char *env[], char *argv[])
+char *ft_check_cmd(char *paths, char *env[], char *argv[])
 {
-	
+	char *path;
+	char *path_cmd;
+	char **cmd;
+	//int i;
 
-
-
-
+	//i = 0;
+	cmd = ft_split(argv[2], ' ');
+	if (access(cmd[0], X_OK) != -1)
+	{
+		// ejecutamos el comando y lo pasamos al archivo
+		write(1, "if", 2);
+		execve(cmd[0], cmd, env);
+		//write(1, "if", 2);
+	}
+	else
+	{
+		// ajuntamos cada path con el comando que hayan pasado y 
+		// luego mirar si se puede ejecutar si funcion bien
+		// sino error command not found
+		write(1, "else", 4);
+			path = ft_strjoin(paths, "/");
+			path_cmd = ft_strjoin(path, cmd[0]);
+			if (access(path_cmd, X_OK) != -1)
+			{
+				write(1, "if2", 3);
+				execve("/bin/cat", cmd, env);
+				//write(1, "if2", 3);
+			}
+			//i++;
+		//else
+			//error_cmd("command not found");
+		free(path);
+		free(path_cmd);
+	}
+	return NULL;
 }
 
 
 
-int main(int argc, char *argv[], char *env[]) {
-    /*if (argc < 5) {
+
+
+int main(int argc, char *argv[], char *env[]) 
+{
+	pid_t pid;
+	int fd[2];
+
+    if (argc != 5) 
         printf("Uso: %s <output_file1> <command1> <output_file2> <command2>\n", argv[0]);
-      
-    }*/
-	(void) argc;
-	int fd;
-	fd = open(argv[1], O_WRONLY | O_CREAT, 0644);
-	dup2(fd, STDOUT_FILENO);
-	close(fd);
-	
-	char *args[3];
-	
-	args[0] = "ls";
-	args[1] = "-l";
-	args[2] = NULL;
-	int i = 0;
-	// hacer un split para tener separado el comando con parametros
-	while (find_path(env)[i] != NULL)
+    if (pipe(fd) == -1)
 	{
-		printf("%s\n",find_path(env)[i]);
-		i++;
+		perror("pipe");
+		exit(EXIT_FAILURE);
 	}
-	//printf("ss");
-	// hay que cambiar el "/bin/ls" por la ruta correcta en funcion del comando que se pongo
-	//execve("/bin/ls", args, NULL);
-	//write(1, &env, 2);
-	//printf("env: %s", env);
-	
+    pid = fork();
+    if (pid == -1)
+    {
+	perror("fork");
+	exit(EXIT_FAILURE);
+    }
+    if (pid == 0)
+	ft_child(argv, fd, env);
+    else
+	ft_parent(argv, fd, env);
 	return (0);
 }
 

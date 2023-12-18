@@ -1,0 +1,46 @@
+/home/moha/.local/bin
+/usr/local/sbin
+/usr/local/bin
+/usr/sbin
+/usr/bin
+/sbin
+/bin
+/usr/games
+/usr/local/games
+/usr/lib/wsl/lib
+/mnt/c/Program Files/Common Files/Oracle/Java/javapath
+/mnt/c/Program Files (x86)/VMware/VMware Player/bin/
+/mnt/c/Python39/Scripts/
+/mnt/c/Python39/
+/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath
+/mnt/c/app/scott/product/12.1.0/dbhome_1/bin
+/mnt/c/ProgramData/Oracle/Java/javapath
+/mnt/c/WINDOWS/system32
+/mnt/c/WINDOWS
+/mnt/c/WINDOWS/System32/Wbem
+/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/
+/mnt/c/WINDOWS/System32/OpenSSH/
+/mnt/c/Program Files/PuTTY/
+/mnt/c/ProgramData/chocolatey/bin
+/mnt/c/TDM-GCC-32/bin
+/mnt/c/TDM-GCC-64/bin
+/mnt/c/Program Files/Microsoft SQL Server/Client SDK/ODBC/110/Tools/Binn/
+/mnt/c/Program Files (x86)/Microsoft SQL Server/120/Tools/Binn/
+/mnt/c/Program Files/Microsoft SQL Server/120/Tools/Binn/
+/mnt/c/Program Files/Microsoft SQL Server/120/DTS/Binn/
+/mnt/c/Program Files/OpenJDK/openjdk-11.0.15_10/bin
+/mnt/c/Program Files/OpenJDK/jdk-13.0.2/bin
+/mnt/c/Program Files/Git/cmd
+/mnt/c/xampp8.1/php
+/mnt/c/composer
+/mnt/c/Program Files/nodejs/
+/mnt/c/Users/moha/AppData/Roaming/Composer/vendor/bin
+/mnt/c/Program Files (x86)/python/Scripts/
+/mnt/c/Program Files (x86)/python/
+/mnt/c/Users/moha/AppData/Local/Microsoft/WindowsApps
+/mnt/c/Users/moha/AppData/Local/Programs/Microsoft VS Code/bin
+/mnt/c/flutter/bin
+/mnt/c/Users/moha/AppData/Local/Android/Sdk/platform-tools
+/mnt/c/Users/moha/AppData/Local/GitHubDesktop/bin
+/mnt/c/Users/moha/AppData/Roaming/npm
+/mnt/c/MinGW/bin
