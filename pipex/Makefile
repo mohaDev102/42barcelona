@@ -1,6 +1,6 @@
 NAME = pipex.a
 
-SRC = ft_strjoin.c ft_split.c ft_strlen.c ft_strdup.c ft_substr.c ft_calloc.c ft_memset.c ft_strcmp.c main.c
+SRC = ft_strjoin.c ft_split.c ft_strlen.c ft_strdup.c ft_substr.c ft_calloc.c ft_memset.c ft_strcmp.c main.c pipex_utils.c
 
 OBJ = $(SRC:.c=.o)
 HEADER = pipex.h

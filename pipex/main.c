@@ -15,107 +15,78 @@ char *ft_getenv(char *name, char *env[])
 	i = 0;
 	while (env[i] != NULL)
 	{
-		//printf("%s", name);
 		var = ft_split(env[i], '=');
 		if (var != NULL && var[0] != NULL && var[1] != NULL)
 		{
 			if (ft_strcmp(var[0], name) == 0)
 				return (var[1]);
 		}
-		free(var);
-		//write(1, "ss", 2);
+		free(var);		
 		i++;
 	}
-	//printf("%s", var[i]);
 	return (NULL);
 }
 
-void	ft_child(char *argv[], char *process_fd, char **env)
+char **find_path(char *env[])
 {
+	// buscar la ruta del comando que pongan por paramentro
+	char **paths;
+	char *path_sis;
+	char **paths_pars = NULL;
+	int i;
 
-	
+	i = 0;
+	path_sis = ft_getenv("PATH", env);
+	paths = ft_split(path_sis, ':');
+	while (paths[i] != NULL)
+	{
+		paths_pars[i] = paths[i];
+		i++;
+	}
+	return (paths_pars);
+}
+
+void ft_exec_cmd(char *argv[], char *env[])
+{
+	char **paths;
+	char i;
+
+	paths = find_path(env);
+	i = 0;
+	while (paths[i] != NULL)
+	{
+		ft_check_cmd(paths[i], env, argv);
+		i++;
+	}
+}
+
+void	ft_child(char *argv[], int *process_fd, char **env)
+{
+	int fd;
+
 	fd = open(argv[1], O_RDONLY, 0777);
 	if (fd == -1)
 		//exit_free();
 	dup2(fd, STDOUT_FILENO);
 	dup2(process_fd[1], 1);
 	close(process_fd[0]);
+	ft_exec_cmd(&argv[1], env);
 }
 
 
-void	ft_parent(char *argv[], char *process_fd, char **env)
+
+void	ft_parent(char *argv[], int *process_fd, char **env)
 {
-	
+	int fd;
+
 	fd = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (fd == -1)
 		//exit_free();
-	dup2(fd, );
+	dup2(fd, STDIN_FILENO);
 	dup2(process_fd[0], STDIN_FILENO);
 	close(process_fd[1]);
+	ft_exec_cmd(&argv[4], env);
 }
-
-char **find_path(char *env[])
-{
-
-	// buscar la ruta del comando que pongan por paramentro
-	char **paths;
-	char *pat;
-
-	//paths = NULL;
-	pat = ft_getenv("PATH", env);
-	paths = ft_split(pat, ':');
-	//paths = (char *)malloc(sizeof(char *) * (ft_strlen(pat) + 1));
-	/*while (paths[i] != NULL)
-	{
-		return (paths[i]);
-		i++;
-	}	*/
-	return (paths);
-}
-
-// comprobar si el path ejecuta y en caso que no, concatenar el path con el argv y si tampoco pues comando not found
-char *ft_check_cmd(char *paths, char *env[], char *argv[])
-{
-	char *path;
-	char *path_cmd;
-	char **cmd;
-	//int i;
-
-	//i = 0;
-	cmd = ft_split(argv[2], ' ');
-	if (access(cmd[0], X_OK) != -1)
-	{
-		// ejecutamos el comando y lo pasamos al archivo
-		write(1, "if", 2);
-		execve(cmd[0], cmd, env);
-		//write(1, "if", 2);
-	}
-	else
-	{
-		// ajuntamos cada path con el comando que hayan pasado y 
-		// luego mirar si se puede ejecutar si funcion bien
-		// sino error command not found
-		write(1, "else", 4);
-			path = ft_strjoin(paths, "/");
-			path_cmd = ft_strjoin(path, cmd[0]);
-			if (access(path_cmd, X_OK) != -1)
-			{
-				write(1, "if2", 3);
-				execve("/bin/cat", cmd, env);
-				//write(1, "if2", 3);
-			}
-			//i++;
-		//else
-			//error_cmd("command not found");
-		free(path);
-		free(path_cmd);
-	}
-	return NULL;
-}
-
-
-
-
 
 int main(int argc, char *argv[], char *env[]) 
 {
@@ -132,13 +103,13 @@ int main(int argc, char *argv[], char *env[])
     pid = fork();
     if (pid == -1)
     {
-	perror("fork");
-	exit(EXIT_FAILURE);
+		perror("fork");
+		exit(EXIT_FAILURE);
     }
     if (pid == 0)
-	ft_child(argv, fd, env);
+		ft_child(argv, fd, env);
     else
-	ft_parent(argv, fd, env);
+		ft_parent(argv, fd, env);
 	return (0);
 }
 
