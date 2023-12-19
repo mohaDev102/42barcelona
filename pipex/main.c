@@ -73,8 +73,8 @@ void	ft_child(char *argv[], int *process_fd, char **env)
 	fd = open(argv[1], O_RDONLY, 0777);
 	if (fd == -1)
 		perror("open");
-	dup2(fd, STDOUT_FILENO);
-	dup2(process_fd[1], STDIN_FILENO);
+	dup2(fd, STDIN_FILENO);
+	dup2(process_fd[1], STDOUT_FILENO);
 	close(process_fd[0]);
 	//close(fd);
 	ft_exec_cmd(&argv[2], env);

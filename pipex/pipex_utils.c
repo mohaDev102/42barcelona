@@ -25,7 +25,8 @@ char *ft_check_cmd(char *paths, char *env[], char *argv[])
 			{
 				execve(path_cmd, cmd, env);
 			}
-		//else
+		else
+			perror("command not found");
 			//error_cmd("command not found");
 		free(path);
 		free(path_cmd);
