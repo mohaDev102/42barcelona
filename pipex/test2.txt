@@ -1,46 +1,29 @@
-/home/moha/.local/bin
-/usr/local/sbin
-/usr/local/bin
-/usr/sbin
-/usr/bin
-/sbin
-/bin
-/usr/games
-/usr/local/games
-/usr/lib/wsl/lib
-/mnt/c/Program Files/Common Files/Oracle/Java/javapath
-/mnt/c/Program Files (x86)/VMware/VMware Player/bin/
-/mnt/c/Python39/Scripts/
-/mnt/c/Python39/
-/mnt/c/Program Files (x86)/Common Files/Oracle/Java/javapath
-/mnt/c/app/scott/product/12.1.0/dbhome_1/bin
-/mnt/c/ProgramData/Oracle/Java/javapath
-/mnt/c/WINDOWS/system32
-/mnt/c/WINDOWS
-/mnt/c/WINDOWS/System32/Wbem
-/mnt/c/WINDOWS/System32/WindowsPowerShell/v1.0/
-/mnt/c/WINDOWS/System32/OpenSSH/
-/mnt/c/Program Files/PuTTY/
-/mnt/c/ProgramData/chocolatey/bin
-/mnt/c/TDM-GCC-32/bin
-/mnt/c/TDM-GCC-64/bin
-/mnt/c/Program Files/Microsoft SQL Server/Client SDK/ODBC/110/Tools/Binn/
-/mnt/c/Program Files (x86)/Microsoft SQL Server/120/Tools/Binn/
-/mnt/c/Program Files/Microsoft SQL Server/120/Tools/Binn/
-/mnt/c/Program Files/Microsoft SQL Server/120/DTS/Binn/
-/mnt/c/Program Files/OpenJDK/openjdk-11.0.15_10/bin
-/mnt/c/Program Files/OpenJDK/jdk-13.0.2/bin
-/mnt/c/Program Files/Git/cmd
-/mnt/c/xampp8.1/php
-/mnt/c/composer
-/mnt/c/Program Files/nodejs/
-/mnt/c/Users/moha/AppData/Roaming/Composer/vendor/bin
-/mnt/c/Program Files (x86)/python/Scripts/
-/mnt/c/Program Files (x86)/python/
-/mnt/c/Users/moha/AppData/Local/Microsoft/WindowsApps
-/mnt/c/Users/moha/AppData/Local/Programs/Microsoft VS Code/bin
-/mnt/c/flutter/bin
-/mnt/c/Users/moha/AppData/Local/Android/Sdk/platform-tools
-/mnt/c/Users/moha/AppData/Local/GitHubDesktop/bin
-/mnt/c/Users/moha/AppData/Roaming/npm
-/mnt/c/MinGW/bin
+total 312
+drwxr-xr-x  28 mel-atta  2023_barcelona    952 Dec 19 19:09 .
+drwxr-xr-x   9 mel-atta  2023_barcelona    306 Dec 16 16:00 ..
+-rw-r--r--   1 mel-atta  2023_barcelona    449 Dec 19 13:54 Makefile
+-rw-r--r--   1 mel-atta  2023_barcelona   1104 Dec 16 17:03 ft_calloc.c
+-rw-r--r--   1 mel-atta  2023_barcelona    776 Dec 19 19:06 ft_calloc.o
+-rw-r--r--   1 mel-atta  2023_barcelona   1110 Dec 16 17:05 ft_memset.c
+-rw-r--r--   1 mel-atta  2023_barcelona    692 Dec 19 19:06 ft_memset.o
+-rw-r--r--   1 mel-atta  2023_barcelona   2058 Dec 16 16:53 ft_split.c
+-rw-r--r--   1 mel-atta  2023_barcelona   1724 Dec 19 19:06 ft_split.o
+-rw-r--r--   1 mel-atta  2023_barcelona   1376 Dec 16 22:26 ft_strcmp.c
+-rw-r--r--   1 mel-atta  2023_barcelona    812 Dec 19 19:06 ft_strcmp.o
+-rw-r--r--   1 mel-atta  2023_barcelona   1200 Dec 16 17:02 ft_strdup.c
+-rw-r--r--   1 mel-atta  2023_barcelona    856 Dec 19 19:06 ft_strdup.o
+-rw-r--r--   1 mel-atta  2023_barcelona   1430 Dec 16 16:52 ft_strjoin.c
+-rw-r--r--   1 mel-atta  2023_barcelona    992 Dec 19 19:06 ft_strjoin.o
+-rw-r--r--   1 mel-atta  2023_barcelona   1015 Dec 16 17:01 ft_strlen.c
+-rw-r--r--   1 mel-atta  2023_barcelona    668 Dec 19 19:06 ft_strlen.o
+-rw-r--r--   1 mel-atta  2023_barcelona   1382 Dec 16 17:02 ft_substr.c
+-rw-r--r--   1 mel-atta  2023_barcelona   1208 Dec 19 19:06 ft_substr.o
+-rw-r--r--   1 mel-atta  2023_barcelona   2077 Dec 19 19:09 main.c
+-rw-r--r--   1 mel-atta  2023_barcelona   3068 Dec 19 19:09 main.o
+-rwxr-xr-x   1 mel-atta  2023_barcelona  50720 Dec 19 19:09 pipex
+-rw-r--r--   1 mel-atta  2023_barcelona  13088 Dec 19 19:09 pipex.a
+-rw-r--r--   1 mel-atta  2023_barcelona    587 Dec 19 14:17 pipex.h
+-rw-r--r--   1 mel-atta  2023_barcelona    799 Dec 19 18:37 pipex_utils.c
+-rw-r--r--   1 mel-atta  2023_barcelona   1092 Dec 19 19:06 pipex_utils.o
+-rw-r--r--   1 mel-atta  2023_barcelona      0 Dec 19 18:44 test.txt
+-rw-r--r--   1 mel-atta  2023_barcelona      0 Dec 19 19:10 test2.txt

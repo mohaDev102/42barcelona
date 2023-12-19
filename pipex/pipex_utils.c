@@ -8,7 +8,7 @@ char *ft_check_cmd(char *paths, char *env[], char *argv[])
 	char *path_cmd;
 	char **cmd;
 
-	cmd = ft_split(argv, ' ');
+	cmd = ft_split(*argv, ' ');
 	if (access(cmd[0], X_OK) != -1)
 	{
 		// ejecutamos el comando y lo pasamos al archivo

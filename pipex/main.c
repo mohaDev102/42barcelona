@@ -34,10 +34,16 @@ char **find_path(char *env[])
 	char *path_sis;
 	char **paths_pars = NULL;
 	int i;
+	int count;
 
 	i = 0;
+	count = 0;
 	path_sis = ft_getenv("PATH", env);
 	paths = ft_split(path_sis, ':');
+	while (paths[count] != NULL)
+		count++;
+
+	paths_pars = (char **)malloc((count + 1) * sizeof(char *));
 	while (paths[i] != NULL)
 	{
 		paths_pars[i] = paths[i];
@@ -49,7 +55,7 @@ char **find_path(char *env[])
 void ft_exec_cmd(char *argv[], char *env[])
 {
 	char **paths;
-	char i;
+	int i;
 
 	paths = find_path(env);
 	i = 0;
@@ -66,11 +72,12 @@ void	ft_child(char *argv[], int *process_fd, char **env)
 
 	fd = open(argv[1], O_RDONLY, 0777);
 	if (fd == -1)
-		//exit_free();
+		perror("open");
 	dup2(fd, STDOUT_FILENO);
-	dup2(process_fd[1], 1);
+	dup2(process_fd[1], STDIN_FILENO);
 	close(process_fd[0]);
-	ft_exec_cmd(&argv[1], env);
+	//close(fd);
+	ft_exec_cmd(&argv[2], env);
 }
 
 
@@ -81,11 +88,12 @@ void	ft_parent(char *argv[], int *process_fd, char **env)
 
 	fd = open(argv[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	if (fd == -1)
-		//exit_free();
-	dup2(fd, STDIN_FILENO);
+		perror("open");
+	dup2(fd, STDOUT_FILENO);
 	dup2(process_fd[0], STDIN_FILENO);
 	close(process_fd[1]);
-	ft_exec_cmd(&argv[4], env);
+	//close(fd);
+	ft_exec_cmd(&argv[3], env);
 }
 
 int main(int argc, char *argv[], char *env[]) 
