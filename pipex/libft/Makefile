@@ -1,6 +1,6 @@
-NAME = pipex
+NAME = libft.a
 
-SRC = src/pipex.c src/pipex_utils.c libft/libft.a
+SRC = ft_strjoin.c ft_split.c ft_strlen.c ft_strdup.c ft_substr.c ft_calloc.c ft_memset.c ft_strcmp.c
 
 OBJ = $(SRC:.c=.o)
 HEADER = pipex.h
@@ -9,19 +9,19 @@ RM = rm -f
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
-$(NAME):
-	make all -C libft
-	$(CC) $(CFLAGS) $(SRC) -o $(NAME)
+%.o:%.c	$(HEADER) Makefile
+		$(CC) $(CFLAGS) -c $< -o $@
 
 all: $(NAME)
 
+$(NAME): $(OBJ)
+	$(LIB) $(NAME) $(OBJ)
+
 clean:
 	$(RM) $(OBJ)
-	make clean -C libft
 
 fclean: clean
 	$(RM) $(NAME)
-	make fclean -C libft
 
 re: fclean all
 

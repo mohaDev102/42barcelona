@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memset.c                                        :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-atta <mel-atta@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/13 17:14:55 by mel-atta          #+#    #+#             */
-/*   Updated: 2023/12/16 17:05:52 by mel-atta         ###   ########.fr       */
+/*   Created: 2023/09/13 14:02:22 by mel-atta          #+#    #+#             */
+/*   Updated: 2023/12/16 17:03:49 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "pipex.h"
-#include <stddef.h>
+#include <stdlib.h>
+#include "../src/pipex.h"
 
-void	*ft_memset(void *b, int c, size_t len)
+void	*ft_calloc(size_t count, size_t size)
 {
-	size_t			i;
-	unsigned char	*ptr;
+	void	*ptr;
 
-	i = 0;
-	ptr = (unsigned char *)b;
-	while (i < len)
-		ptr[i++] = (unsigned char)c;
-	return (b);
+	ptr = malloc(count * size);
+	if (ptr == NULL)
+		return (NULL);
+	ft_memset(ptr, 0, count * size);
+	return (ptr);
 }

@@ -1,36 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-atta <mel-atta@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/24 15:15:38 by mel-atta          #+#    #+#             */
-/*   Updated: 2023/12/16 22:26:47 by mel-atta         ###   ########.fr       */
+/*   Created: 2023/09/16 00:54:10 by mel-atta          #+#    #+#             */
+/*   Updated: 2023/12/16 17:02:10 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "pipex.h"
-#include <stdio.h>
-#include <string.h>
+#include "../src/pipex.h"
 #include <unistd.h>
+#include <stdio.h>
 
-int	ft_strcmp(const char *s1, const char *s2)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	size_t	i;
+	char	*res;
 
+	if (s == NULL)
+		return (0);
+	if (start >= ft_strlen(s))
+		return (ft_strdup(""));
+	if (len > ft_strlen(s) - start)
+		len = ft_strlen(s) - start;
+	res = (char *)ft_calloc(sizeof(char), len + 1);
+	if (res == 0)
+		return (0);
 	i = 0;
-	while (s1[i] != '\0' && s2[i] != '\0')
+	while (start < ft_strlen(s) && i < len && s[i])
 	{
-		if (s1[i] != s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		res[i] = s[start];
 		i++;
+		start++;
 	}
-	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+	return (res);
 }
-/*int main()
-{
-	char s1[100] = "";
-	char s2[100] = "test";
-	printf("original:%d\n", strncmp(s1, s2, 0));
-	printf("%d\n", ft_strncmp(s1, s2, 0));
-}*/
