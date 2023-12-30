@@ -40,14 +40,16 @@ char	**find_path(char *env[])
 	int		i;
 	int		count;
 
-	paths_pars = NULL;
 	i = 0;
-	count = 0;
 	path_sis = ft_getenv("PATH", env);
 	paths = ft_split(path_sis, ':');
-	while (paths[count] != NULL)
-		count++;
+	count = ft_strlen(*paths);
 	paths_pars = (char **)malloc((count + 1) * sizeof(char *));
+	if (paths_pars == NULL)
+	{
+		free(paths);
+		return (NULL);
+	}
 	while (paths[i] != NULL)
 	{
 		paths_pars[i] = paths[i];

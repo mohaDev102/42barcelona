@@ -1,17 +1,23 @@
 NAME = pipex
 
-SRC = src/pipex.c src/pipex_utils.c src/utils2.c libft/libft.a
+SRC = src/pipex.c src/pipex_utils.c src/utils2.c
 
 OBJ = $(SRC:.c=.o)
-HEADER = pipex.h
+HEADER = src/pipex.h
+LIBFT = libft/libft.a
 LIB = ar rcs
 RM = rm -f
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
-$(NAME):
-	make all -C libft
-	$(CC) $(CFLAGS) $(SRC) -o $(NAME)
+$(NAME): $(OBJ) $(LIBFT)
+	$(CC) $(CFLAGS) $^ -o $@
+
+$(LIBFT):
+	make -C libft
+
+%.o: %.c $(HEADER)
+	$(CC) $(CFLAGS) -c $< -o $@
 
 all: $(NAME)
 
