@@ -5,10 +5,11 @@ SRC = src/pipex.c src/pipex_utils.c src/utils2.c
 OBJ = $(SRC:.c=.o)
 HEADER = src/pipex.h
 LIBFT = libft/libft.a
-LIB = ar rcs
 RM = rm -f
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
+
+all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT)
 	$(CC) $(CFLAGS) $^ -o $@
@@ -18,8 +19,6 @@ $(LIBFT):
 
 %.o: %.c $(HEADER)
 	$(CC) $(CFLAGS) -c $< -o $@
-
-all: $(NAME)
 
 clean:
 	$(RM) $(OBJ)

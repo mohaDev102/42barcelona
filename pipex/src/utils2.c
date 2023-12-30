@@ -14,8 +14,9 @@
 void	ft_not_found(char *cmd)
 {
 	write(2, "Error:\n", 7);
-	write(2, "Command not found :", 19);
+	write(2, "Command not found :", 20);
 	write(2, &cmd[0], ft_strlen(&cmd[0]));
+	write(2, "\n", 1);
 	exit(127);
 }
 

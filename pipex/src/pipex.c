@@ -25,13 +25,17 @@ void	ft_child(char *argv[], int *process_fd, char **env)
 	fd = open(argv[1], O_RDONLY, 0777);
 	if (fd == -1)
 	{
-		write(2, argv[1], ft_strlen(argv[1]));
-		write(2, ": No such file or directory \n", 30);
-	}
-	else if (access(argv[1], R_OK) == -1)
-	{
-		write(2, "permission denied\n", 18);
-		exit(1);
+		if (access(argv[1], F_OK) == 0)
+		{
+			write(2, "permission denied\n", 18);
+			exit(1);
+		}
+		else
+		{
+			write(2, argv[1], ft_strlen(argv[1]));
+			write(2, ": No such file or directory \n", 30);
+			exit(1);
+		}
 	}
 	dup2(fd, STDIN_FILENO);
 	dup2(process_fd[1], STDOUT_FILENO);

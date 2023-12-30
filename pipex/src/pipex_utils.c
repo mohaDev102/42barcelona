@@ -32,31 +32,18 @@ char	*ft_getenv(char *name, char *env[])
 	return (NULL);
 }
 
-char	**find_path(char *env[])
+char	**find_path(char *env[], char *argv[])
 {
 	char	**paths;
 	char	*path_sis;
-	char	**paths_pars;
-	int		i;
-	int		count;
 
-	i = 0;
 	path_sis = ft_getenv("PATH", env);
+	if (path_sis == NULL)
+	{
+		ft_not_found(*argv);
+	}
 	paths = ft_split(path_sis, ':');
-	count = ft_strlen(*paths);
-	paths_pars = (char **)malloc((count + 1) * sizeof(char *));
-	if (paths_pars == NULL)
-	{
-		free(paths);
-		return (NULL);
-	}
-	while (paths[i] != NULL)
-	{
-		paths_pars[i] = paths[i];
-		i++;
-	}
-	paths_pars[i] = NULL;
-	return (paths_pars);
+	return (paths);
 }
 
 char	*ft_check_cmd(char *env[], char *argv[])
@@ -64,7 +51,7 @@ char	*ft_check_cmd(char *env[], char *argv[])
 	char	**cmd;
 	char	**paths;
 
-	paths = find_path(env);
+	paths = find_path(env, argv);
 	cmd = ft_split(*argv, ' ');
 	if (access(cmd[0], X_OK) != -1)
 		execve(cmd[0], cmd, env);
@@ -88,6 +75,6 @@ void	ft_exec_cmd(char *argv[], char *env[])
 {
 	char	**paths;
 
-	paths = find_path(env);
+	paths = find_path(env, argv);
 	ft_check_cmd(env, argv);
 }
