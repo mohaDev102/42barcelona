@@ -1,10 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipex_utils.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mel-atta <mel-atta@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/30 02:21:57 by mel-atta          #+#    #+#             */
+/*   Updated: 2023/12/30 02:21:59 by mel-atta         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "pipex.h"
 
-char *ft_getenv(char *name, char *env[])
+char	*ft_getenv(char *name, char *env[])
 {
-	int i;
-	char **var;
+	int		i;
+	char	**var;
 
 	i = 0;
 	while (env[i] != NULL)
@@ -15,20 +26,21 @@ char *ft_getenv(char *name, char *env[])
 			if (ft_strcmp(var[0], name) == 0)
 				return (var[1]);
 		}
-		free(var);		
+		free(var);
 		i++;
 	}
 	return (NULL);
 }
 
-char **find_path(char *env[])
+char	**find_path(char *env[])
 {
-	char **paths;
-	char *path_sis;
-	char **paths_pars = NULL;
-	int i;
-	int count;
+	char	**paths;
+	char	*path_sis;
+	char	**paths_pars;
+	int		i;
+	int		count;
 
+	paths_pars = NULL;
 	i = 0;
 	count = 0;
 	path_sis = ft_getenv("PATH", env);
@@ -45,37 +57,10 @@ char **find_path(char *env[])
 	return (paths_pars);
 }
 
-void ft_error(char *cmd)
+char	*ft_check_cmd(char *env[], char *argv[])
 {
-	write(2, "Error:\n", 7);
-	write(2, "Command not found :", 19);
-	write(2, &cmd[0], ft_strlen(&cmd[0]));
-	exit(127);
-}
-
-void ft_iterar_paths(char **paths, char **cmd, char *env[])
-{
-	int i;
-	char	*path_cmd;
-	char	*path; 
-
-	i = 0;
-	path_cmd = NULL;
-	while (paths[i] != NULL)
-	{
-		path = ft_strjoin(paths[i], "/");
-		path_cmd = ft_strjoin(path, cmd[0]);
-		execve(path_cmd, cmd, env);
-		free(path);
-		free(path_cmd);
-		i++;
-	}
-}
-
-char *ft_check_cmd(char *env[], char *argv[])
-{
-	char **cmd;
-	char **paths;
+	char	**cmd;
+	char	**paths;
 
 	paths = find_path(env);
 	cmd = ft_split(*argv, ' ');
@@ -84,22 +69,22 @@ char *ft_check_cmd(char *env[], char *argv[])
 	else if (access(cmd[0], X_OK) == -1)
 		ft_iterar_paths(paths, cmd, env);
 	if (access(cmd[0], F_OK) != -1)
-    {
+	{
 		write(2, "Permission denied\n", 18);
 		exit(126);
-    }
-    else 
-    {
+	}
+	else
+	{
 		if (cmd[0] != NULL)
-			ft_error(*cmd);
-    }
+			ft_not_found(*cmd);
+	}
 	free(cmd);
 	return (NULL);
 }
 
-void ft_exec_cmd(char *argv[], char *env[])
+void	ft_exec_cmd(char *argv[], char *env[])
 {
-	char **paths;
+	char	**paths;
 
 	paths = find_path(env);
 	ft_check_cmd(env, argv);

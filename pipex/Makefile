@@ -1,6 +1,6 @@
 NAME = pipex
 
-SRC = src/pipex.c src/pipex_utils.c libft/libft.a
+SRC = src/pipex.c src/pipex_utils.c src/utils2.c libft/libft.a
 
 OBJ = $(SRC:.c=.o)
 HEADER = pipex.h
