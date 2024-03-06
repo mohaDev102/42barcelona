@@ -64,8 +64,8 @@ char	*ft_read_line(char *buffer)
 		return (NULL);
 	while (buffer[i] && buffer[i] != '\n')
 		i++;
-	// if (buffer[i] && buffer[i] == '\n')
-	// 	i++;
+	if (buffer[i] && buffer[i] == '\n')
+		i++;
 	line = (char *)malloc(sizeof(char) * i + 1);
 	if (line == NULL)
 		return (NULL);
@@ -111,6 +111,7 @@ char	*get_next_line(int fd)
 {
 	static char	*buffer = NULL;
 	char		*line;
+
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	buffer = ft_read_file(fd, buffer);

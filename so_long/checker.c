@@ -16,35 +16,32 @@ t_flood ft_newmap()
 Map    *check_param(int argc, char *argv[], Map *map)
 {
     int fd;
-	//printf("%d", argc);
+
     if (argc != 2)
-	{
         error_param("Incorrect parameters", NULL);
-		//printf("error\n");
-	}
     fd = open(argv[1], O_RDONLY);
     if (fd == -1)
         error_param("Error in file", NULL);
     if (ft_conteins_ber(argv[1]) || !ft_strcmp(argv[1], ".ber"))
-	{
         error_param("File format not correct", NULL);
-	}
     return (check_map(fd, map));
 }
 
 int addToMap(Map *map, char *line) 
 {
-    int lineLength = ft_strlen(line);
+    int lineLength;
+
+    lineLength = ft_strlen(line);
     if (map->height == 0)
         map->width = lineLength;
     char **newGrid = realloc(map->grid, (map->height + 1) * sizeof(char *));
     if (newGrid == NULL) 
         return 0;
     map->grid = newGrid;
-    map->grid[map->height] = malloc(strlen(line) + 1);
+    map->grid[map->height] = malloc(ft_strlen(line) + 1);
     if (map->grid[map->height] == NULL)
         return 0;
-    strcpy(map->grid[map->height], line);
+    ft_strcpy(map->grid[map->height], line);
     map->height++;
     return 1;
 }
@@ -77,18 +74,18 @@ Map* copyMap(Map* original)
     // Copiar la anchura y la altura del mapa original
     copy->width = original->width;
     copy->height = original->height;
-
     // Asignar memoria para la cuadrícula de la copia
     copy->grid = malloc(sizeof(char*) * copy->height);
-    if (copy->grid == NULL) {
+    if (copy->grid == NULL)
+    {
         // Manejo de error: no se pudo asignar memoria para la cuadrícula
         free(copy); // Liberar memoria asignada para la copia
         exit(EXIT_FAILURE);
     }
-
     // Copiar cada fila del mapa original a la copia
     int i = 0;
-    while (i < copy->height) {
+    while (i < copy->height)
+    {
         copy->grid[i] = malloc(sizeof(char) * (copy->width + 1)); // +1 para el carácter nulo
         if (copy->grid[i] == NULL) {
             // Manejo de error: no se pudo asignar memoria para la fila de la copia
@@ -140,42 +137,74 @@ Map    *check_map(int fd, Map *map)
     return (NULL);
 }
 
+void getPlayerPosition(t_flood *game, Map *map)
+{
+    game->player_x = -1;
+    game->player_y = -1;
+
+    for (int y = 0; y < map->height; y++) {
+        for (int x = 0; x < map->width; x++) 
+        {
+            if (map->grid[y][x] == 'P')
+            {
+                game->player_x = x;
+                game->player_y = y;
+                return;
+            }
+        }
+    }
+}
+
 int key_press(int key, GameMap *gameMap)
 {
-
 	t_flood *game = gameMap->game;
     Map *map = gameMap->map;
-    //printf("%d", map->height);
-    //printf("%d", map->height);
-    // printf("%c", map->grid[3][1]);
+ 
+    if (game->player_x == 0 || game->player_y == 0)
+        getPlayerPosition(game, map);
+    char c = map->grid[game->player_y][game->player_x];
+    if (c == 'C' && game->ncollect < game->coins)
+    {
+        map->grid[game->player_y][game->player_x] = '0';
+        game->ncollect++;
+        write(1, "Collected ", 10);
+        put_nbr(game->ncollect);
+        write(1, " coins\n", 7);
+    }
 	if (key == 53)
-		exit(1);
+    {
+		mlx_destroy_window(game->mlx, game->win);
+        exit(1);
+    }
 	else if (key == 13)
 	{
         if (isValidMove(map, game->player_x, game->player_y - 1))
         {
-            write(1, "\nmover\n", 7);
-            movePlayer(game, game->player_x, game->player_y - 1);
-        }
-        else
-        {
-            printf("no moverse");
-            write(1, "qqq", 3);
+            movePlayer(map, game, game->player_x, game->player_y - 1);
         }
     }
 	else if (key == 0)
-		game->player_x--;
+    {
+        if (isValidMove(map, game->player_x - 1, game->player_y))
+            movePlayer(map, game, game->player_x - 1, game->player_y);
+    }
 	else if (key == 1)
-		game->player_y--;
-	else if (key == 28)
-		game->player_x++;
-    //printMap(&game, &map);
+    {
+        if (isValidMove(map, game->player_x, game->player_y + 1))
+            movePlayer(map, game, game->player_x, game->player_y + 1);
+    }
+	else if (key == 2)
+    {
+        if (isValidMove(map, game->player_x + 1, game->player_y))
+            movePlayer(map, game, game->player_x + 1, game->player_y);
+    }
+    put_nbr(game->moves);
+    write(1, "\n", 1);
 	return (0);
 }
 
 void init_game(Map *map, t_flood *g)
 {
-	// inicializar
 	g->mlx = mlx_init();
 	if (g->mlx == NULL)
 	{
@@ -184,25 +213,29 @@ void init_game(Map *map, t_flood *g)
 	}
     int height = 40;
     int width = 40;
-
-    // int x = 1200;
-    // int y = 800;
 	int win_width = map->width * CELL_SIZE;
     int win_height = map->height * CELL_SIZE;
+    if (win_height >= 720 || win_width >= 1920)
+    {
+        write(1, "Mapa demasiado grande\n", 22);
+        exit(1);
+    }
     g->win = mlx_new_window(g->mlx, win_width, win_height, "so_long");
     g->img_floor = mlx_xpm_file_to_image(g->mlx, "floor.xpm", &width, &height);
     g->img_wall = mlx_xpm_file_to_image(g->mlx, "wall.xpm", &width, &height);
     g->img_coin = mlx_xpm_file_to_image(g->mlx, "coin.xpm", &width, &height);
     g->img_player = mlx_xpm_file_to_image(g->mlx, "player.xpm", &width, &height);
     g->img_exit = mlx_xpm_file_to_image(g->mlx, "exit.xpm", &width, &height);
-
+    g->player_x = 0;
+    g->player_y = 0;
+    g->ncollect = 0;
+    count_coins(g, map);
     if (g->img_floor == NULL || g->img_wall == NULL || g->img_coin == NULL || g->img_player == NULL || g->img_exit == NULL)
     {
         perror("Error al cargar imágenes");
         exit(EXIT_FAILURE);
     }
     printMap(g, map);
-    // printf("%c", map->grid[0][0]);
     GameMap gm = {g, map};
     mlx_key_hook(g->win, key_press, &gm);
     mlx_loop(g->mlx);

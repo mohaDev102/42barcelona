@@ -32,11 +32,13 @@ typedef struct flood_fill
 	void *img_exit;
 	int player_x;
 	int player_y;
+	int moves;
 	int linecontrol;
 	char *big_line;
 	int ncol;
 	int nrow;
 	int ncollect;
+	int coins;
 	int nexits;
 	int nwalls;
     int x;
@@ -58,7 +60,6 @@ typedef struct t_error
 	int nwalls;
 } t_err;
 
-//void check_line(char *line, t_flood *flood);
 char	*get_next_line(int fd);
 void error_param(char *msg, char **map);
 Map	*check_param(int argc, char *argv[], Map *map);
@@ -69,7 +70,6 @@ void init_game(Map *map, t_flood *g);
 int ft_conteins_ber(char *str);
 int validarMapa(t_flood *g);
 t_err ft_newmap_error();
-// char	*ft_strjoin(char const *s1, char const *s2);
 size_t	ft_strlen(const char *c);
 void ft_read_map(int fd, t_err *map_err, t_flood *g, char **map_str);
 char	**ft_split(char const *s, char c);
@@ -77,12 +77,13 @@ char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strdup(const char *s1);
 void	*ft_calloc(size_t count, size_t size);
 void	*ft_memset(void *b, int c, size_t len);
-size_t	ft_strlcpy(char *dest, const char *src, size_t n);
+char    *ft_strcpy(char *s1, char *s2);
 int	validateMap(Map* map);
 void printMap(t_flood *g, Map *map);
-void move_w(t_flood *game, Map *map);
 int isValidMove(Map *map, int x, int y);
-void movePlayer(t_flood *game, int new_x, int new_y);
+void movePlayer(Map *map, t_flood *game, int new_x, int new_y);
 void erasePlayer(t_flood *game, int x, int y);
 void drawPlayer(t_flood *game);
+void count_coins(t_flood *game, Map *map);
+void put_nbr(int num);
 #endif
