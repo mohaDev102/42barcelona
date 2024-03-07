@@ -17,6 +17,10 @@ typedef struct validMap
 	char **grid;
 	int height;
 	int width;
+	int ncoins;
+	int nexit;
+	int x;
+	int y;
 } Map;
 
 typedef struct flood_fill
@@ -86,4 +90,10 @@ void erasePlayer(t_flood *game, int x, int y);
 void drawPlayer(t_flood *game);
 void count_coins(t_flood *game, Map *map);
 void put_nbr(int num);
+void	printCell(t_flood *g, int x, int y, char type);
+void	movePlayer(Map *map, t_flood *game, int new_x, int new_y);
+void	erasePlayer(t_flood *game, int x, int y);
+void verify_walls(Map *map);
+int	exitGame(Map *map, int x, int y);
+void ft_exit(char *str, int ex);
 #endif

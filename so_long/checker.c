@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   checker.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mel-atta <mel-atta@student.42barcel>       +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/03/07 11:48:05 by mel-atta          #+#    #+#             */
+/*   Updated: 2024/03/07 11:48:06 by mel-atta         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 
 #include "so_long.h"
 
@@ -66,7 +78,7 @@ void freeMap(Map *map)
 Map* copyMap(Map* original)
 {
     Map* copy = malloc(sizeof(Map));
-    if (copy == NULL) 
+    if (copy == NULL)
     {
         // Manejo de error: no se pudo asignar memoria para la copia
         exit(EXIT_FAILURE);
@@ -93,10 +105,9 @@ Map* copyMap(Map* original)
             free(copy); // Liberar memoria asignada para la copia
             exit(EXIT_FAILURE);
         }
-        strcpy(copy->grid[i], original->grid[i]); // Copiar la fila del mapa original a la copia
+        ft_strcpy(copy->grid[i], original->grid[i]); // Copiar la fila del mapa original a la copia
         i++;
     }
-
     return copy;
 }
 

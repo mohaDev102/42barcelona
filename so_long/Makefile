@@ -1,6 +1,6 @@
 NAME = so_long
 
-SRC = floodfill.c get_next_line.c get_next_line_utils.c checker.c errors.c map.c moves.c
+SRC = floodfill.c get_next_line.c get_next_line_utils.c checker.c errors.c map.c validate.c player.c
 
 OBJ = $(SRC:.c=.o)
 HEADER = so_long.h
