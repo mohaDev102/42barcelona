@@ -12,7 +12,7 @@
 
 #include "so_long.h"
 
-void	floodFill(Map *map, int x, int y)
+void	flood_fill(Map *map, int x, int y)
 {
 	if (x < 0 || x >= map->width || y < 0 || y >= map->height
 		|| map->grid[y][x] == '1' || map->grid[y][x] == 'F')
@@ -22,64 +22,63 @@ void	floodFill(Map *map, int x, int y)
 	if (map->grid[y][x] == 'E')
 		map->nexit = 1;
 	map->grid[y][x] = 'F';
-	floodFill(map, x + 1, y);
-	floodFill(map, x - 1, y);
-	floodFill(map, x, y + 1);
-	floodFill(map, x, y - 1);
+	flood_fill(map, x + 1, y);
+	flood_fill(map, x - 1, y);
+	flood_fill(map, x, y + 1);
+	flood_fill(map, x, y - 1);
 }
 
-int	exitGame(Map *map, int x, int y)
+void	caracter_map(Map *map, t_flood *game)
 {
-	return (map->grid[y - 1][x] == 'E' || map->grid[y + 1][x] == 'E'
-		|| map->grid[y][x - 1] == 'E' || map->grid[y][x + 1] == 'E');
+	int		i;
+	int		j;
+	char	c;
+
+	i = -1;
+	while (++i < map->height)
+	{
+		j = -1;
+		while (++j < map->width)
+		{
+			c = map->grid[i][j];
+			if (map->grid[i][j] == 'P')
+			{
+				game->nplayer++;
+				map->x = i;
+				map->y = j;
+			}
+			else if (map->grid[i][j] == 'E')
+				map->nexit++;
+			else if (map->grid[i][j] == 'C')
+				game->coins++;
+			if (c != '1' && c != '0' && c != 'E' && c != 'P' && c != 'C')
+				ft_exit("caracter invalido", 1);
+		}
+	}
 }
 
-int	validateMap(Map *map)
+int	validate_map(Map *map)
 {
 	int		player_count;
 	int		coin_count;
-	int		i;
-	int		j;
 	t_flood	game;
 
 	player_count = 0;
 	coin_count = 0;
-	i = -1;
+	game.coins = 0;
+	game.nplayer = 0;
 	verify_walls(map);
-	while (++i < map->height)
-	{
-		j = -1;
-		while (++j < (map->width))
-		{
-			if (map->grid[i][j] == '1' || map->grid[i][j] == '0' || 
-			map->grid[i][j] == 'E' || map->grid[i][j] == 'P' || 
-			map->grid[i][j] == 'C')
-			{
-				if (map->grid[i][j] == 'P')
-				{
-					player_count++;
-					map->x = j;
-					map->y = i;
-				}
-				else if (map->grid[i][j] == 'E')
-					map->nexit++;
-				else if (map->grid[i][j] == 'C')
-					coin_count++;
-			}
-			else
-				ft_exit("caracter invalido", 1);
-		}
-	}
-	game.ncollect = coin_count;
-	if (map->nexit != 1 || player_count != 1 || coin_count == 0)
+	caracter_map(map, &game);
+	game.ncollect = game.coins;
+	if (map->nexit != 1 || game.nplayer != 1 || game.coins == 0)
 		ft_exit("Error\n", 1);
-	floodFill(map, map->x, map->y);
-	if (map->nexit < 1 || map->nexit > 1 || map->ncoins != coin_count)
+	flood_fill(map, map->x, map->y);
+	if (map->nexit < 1 || map->nexit > 1 || map->ncoins != game.coins)
 		ft_exit("Error\n", 1);
 	return (1);
 }
 
-void	printMap(t_flood *g, Map *map)
+void	print_map(t_flood *g, Map *map)
 {
 	int		y;
 	int		x;
@@ -93,7 +92,7 @@ void	printMap(t_flood *g, Map *map)
 		while (x < map->width)
 		{
 			type = map->grid[y][x];
-			printCell(g, x, y, type);
+			print_cell(g, x, y, type);
 			x++;
 		}
 		y++;
