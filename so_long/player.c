@@ -12,21 +12,19 @@
 
 #include "so_long.h"
 
-void	movePlayer(Map *map, t_flood *game, int new_x, int new_y)
+void	move_player(Map *map, t_flood *game, int new_x, int new_y)
 {
 	game->x = game->player_x;
 	game->y = game->player_y;
 	game->player_x = new_x;
 	game->player_y = new_y;
 	game->moves++;
-	erasePlayer(game, game->x, game->y);
-	drawPlayer(game);
-	if (exitGame(map, game->player_x, game->player_y)
-		&& game->coins == game->ncollect)
-		ft_exit("Has ganado", 0);
+	erase_player(game, game->x, game->y);
+	draw_player(game);
+	(void) *map;
 }
 
-void	erasePlayer(t_flood *game, int x, int y)
+void	erase_player(t_flood *game, int x, int y)
 {
 	int	start_x;
 	int	start_y;
@@ -37,7 +35,7 @@ void	erasePlayer(t_flood *game, int x, int y)
 		start_y);
 }
 
-void	drawPlayer(t_flood *game)
+void	draw_player(t_flood *game)
 {
 	int	start_x;
 	int	start_y;
@@ -48,7 +46,7 @@ void	drawPlayer(t_flood *game)
 		start_y);
 }
 
-void	printCell(t_flood *g, int x, int y, char type)
+void	print_cell(t_flood *g, int x, int y, char type)
 {
 	int	start_x;
 	int	start_y;
@@ -60,10 +58,15 @@ void	printCell(t_flood *g, int x, int y, char type)
 	else if (type == '1')
 		mlx_put_image_to_window(g->mlx, g->win, g->img_wall, start_x, start_y);
 	else if (type == 'P')
-		mlx_put_image_to_window(g->mlx, g->win, g->img_player, start_x,
-			start_y);
+		mlx_put_image_to_window(g->mlx, g->win, \
+		g->img_player, start_x, start_y);
 	else if (type == 'E')
 		mlx_put_image_to_window(g->mlx, g->win, g->img_exit, start_x, start_y);
 	else if (type == 'C')
 		mlx_put_image_to_window(g->mlx, g->win, g->img_coin, start_x, start_y);
+}
+
+int	exit_game(Map *map, int x, int y)
+{
+	return (map->grid[y][x] == 'E');
 }
