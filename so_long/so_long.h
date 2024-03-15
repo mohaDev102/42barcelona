@@ -11,6 +11,8 @@
 #include "minilibx/mlx.h"
 
 #define CELL_SIZE 50
+#define HEIGHT 40
+#define WIDTH 40
 
 typedef struct validMap
 {
@@ -55,7 +57,7 @@ typedef struct
 {
     t_flood *game;
     Map *map;
-} GameMap;
+} game_map;
 
 typedef struct t_error
 {
@@ -91,7 +93,7 @@ void draw_player(t_flood *game);
 void count_coins(t_flood *game, Map *map);
 void put_nbr(int num);
 void	print_cell(t_flood *g, int x, int y, char type);
-void	move_player(Map *map, t_flood *game, int new_x, int new_y);
+void	move_player(t_flood *game, int new_x, int new_y);
 void	erase_player(t_flood *game, int x, int y);
 void verify_walls(Map *map);
 int	exit_game(Map *map, int x, int y);
@@ -100,4 +102,12 @@ int	initialize_map(Map *map);
 void	free_map(Map *map);
 int	add_to_map(Map *map, char *line);
 void	get_player_position(t_flood *game, Map *map);
+Map *copy_map(Map *original);
+void initialize_copy(Map *copy, Map *original);
+void collected_coins(t_flood *game, Map *map);
+void ft_put_img(t_flood *g, int win_height, int win_width);
+void init_param(t_flood *g);
+void handler_movement(int key, t_flood *game, Map *map);
+void add_line_to_map(Map *map, char *line);
+void check_map_rectangularity(Map *map, size_t *first_map_width, char *line);
 #endif

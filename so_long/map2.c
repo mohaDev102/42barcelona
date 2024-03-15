@@ -55,14 +55,25 @@ void	free_map(Map *map)
 	free(map->grid);
 }
 
-int	ft_conteins_ber(char *str)
+void check_map_rectangularity(Map *map, size_t *first_map_width, char *line)
 {
-	int	i;
+	if (*first_map_width == 0)
+		*first_map_width = ft_strlen(line);
+	else if (ft_strlen(line) != *first_map_width)
+	{
+		ft_exit("Mapa no rectangular", 1);
+		free(line);
+		free_map(map);
+	}
+}
 
-	i = 0;
-	while (str[i] && str[i] != '.')
-		i++;
-	if (!str[i] || ft_strcmp(&str[i], ".ber") != 0)
-		return (1);
-	return (0);
+void add_line_to_map(Map *map, char *line)
+{
+	if (!add_to_map(map, line))
+	{
+		ft_exit("Error al añadir línea al mapa", 1);
+		free(line);
+		free_map(map);
+	}
+	free(line);
 }

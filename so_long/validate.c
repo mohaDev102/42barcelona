@@ -18,8 +18,10 @@ int	is_valid_move(Map *map, t_flood *game, int x, int y)
 	if (x < 0 || y < 0 || x >= map->width || y >= map->height)
 		return (0);
 	if (game->coins == game->ncollect)
-		return (map->grid[y][x] == '0' || map->grid[y][x] == 'C' || map->grid[y][x] == 'P' || map->grid[y][x] == 'E');
-	return (map->grid[y][x] == '0' || map->grid[y][x] == 'C' || map->grid[y][x] == 'P');
+		return (map->grid[y][x] == '0' || map->grid[y][x] == 'C' ||
+		map->grid[y][x] == 'P' || map->grid[y][x] == 'E');
+	return (map->grid[y][x] == '0' || map->grid[y][x] == 'C'
+		|| map->grid[y][x] == 'P');
 }
 
 void	put_nbr(int num)

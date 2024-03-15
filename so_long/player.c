@@ -12,7 +12,7 @@
 
 #include "so_long.h"
 
-void	move_player(Map *map, t_flood *game, int new_x, int new_y)
+void	move_player(t_flood *game, int new_x, int new_y)
 {
 	game->x = game->player_x;
 	game->y = game->player_y;
@@ -21,7 +21,6 @@ void	move_player(Map *map, t_flood *game, int new_x, int new_y)
 	game->moves++;
 	erase_player(game, game->x, game->y);
 	draw_player(game);
-	(void) *map;
 }
 
 void	erase_player(t_flood *game, int x, int y)
