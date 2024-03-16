@@ -12,7 +12,7 @@
 
 #include "so_long.h"
 
-void	flood_fill(Map *map, int x, int y)
+void	flood_fill(t_map *map, int x, int y)
 {
 	if (x < 0 || x >= map->width || y < 0 || y >= map->height
 		|| map->grid[y][x] == '1' || map->grid[y][x] == 'F')
@@ -28,7 +28,7 @@ void	flood_fill(Map *map, int x, int y)
 	flood_fill(map, x, y - 1);
 }
 
-void	caracter_map(Map *map, t_flood *game)
+void	caracter_map(t_map *map, t_game *game)
 {
 	int		i;
 	int		j;
@@ -57,11 +57,11 @@ void	caracter_map(Map *map, t_flood *game)
 	}
 }
 
-int	validate_map(Map *map)
+int	validate_map(t_map *map)
 {
 	int		player_count;
 	int		coin_count;
-	t_flood	game;
+	t_game	game;
 
 	player_count = 0;
 	coin_count = 0;
@@ -78,7 +78,7 @@ int	validate_map(Map *map)
 	return (1);
 }
 
-void	print_map(t_flood *g, Map *map)
+void	print_map(t_game *g, t_map *map)
 {
 	int		y;
 	int		x;
@@ -99,7 +99,7 @@ void	print_map(t_flood *g, Map *map)
 	}
 }
 
-void	count_coins(t_flood *game, Map *map)
+void	count_coins(t_game *game, t_map *map)
 {
 	int	i;
 	int	j;

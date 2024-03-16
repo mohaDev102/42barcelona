@@ -1,6 +1,6 @@
 NAME = so_long
 
-SRC = floodfill.c get_next_line.c get_next_line_utils.c checker.c \
+SRC = so_long.c get_next_line.c get_next_line_utils.c checker.c \
 	errors.c map.c validate.c player.c map2.c copy_map.c utils.c
 
 OBJ = $(SRC:.c=.o)
@@ -13,7 +13,7 @@ CFLAGS = -g -Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT)
-	$(CC) -lmlx -L minilibx/ -framework OpenGL -framework AppKit $(CFLAGS) $^ -o $@
+	$(CC) $(CFLAGS) $^ -lmlx -L minilibx/ -framework OpenGL -framework AppKit -o $@
 
 $(LIBFT):
 	make -C libft

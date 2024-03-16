@@ -12,7 +12,7 @@
 
 #include "so_long.h"
 
-int	add_to_map(Map *map, char *line)
+int	add_to_map(t_map *map, char *line)
 {
 	int		line_length;
 	char	**new_grid;
@@ -32,7 +32,7 @@ int	add_to_map(Map *map, char *line)
 	return (1);
 }
 
-int	initialize_map(Map *map)
+int	initialize_map(t_map *map)
 {
 	map->grid = NULL;
 	map->height = 0;
@@ -42,7 +42,7 @@ int	initialize_map(Map *map)
 	return (1);
 }
 
-void	free_map(Map *map)
+void	free_map(t_map *map)
 {
 	int	i;
 
@@ -55,7 +55,7 @@ void	free_map(Map *map)
 	free(map->grid);
 }
 
-void check_map_rectangularity(Map *map, size_t *first_map_width, char *line)
+void	check_map_rectan(t_map *map, size_t *first_map_width, char *line)
 {
 	if (*first_map_width == 0)
 		*first_map_width = ft_strlen(line);
@@ -67,7 +67,7 @@ void check_map_rectangularity(Map *map, size_t *first_map_width, char *line)
 	}
 }
 
-void add_line_to_map(Map *map, char *line)
+void	add_line_to_map(t_map *map, char *line)
 {
 	if (!add_to_map(map, line))
 	{

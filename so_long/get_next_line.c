@@ -75,8 +75,6 @@ char	*ft_read_line(char *buffer)
 		line[i] = buffer[i];
 		i++;
 	}
-	// if (buffer[i] && buffer[i] == '\n')
-	// 	line[i++] = '\n';
 	line[i] = '\0';
 	return (line);
 }
@@ -126,19 +124,3 @@ char	*get_next_line(int fd)
 	buffer = ft_next_line(buffer);
 	return (line);
 }
-
-/*int main()
-{
-	int fd;
-	char *buffer;
-	int i;
-
-	i = 1;
-	fd = open("test.txt", O_RDONLY);
-	while ((buffer = get_next_line(fd)))
-	{
-		printf("%d: %s",i++, buffer);
-		free(buffer);
-	}
-	close(fd);
-}*/

@@ -1,12 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+        
+	+:+     */
+/*   By: mel-atta <mel-atta@student.42barcel>       +#+  +:+      
+	+#+        */
+/*                                                +#+#+#+#+#+  
+	+#+           */
+/*   Created: 2024/03/16 02:59:17 by mel-atta          #+#    #+#             */
+/*   Updated: 2024/03/16 02:59:19 by mel-atta         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "so_long.h"
 
-void collected_coins(t_flood *game, Map *map)
+void	collected_coins(t_game *game, t_map *map)
 {
-    char c;
+	char	c;
 
 	c = map->grid[game->player_y][game->player_x];
-    if (c == 'C' && game->ncollect < game->coins)
+	if (c == 'C' && game->ncollect < game->coins)
 	{
 		map->grid[game->player_y][game->player_x] = '0';
 		game->ncollect++;
@@ -16,9 +30,9 @@ void collected_coins(t_flood *game, Map *map)
 	}
 }
 
-void handler_movement(int key, t_flood *game, Map *map)
+void	handler_movement(int key, t_game *game, t_map *map)
 {
-    if (key == 53)
+	if (key == 53)
 	{
 		mlx_destroy_window(game->mlx, game->win);
 		exit(1);
@@ -54,5 +68,11 @@ int	ft_conteins_ber(char *str)
 		i++;
 	if (!str[i] || ft_strcmp(&str[i], ".ber") != 0)
 		return (1);
+	return (0);
+}
+
+int	close_window(void)
+{
+	exit(0);
 	return (0);
 }

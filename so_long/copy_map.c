@@ -1,11 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   copy_map.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+
+	+:+     */
+/*   By: mel-atta <mel-atta@student.42barcel>       +#+  +:+
+	+#+        */
+/*                                                +#+#+#+#+#+
+	+#+           */
+/*   Created: 2024/03/16 02:59:30 by mel-atta          #+#    #+#             */
+/*   Updated: 2024/03/16 02:59:32 by mel-atta         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
-Map	*copy_map(Map *original)
+t_map	*copy_map(t_map *original)
 {
-	Map *copy;
-	int i;
+	t_map	*copy;
+	int		i;
 
-	copy = malloc(sizeof(Map));
+	copy = malloc(sizeof(t_map));
 	initialize_copy(copy, original);
 	i = 0;
 	while (i < copy->height)
@@ -23,9 +38,9 @@ Map	*copy_map(Map *original)
 	return (copy);
 }
 
-void    initialize_copy(Map *copy, Map *original)
+void	initialize_copy(t_map *copy, t_map *original)
 {
-    if (copy == NULL)
+	if (copy == NULL)
 		exit(1);
 	copy->width = original->width;
 	copy->height = original->height;
@@ -37,10 +52,10 @@ void    initialize_copy(Map *copy, Map *original)
 	}
 }
 
-void ft_put_img(t_flood *g, int win_height, int win_width)
+void	ft_put_img(t_game *g, int win_height, int win_width)
 {
-	int height;
-	int width;
+	int	height;
+	int	width;
 
 	height = 40;
 	width = 40;
@@ -53,7 +68,7 @@ void ft_put_img(t_flood *g, int win_height, int win_width)
 	g->img_exit = mlx_xpm_file_to_image(g->mlx, "exit.xpm", &width, &height);
 }
 
-void init_param(t_flood *g)
+void	init_param(t_game *g)
 {
 	g->player_x = 0;
 	g->player_y = 0;

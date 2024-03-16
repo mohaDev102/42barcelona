@@ -12,7 +12,7 @@
 
 #include "so_long.h"
 
-void	move_player(t_flood *game, int new_x, int new_y)
+void	move_player(t_game *game, int new_x, int new_y)
 {
 	game->x = game->player_x;
 	game->y = game->player_y;
@@ -23,7 +23,7 @@ void	move_player(t_flood *game, int new_x, int new_y)
 	draw_player(game);
 }
 
-void	erase_player(t_flood *game, int x, int y)
+void	erase_player(t_game *game, int x, int y)
 {
 	int	start_x;
 	int	start_y;
@@ -34,7 +34,7 @@ void	erase_player(t_flood *game, int x, int y)
 		start_y);
 }
 
-void	draw_player(t_flood *game)
+void	draw_player(t_game *game)
 {
 	int	start_x;
 	int	start_y;
@@ -45,7 +45,7 @@ void	draw_player(t_flood *game)
 		start_y);
 }
 
-void	print_cell(t_flood *g, int x, int y, char type)
+void	print_cell(t_game *g, int x, int y, char type)
 {
 	int	start_x;
 	int	start_y;
@@ -65,7 +65,7 @@ void	print_cell(t_flood *g, int x, int y, char type)
 		mlx_put_image_to_window(g->mlx, g->win, g->img_coin, start_x, start_y);
 }
 
-int	exit_game(Map *map, int x, int y)
+int	exit_game(t_map *map, int x, int y)
 {
 	return (map->grid[y][x] == 'E');
 }
