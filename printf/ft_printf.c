@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/30 10:20:32 by mel-atta          #+#    #+#             */
-/*   Updated: 2023/10/07 13:39:59 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/02/01 12:18:14 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
@@ -77,8 +77,8 @@ int	ft_printf(char const *s, ...)
 	va_end(args);
 	return (len);
 }
-/*int main()
+int main()
 {
-	ft_printf("cant%d\n",ft_printf("%s", (char *)NULL));
-	printf("cant%d\n",printf("%s", (char *)NULL));
-}*/
+	ft_printf("cant%d\n",ft_printf("%d", -2147483648);
+	printf("cant%d\n",printf("%d", -2147483648);
+}

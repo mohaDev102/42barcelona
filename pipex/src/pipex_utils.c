@@ -73,8 +73,5 @@ char	*ft_check_cmd(char *env[], char *argv[])
 
 void	ft_exec_cmd(char *argv[], char *env[])
 {
-	char	**paths;
-
-	paths = find_path(env, argv);
 	ft_check_cmd(env, argv);
 }
