@@ -19,10 +19,14 @@
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
+#include <stddef.h>
+#include <string.h>
+#include <unistd.h>
 
 # define CELL_SIZE 50
 # define HEIGHT 40
 # define WIDTH 40
+# define BUFFER_SIZE 10
 
 typedef struct validMap
 {
