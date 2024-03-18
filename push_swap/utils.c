@@ -66,6 +66,7 @@ void push_stack(t_stack **stack_a, int num)
         return ;
     new_node->value = num;
     new_node->next = *stack_a;
+    // printf("%d", new_node->value);
     *stack_a = new_node;
 }
 

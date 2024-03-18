@@ -7,9 +7,9 @@ int main(int argc, char *argv[])
     {
         int i;
         int num;
-        t_stack *stack_a;
+        t_stack *stack_a = NULL;
 
-        // t_stack *stack_a;
+        // stack_a;
         i = 1;
         if (check_number(argv, argc))
         {
@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
         }
         else
             write(1, "no ordenada", 11);
-            return (0);
+        return (0);
 
     }
 }
