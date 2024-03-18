@@ -1,22 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-atta <mel-atta@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/16 04:11:27 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/03/16 04:11:29 by mel-atta         ###   ########.fr       */
+/*   Created: 2023/09/25 11:48:08 by mel-atta          #+#    #+#             */
+/*   Updated: 2023/09/25 11:48:16 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "../push_swap.h"
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
 
-void	error_param(char *msg, char **map)
+char	*ft_strcpy(char *s1, char *s2)
 {
-	if (map)
-		free(map);
-	if (ft_strlen(msg) != 0)
-		write(1, msg, ft_strlen(msg));
-	exit(1);
+	int	i;
+
+	i = 0;
+	while (s2[i])
+	{
+		s1[i] = s2[i];
+		i++;
+	}
+	s1[i] = '\0';
+	return (s1);
 }

@@ -1,22 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   ft_calloc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-atta <mel-atta@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/16 04:11:27 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/03/16 04:11:29 by mel-atta         ###   ########.fr       */
+/*   Created: 2023/09/13 14:02:22 by mel-atta          #+#    #+#             */
+/*   Updated: 2023/12/16 17:03:49 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include <stdlib.h>
+#include "../push_swap.h"
 
-#include "so_long.h"
-
-void	error_param(char *msg, char **map)
+void	*ft_calloc(size_t count, size_t size)
 {
-	if (map)
-		free(map);
-	if (ft_strlen(msg) != 0)
-		write(1, msg, ft_strlen(msg));
-	exit(1);
+	void	*ptr;
+
+	ptr = malloc(count * size);
+	if (ptr == NULL)
+		return (NULL);
+	ft_memset(ptr, 0, count * size);
+	return (ptr);
 }

@@ -13,13 +13,15 @@
 #include "so_long.h"
 #include <unistd.h>
 
-int	is_valid_move(Map *map, t_flood *game, int x, int y)
+int	is_valid_move(t_map *map, t_game *game, int x, int y)
 {
 	if (x < 0 || y < 0 || x >= map->width || y >= map->height)
 		return (0);
 	if (game->coins == game->ncollect)
-		return (map->grid[y][x] == '0' || map->grid[y][x] == 'C' || map->grid[y][x] == 'P' || map->grid[y][x] == 'E');
-	return (map->grid[y][x] == '0' || map->grid[y][x] == 'C' || map->grid[y][x] == 'P');
+		return (map->grid[y][x] == '0' || map->grid[y][x] == 'C'
+			|| map->grid[y][x] == 'P' || map->grid[y][x] == 'E');
+	return (map->grid[y][x] == '0' || map->grid[y][x] == 'C'
+		|| map->grid[y][x] == 'P');
 }
 
 void	put_nbr(int num)
@@ -32,7 +34,7 @@ void	put_nbr(int num)
 	write(1, &res, 1);
 }
 
-void	verify_walls(Map *map)
+void	verify_walls(t_map *map)
 {
 	int	i;
 	int	j;
@@ -63,13 +65,19 @@ void	ft_exit(char *str, int ex)
 	exit(ex);
 }
 
-void	get_player_position(t_flood *game, Map *map)
+void	get_player_position(t_game *game, t_map *map)
 {
+	int	x;
+	int	y;
+
+	x = 0;
+	y = 0;
 	game->player_x = -1;
 	game->player_y = -1;
-	for (int y = 0; y < map->height; y++)
+	while (y < map->height)
 	{
-		for (int x = 0; x < map->width; x++)
+		x = 0;
+		while (x < map->width)
 		{
 			if (map->grid[y][x] == 'P')
 			{
@@ -77,6 +85,8 @@ void	get_player_position(t_flood *game, Map *map)
 				game->player_y = y;
 				return ;
 			}
+			x++;
 		}
+		y++;
 	}
 }

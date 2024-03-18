@@ -12,7 +12,7 @@
 
 #include "so_long.h"
 
-int	add_to_map(Map *map, char *line)
+int	add_to_map(t_map *map, char *line)
 {
 	int		line_length;
 	char	**new_grid;
@@ -32,7 +32,7 @@ int	add_to_map(Map *map, char *line)
 	return (1);
 }
 
-int	initialize_map(Map *map)
+int	initialize_map(t_map *map)
 {
 	map->grid = NULL;
 	map->height = 0;
@@ -42,7 +42,7 @@ int	initialize_map(Map *map)
 	return (1);
 }
 
-void	free_map(Map *map)
+void	free_map(t_map *map)
 {
 	int	i;
 
@@ -55,14 +55,25 @@ void	free_map(Map *map)
 	free(map->grid);
 }
 
-int	ft_conteins_ber(char *str)
+void	check_map_rectan(t_map *map, size_t *first_map_width, char *line)
 {
-	int	i;
+	if (*first_map_width == 0)
+		*first_map_width = ft_strlen(line);
+	else if (ft_strlen(line) != *first_map_width)
+	{
+		ft_exit("Mapa no rectangular", 1);
+		free(line);
+		free_map(map);
+	}
+}
 
-	i = 0;
-	while (str[i] && str[i] != '.')
-		i++;
-	if (!str[i] || ft_strcmp(&str[i], ".ber") != 0)
-		return (1);
-	return (0);
+void	add_line_to_map(t_map *map, char *line)
+{
+	if (!add_to_map(map, line))
+	{
+		ft_exit("Error al añadir línea al mapa", 1);
+		free(line);
+		free_map(map);
+	}
+	free(line);
 }

@@ -1,30 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-atta <mel-atta@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/25 11:48:08 by mel-atta          #+#    #+#             */
-/*   Updated: 2023/09/25 11:48:16 by mel-atta         ###   ########.fr       */
+/*   Created: 2023/09/24 15:15:38 by mel-atta          #+#    #+#             */
+/*   Updated: 2023/12/16 22:26:47 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "../so_long.h"
+#include "../push_swap.h"
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 
-char	*ft_strcpy(char *s1, char *s2)
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
-	while (s2[i])
+	while (s1[i] != '\0' && s2[i] != '\0')
 	{
-		s1[i] = s2[i];
+		if (s1[i] != s2[i])
+			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 		i++;
 	}
-	s1[i] = '\0';
-	return (s1);
+	return ((unsigned char)s1[i] - (unsigned char)s2[i]);
 }
+/*int main()
+{
+	char s1[100] = "";
+	char s2[100] = "test";
+	printf("original:%d\n", strncmp(s1, s2, 0));
+	printf("%d\n", ft_strncmp(s1, s2, 0));
+}*/

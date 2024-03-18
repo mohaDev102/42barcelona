@@ -1,22 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   floodfill.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-atta <mel-atta@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/16 04:11:27 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/03/16 04:11:29 by mel-atta         ###   ########.fr       */
+/*   Created: 2024/03/16 02:58:53 by mel-atta          #+#    #+#             */
+/*   Updated: 2024/03/16 02:58:55 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "get_next_line.h"
 #include "so_long.h"
+#include <fcntl.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
-void	error_param(char *msg, char **map)
+int	main(int argc, char *argv[])
 {
-	if (map)
-		free(map);
-	if (ft_strlen(msg) != 0)
-		write(1, msg, ft_strlen(msg));
-	exit(1);
+	t_game	g;
+	t_map	map;
+	t_map	*map_pars;
+
+	map_pars = check_param(argc, argv, &map);
+	init_game(map_pars, &g);
+	return (0);
 }

@@ -1,22 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mel-atta <mel-atta@student.42barcel>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/16 04:11:27 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/03/16 04:11:29 by mel-atta         ###   ########.fr       */
+/*   Created: 2023/09/13 17:14:55 by mel-atta          #+#    #+#             */
+/*   Updated: 2023/12/16 17:05:52 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "../push_swap.h"
+#include <stddef.h>
 
-#include "so_long.h"
-
-void	error_param(char *msg, char **map)
+void	*ft_memset(void *b, int c, size_t len)
 {
-	if (map)
-		free(map);
-	if (ft_strlen(msg) != 0)
-		write(1, msg, ft_strlen(msg));
-	exit(1);
+	size_t			i;
+	unsigned char	*ptr;
+
+	i = 0;
+	ptr = (unsigned char *)b;
+	while (i < len)
+		ptr[i++] = (unsigned char)c;
+	return (b);
 }
