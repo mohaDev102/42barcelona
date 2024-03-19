@@ -13,7 +13,7 @@ CFLAGS = -g -Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) $^ -lmlx -L minilibx/ -framework OpenGL -framework AppKit -o $@
+	$(CC) $(CFLAGS) -lmlx -L minilibx/ -framework OpenGL -framework AppKit $^ -o $@
 
 $(LIBFT):
 	make -C libft

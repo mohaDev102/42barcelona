@@ -7,7 +7,7 @@
       "request": "launch",
       "args": [],
       "cwd": "/Users/mel-atta/42barcelonagit/get_next_line",
-      "program": "/Users/mel-atta/42barcelonagit/get_next_line/build/Debug/outDebug"
+      "program": "/Users/mel-atta/42barcelonagit/get_next_line/a.out"
     }
   ]
 }

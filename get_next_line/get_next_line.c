@@ -81,6 +81,70 @@ char	*ft_read_line(char *buffer)
 	return (line);
 }
 
+char	*next_line(char *buffer)
+{
+	char	*line;
+	size_t	i;
+	size_t j;
+	size_t cant;
+
+	i = 0;
+	j = 0;
+	//if (!buffer || buffer[i] == '\0')
+	//	return (NULL);
+	while (buffer[i] && buffer[i] != '\n')
+		i++;
+	if (buffer[i] == '\n')
+		i++;
+	cant = ft_strlen(buffer + i);
+	if (cant == 0)
+		return (ft_free(buffer, 0));
+	line =  (char *)malloc(sizeof(char) * (ft_strlen(buffer) - i) + 1);
+	if (line == NULL)
+		return (ft_free(buffer, 0));
+	while (buffer[i])
+	{
+		line[j] = buffer[i];
+		i++;
+		j++;
+	}
+	line[i] = '\0';
+	free(buffer);
+	return (line);
+}
+
+char	*beefreader(int fd, char *buffer)
+{
+	char	*tmp;
+	int		beefs_read;
+
+	tmp = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (!tmp)
+		return (ft_free(buffer, 0));
+	beefs_read = 1;
+	while (beefs_read > 0 && (ft_strchr(buffer, '\n') != 0))
+	{
+		beefs_read = read(fd, tmp, BUFFER_SIZE);
+		if (beefs_read == -1)
+			return (ft_free(buffer, tmp));
+		//if (beefs_read == 0 && !buffer)
+		//	return (free(tmp), NULL);
+		if (beefs_read > 0)
+		{
+			
+			tmp[beefs_read] = 0;
+			buffer = ft_strjoin(buffer, tmp);
+			if (!buffer)
+				return (ft_free(buffer, tmp));
+		}
+		//if (!buffer)
+		//	return (free(tmp), NULL);
+	}
+	free(tmp);
+	return (buffer);
+}
+
+
 char	*ft_next_line(char *buffer)
 {
 	int		i;
@@ -107,6 +171,33 @@ char	*ft_next_line(char *buffer)
 	return (next_line);
 }
 
+char *line_up(char *buffer)
+{
+	char	*line;
+	int		i;
+
+	i = 0;
+	if (!buffer)
+		return (NULL);
+	while (buffer[i] && buffer[i] != '\n')
+		i++;
+	if (buffer[i] && buffer[i] == '\n')
+		i++;
+	line = (char *)malloc(sizeof(char) * i + 1);
+	if (line == NULL)
+		return (NULL);
+	i = 0;
+	while (buffer[i] && buffer[i] != '\n')
+	{
+		line[i] = buffer[i];
+		i++;
+	}
+	if (buffer[i] && buffer[i] == '\n')
+		line[i++] = '\n';
+	line[i] = '\0';
+	return (line);
+}
+
 char	*get_next_line(int fd)
 {
 	static char	*buffer = NULL;
@@ -115,30 +206,33 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	buffer = ft_read_file(fd, buffer);
+	// buffer = beefreader(fd, buffer);
 	if (buffer == NULL)
 		return (ft_free(buffer, 0));
-	line = ft_read_line(buffer);
+	// line = ft_read_line(buffer);
+	line = line_up(buffer);
 	if (!line)
 	{
 		buffer = ft_free(buffer, 0);
 		return (NULL);
 	}
+	// buffer = next_line(buffer);	
 	buffer = ft_next_line(buffer);
 	return (line);
 }
 
-/*int main()
-{
-	int fd;
-	char *buffer;
-	int i;
+// int main()
+// {
+// 	int fd;
+// 	char *buffer;
+// 	int i;
 
-	i = 1;
-	fd = open("test.txt", O_RDONLY);
-	while ((buffer = get_next_line(fd)))
-	{
-		printf("%d: %s",i++, buffer);
-		free(buffer);
-	}
-	close(fd);
-}*/
+// 	i = 1;
+// 	fd = open("oneline.txt", O_RDONLY);
+// 	while ((buffer = get_next_line(fd)))
+// 	{
+// 		printf("%d: %s",i++, buffer);
+// 		free(buffer);
+// 	}
+// 	close(fd);
+// }
