@@ -21,7 +21,10 @@ void		*ft_calloc(size_t count, size_t size);
 void		*ft_memset(void *b, int c, size_t len);
 char		*ft_strcpy(char *s1, char *s2);
 int check_number(char **str, int argc);
-int is_sorted(t_stack *stack_a);
-void    push_stack(t_stack **stack, int num);
-void print_stack(t_stack *stack);
+int is_sorted(t_stack **stack_a);
+void    push_stack(t_stack **stack, char **str);
+void print_stack(t_stack **stack);
+int get_first_value(t_stack *stack);
+int get_last_value(t_stack *stack);
+t_stack	*ft_lstnew(int value);
 #endif
