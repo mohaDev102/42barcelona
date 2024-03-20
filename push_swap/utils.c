@@ -55,7 +55,7 @@ int is_sorted(t_stack **stack_a)
     {
         if (curr->value > curr->next->value)
         {
-            printf("%d", curr->value);
+            // printf("%d", curr->value);
             return (0);
         }
         curr = curr->next;
@@ -65,14 +65,14 @@ int is_sorted(t_stack **stack_a)
 
 t_stack	*ft_lstnew(int value)
 {
-	t_stack *prueba;
+	t_stack *new;
 
-	prueba = (t_stack *)malloc(sizeof(t_stack));
-	if (!prueba)
+	new = (t_stack *)malloc(sizeof(t_stack));
+	if (!new)
 		return (NULL);
-	prueba->value = value;
-    prueba->next = NULL;
-	return (prueba);
+	new->value = value;
+    new->next = NULL;
+	return (new);
 }
 
 void push_stack(t_stack **stack_a, char **str)
@@ -89,6 +89,14 @@ void push_stack(t_stack **stack_a, char **str)
     while (str[i] != NULL)
     {
         num = ft_atoi(str[i]);
+        if (is_duplicated(num, root))
+        {
+            // si pongo el mensaje de error cuando
+            // es un numero tambien lo hace y creo
+            // lo tendria que ignorar
+            // write(1, "error\n", 6);
+            exit(1);
+        }
         if (!root)
         {
             root = ft_lstnew(num);
@@ -101,39 +109,7 @@ void push_stack(t_stack **stack_a, char **str)
         }
         i++;
     }
-
-    *stack_a = root;
-
-    
-    // t_stack *curr;
-
-    // root = *stack_a;
-    // // new_node = ft_lstnew(num);
-    // curr = NULL;
-    // if (!root)
-    // {
-    //     root = ft_lstnew(num);
-    //     curr = root;
-    // }
-    // else
-    // {
-    //     // curr = root;
-    //     curr->next = ft_lstnew(num);
-    //     // printf("%d", new_node->next->value);
-    //     curr = curr->next;
-    // }
-    // if (!first)
-    // {
-    //     first = ft_lstnew(num);
-    //     first->value = num;
-    //     first->next = curr;
-    // }
-    // else
-    // {
-    //     curr->value = num;
-    //     curr->next = ft_lstnew(num); 
-    // }
-    // *stack_a = first;
+    *stack_a = root;   
 }
 
 void print_stack(t_stack **stack)
@@ -142,29 +118,20 @@ void print_stack(t_stack **stack)
     curr = *stack;
     while (curr != NULL)
     {
-        printf("%d\n", curr->value);
+        // printf("%d\n", curr->value);
         curr = curr->next;
     }
 }
 
-int get_first_value(t_stack *stack) 
+int is_duplicated(int  num, t_stack *value_stack)
 {
-    if (stack == NULL) {
-        printf("La lista está vacía.\n");
-        return -1; // Valor de retorno de error, puedes ajustarlo según sea necesario
-    }
-    return stack->value;
-}
-
-
-int get_last_value(t_stack *stack)
-{
-    if (stack == NULL) {
-        printf("La lista está vacía.\n");
-        return -1; // Valor de retorno de error, puedes ajustarlo según sea necesario
-    }
-    while (stack->next != NULL) {
-        stack = stack->next;
-    }
-    return stack->value;
+        while (value_stack != NULL)
+        {
+            // printf("\n num arg:%d", num);
+            // printf("\nnum stack:%d", value_stack->value);
+            if (num == value_stack->value)
+                return (1);
+            value_stack = value_stack->next;
+        }
+    return (0);
 }

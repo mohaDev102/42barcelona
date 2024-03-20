@@ -5,12 +5,12 @@ int main(int argc, char *argv[])
 {
     if (argc >= 2)
     {
-        int i;
+        // int i;
         // int num;
         t_stack *stack_a = NULL;
 
         
-        i = 1;
+        // i = 1;
         if (check_number(argv, argc))
         {
             write(1, "error\n", 6);
@@ -18,8 +18,6 @@ int main(int argc, char *argv[])
         }
         
         push_stack(&stack_a, argv);
-        print_stack(&stack_a);
-
         // while (i < argc)
         // {
         //     num = ft_atoi(argv[i]);
@@ -35,13 +33,15 @@ int main(int argc, char *argv[])
         // }
         // printf("first: %d\n", get_first_value(stack_a));
         // printf("last: %d\n", get_last_value(stack_a));
-        // if (is_sorted(&stack_a))
-        // {
-        //     write(1, "ordenada", 8);
-        //     exit(0);
-        // }
-        // else
-        //     write(1, "no ordenada", 11);
+        if (is_sorted(&stack_a))
+        {
+            // write(1, "ordenada", 8);
+            free(stack_a);
+            exit(0);
+        }
+        else
+            sort_stack(&stack_a);
+        // print_stack(&stack_a);
         return (0);
 
     }
