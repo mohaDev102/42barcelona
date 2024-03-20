@@ -25,14 +25,14 @@ void sort_stack(t_stack **stack_a)
     len = ft_lstsize(stack_a);
     if (len <= 3)
     {
-        sa();
-        sort_three();
+        //sa();
+        sort_three(stack_a);
     }
-    else if (len > 3 || len <= 5)
+    else if (len > 3 && len <= 5)
     {
-        sa();
-        pb();
-        sort_five();
+        // sa();
+        // pb();
+        // sort_five();
     }
     else if (len > 5)
     {

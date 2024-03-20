@@ -118,7 +118,7 @@ void print_stack(t_stack **stack)
     curr = *stack;
     while (curr != NULL)
     {
-        // printf("%d\n", curr->value);
+        printf("%d\n", curr->value);
         curr = curr->next;
     }
 }

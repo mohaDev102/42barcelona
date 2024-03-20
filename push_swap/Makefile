@@ -1,6 +1,6 @@
 NAME = push_swap
 
-SRC = push_swap.c utils.c sort_stack.c
+SRC = push_swap.c utils.c sort_stack.c sort_three.c sa.c utils2.c
 
 OBJ = $(SRC:.c=.o)
 HEADER = push_swap.h

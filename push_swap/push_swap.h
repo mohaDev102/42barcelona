@@ -28,4 +28,7 @@ int is_duplicated(int num, t_stack *value_stack);
 t_stack	*ft_lstnew(int value);
 void sort_stack(t_stack **stack_a);
 int ft_lstsize(t_stack **stack);
+void sa(t_stack **stack_a);
+void sort_three(t_stack **stack);
+void rra(t_stack **stack_a);
 #endif
