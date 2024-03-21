@@ -31,4 +31,7 @@ int ft_lstsize(t_stack **stack);
 void sa(t_stack **stack_a);
 void sort_three(t_stack **stack);
 void rra(t_stack **stack_a);
+void	ft_lstaddend(t_stack **alst, t_stack *new);
+t_stack	*ft_lstlast(t_stack *lst);
+void	ft_lstadd_front(t_stack **lst, t_stack *new);
 #endif

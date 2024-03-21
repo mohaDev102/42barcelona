@@ -1,15 +1,14 @@
 
-#include "push_swap.c"
+#include "push_swap.h"
 
 void rra(t_stack **stack_a)
 {
     t_stack *curr;
     t_stack *aux;
-    int tmp;
     curr = *stack_a;
-    
-    tmp = curr->value;
-    // funcion para saber la ultima posicion
-    curr->value  = ft_lstlast(curr);
-    curr->next->value = tmp;
+    aux = *stack_a;
+    ft_lstaddend(&aux, curr);
+    curr = ft_lstlast(aux);
+    ft_lstadd_front(&aux, curr);
+    // curr = aux;
 }
