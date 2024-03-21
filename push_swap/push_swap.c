@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
         }
         else
             sort_stack(&stack_a);
-        print_stack(&stack_a);
+        print_stack(stack_a);
         return (0);
     }
 }

@@ -103,7 +103,6 @@ void rra(t_stack **stack_a)
     if (*stack_a == NULL || (*stack_a)->next == NULL) {
        return ;
     }
-
     curr = *stack_a;
     prev = NULL;
     while (curr->next != NULL) 
@@ -114,5 +113,5 @@ void rra(t_stack **stack_a)
     prev->next = NULL;
     curr->next = *stack_a;
     *stack_a = curr;
-    printf("%d", (*stack_a)->value);
+    write(1, "rra\n", 4);
 }

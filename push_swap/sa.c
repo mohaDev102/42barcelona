@@ -9,13 +9,9 @@ void sa(t_stack **stack_a)
 
     aux = *stack_a;
     curr = *stack_a;
-    // while (curr != NULL)
-    // {
-        tmp = curr->value;
-        curr->value = curr->next->value;
-        curr->next->value = tmp;
-        // curr =  curr->next;
-        curr = aux;
-        write(1, "sa\n", 3);
-    // }
+    tmp = curr->value;
+    curr->value = curr->next->value;
+    curr->next->value = tmp;
+    curr = aux;
+    write(1, "sa\n", 3);
 }

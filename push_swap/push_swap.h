@@ -23,7 +23,7 @@ char		*ft_strcpy(char *s1, char *s2);
 int check_number(char **str, int argc);
 int is_sorted(t_stack **stack_a);
 void    push_stack(t_stack **stack, char **str);
-void print_stack(t_stack **stack);
+void print_stack(t_stack *stack);
 int is_duplicated(int num, t_stack *value_stack);
 t_stack	*ft_lstnew(int value);
 void sort_stack(t_stack **stack_a);
