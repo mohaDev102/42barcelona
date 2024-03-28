@@ -4,11 +4,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <limits.h>
 
 typedef struct s_stack
 {
     int index;
+    int middle;
+    int size;
     int value;
+    int stack[255];
     struct s_stack *next;
 } t_stack;
 
@@ -36,6 +40,8 @@ t_stack	*ft_lstlast(t_stack *lst);
 void	ft_lstadd_front(t_stack **lst, t_stack *new);
 void ra(t_stack **stack_a);
 void sort_chunks(t_stack **a, t_stack **b, int chunk_size);
+void	ft_chunk_sort(t_stack *stack_a, t_stack *stack_b, int chunk_size);
 void pa(t_stack **a, t_stack **b);
 void pb(t_stack **a, t_stack **b);
+void	*ft_memmove(void *dst, const void *src, size_t len);
 #endif
