@@ -37,6 +37,12 @@ t_stack	*ft_lstlast(t_stack *lst);
 void	ft_lstadd_front(t_stack **lst, t_stack *new);
 void ra(t_stack **stack_a);
 void sort_chunks(t_stack **a, t_stack **b, int chunk_size);
+void	ft_chunk_sort(t_stack **stack_a, t_stack **stack_b, int chunk_size);
 void pa(t_stack **a, t_stack **b);
 void pb(t_stack **a, t_stack **b);
+void	*ft_memmove(void *dst, const void *src, size_t len);
+int init_stack(t_stack **stack_a);
+void sort_five(t_stack **stack_a, t_stack **stack_b);
+void assign_indices(t_stack **stack);
+void sort_stack_100(t_stack **stack_a, t_stack **stack_b);
 #endif

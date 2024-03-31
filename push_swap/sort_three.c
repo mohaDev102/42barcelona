@@ -12,8 +12,8 @@ void sort_three(t_stack **stack)
     third = (*stack)->next->next->value;
     if (first < second && second > third && first < third)
     {
-        rra(stack);
         sa(stack);
+        ra(stack);
     }
     else if (first > second && second > third && first > third)
     {

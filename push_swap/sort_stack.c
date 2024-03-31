@@ -24,9 +24,18 @@ void sort_stack(t_stack **stack_a, t_stack **stack_b)
     len = ft_lstsize(stack_a);
     if (len < 3)
         sa(stack_a);
-    if (len == 3)
+    else if (len == 3)
         sort_three(stack_a);
-    else
-        sort_chunks(stack_a, stack_b, 50);
-   
+    else if (len == 5)
+        sort_five(stack_a, stack_b);
+    else if (len > 5 && len <= 100)
+        sort_stack_100(stack_a, stack_b);
+    // else if (len <= 120)
+    // {
+    //     ft_chunk_sort(stack_a, stack_b, 18);
+    // }
+    // else
+    // {
+    //     ft_chunk_sort(stack_a, stack_b, 50);
+    // }
 }
