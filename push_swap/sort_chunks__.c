@@ -1,114 +1,74 @@
 
 #include "push_swap.h"
 
-void	bubble_sort(int *array, int n)
-{
-	int	temp;
-
-	for (int i = 0; i < n - 1; i++)
-	{
-		for (int j = 0; j < n - i - 1; j++)
-		{
-			if (array[j] > array[j + 1])
-			{
-				// Intercambia los elementos
-				temp = array[j];
-				array[j] = array[j + 1];
-				array[j + 1] = temp;
-			}
-		}
-	}
-}
-
-// Función para crear y ordenar la matriz de valores
-int	*create_and_sort_values_array(t_stack *stack, int size)
-{
-	int	*values;
-	int	i;
-
-	values = malloc(size * sizeof(int));
-	i = 0;
-	while (stack)
-	{
-		values[i++] = stack->value;
-		stack = stack->next;
-	}
-	bubble_sort(values, size);
-	return (values);
-}
-
-void	assign_index(t_stack **stack, int *sorted_values, int size)
-{
-	t_stack	*current;
-
-	for (int i = 0; i < size; i++)
-	{
-		current = *stack;
-		while (current)
-		{
-			if (current->value == sorted_values[i])
-			{
-				current->index = i;
-				break ;
-					// Rompe el bucle interno una vez que se encuentra el valor
-			}
-			current = current->next;
-		}
-	}
-}
-
 void	assign_indices(t_stack **stack)
 {
-	int		*sorted_values;
-	t_stack	*current_node;
+	t_stack	*current;
+	int		index;
 
-	int size = ft_lstsize(stack); // Asume que tienes esta función definida
-	sorted_values = create_and_sort_values_array(*stack, size);
-	// assign_index(stack, sorted_values, size);
-	current_node = *stack;
-	while (current_node)
+	current = *stack;
+	index = 0;
+	while (current != NULL)
 	{
-		// Encuentra el índice de su valor en la matriz ordenada
-		for (int i = 0; i < size; i++)
-		{
-			if (sorted_values[i] == current_node->value)
-			{
-				current_node->index = i;
-				// break ;
-					// Encuentra el primer valor correspondiente y rompe el ciclo
-			}
-		}
-		current_node = current_node->next;
+		current->index = index;
+		current = current->next;
+		index++;
 	}
-	free(sorted_values); // Limpia la memoria
 }
 
-void	sort_chunks(t_stack **stack_a, t_stack **stack_b, int num_chunks)
+void init_stack(t_stack **stack_a)
 {
-	int	size;
-	int	chunk_size;
-	int	i;
-	// int	chunk_max;
-	// int	first_min_pos;
-    // (void) stack_b;
-	size = ft_lstsize(stack_a);
-	assign_indices(stack_a);
-	chunk_size = size / num_chunks;
-	i = 0;
-    while (num_chunks > 0)
+    t_stack *curr;
+
+    curr = *stack_a;
+    while (curr != NULL)
     {
-        smart_move(stack_a);
-        pb(stack_a, stack_b);
-        num_chunks--;
+        curr->index = -1;
+        curr = curr->next;
     }
-    // smart_move(stack_a);
-    // while (*stack_a != NULL)
-    //     pb(stack_a, stack_b);
-    // smart_move_b(stack_b);
-    // while (*stack_b != NULL)
-    // {
-    //     pa(stack_a, stack_b);
-    // }
+}
+
+void	assign_index(t_stack **stack)
+{
+	 t_stack *current;
+    t_stack *temp;
+    int index = 0;
+    int min_value = INT_MAX;
+
+    // Buscamos el valor mínimo en la pila
+    temp = *stack;
+    while (temp != NULL) {
+        if (temp->value < min_value)
+            min_value = temp->value;
+        temp = temp->next;
+    }
+
+    // Iteramos sobre la pila para asignar los índices basados en los valores
+    current = *stack;
+    while (current != NULL) {
+        if (current->value == min_value) {
+            current->index = index++;
+        }
+        current = current->next;
+    }
+
+    // Incrementamos el valor mínimo para asignar los índices a los siguientes elementos
+    min_value++;
+
+    // Asignamos índices a los demás elementos de la pila
+    index = 0;
+    while (index < ft_lstsize((stack))) {
+        current = *stack;
+        while (current != NULL) {
+            if (current->index == -1) {
+                if (current->value == min_value) {
+                    current->index = index++;
+                }
+            }
+            current = current->next;
+        }
+        min_value++;
+    }
 }
 
 int	find_hold_first(t_stack *stack, int start_range, int end_range)
@@ -125,7 +85,7 @@ int	find_hold_first(t_stack *stack, int start_range, int end_range)
 		stack = stack->next;
 		index++;
 	}
-	return (-1);
+	return (-1); // Retorna
 }
 
 int	find_hold_second(t_stack *stack, int start_range, int end_range)
@@ -133,10 +93,11 @@ int	find_hold_second(t_stack *stack, int start_range, int end_range)
 	int		index;
 	t_stack	*current;
 	int		stack_length;
+	int		hold_second_position;
 
 	index = 0;
-	int hold_second_position = -1;
-		// Almacena la posición desde el fondo de la pila para el 'hold_second'.
+	hold_second_position = -1;
+	// Almacena la posición desde el fondo de la pila para el 'hold_second'.
 	current = stack;
 	// Recorremos la pila una vez para contar su tamaño.
 	stack_length = 0;
@@ -157,7 +118,7 @@ int	find_hold_second(t_stack *stack, int start_range, int end_range)
 		index++;
 	}
 	return (hold_second_position);
-		// Posición desde el fondo para 'hold_second'.
+	// Posición desde el fondo para 'hold_second'.
 }
 
 int	find_max(t_stack *stack)

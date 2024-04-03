@@ -15,6 +15,7 @@ int main(int argc, char *argv[])
         // if (!init_stack(&stack_a))
         //     exit(1);
         push_stack(&stack_a, argv);
+        // init_stack(&stack_a);
         if (is_sorted(&stack_a))
         {
             // write(1, "ordenada", 8);
@@ -24,7 +25,8 @@ int main(int argc, char *argv[])
         else
             sort_stack(&stack_a, &stack_b);
         print_stack(stack_a);
-        // print_stack(stack_b);
+        printf("stack_b\n");
+        print_stack(stack_b);
         return (0);
     }
 }

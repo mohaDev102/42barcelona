@@ -114,11 +114,9 @@ void push_stack(t_stack **stack_a, char **str)
 
 void print_stack(t_stack *stack)
 {
-    // t_stack *curr;
-    // curr = *stack;
     while (stack != NULL)
     {
-        printf("%d\n", stack->value);
+        printf("valor: %d\t index:%d\n", stack->value, stack->index);
         stack = stack->next;
     }
 }

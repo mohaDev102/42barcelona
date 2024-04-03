@@ -41,8 +41,13 @@ void	ft_chunk_sort(t_stack **stack_a, t_stack **stack_b, int chunk_size);
 void pa(t_stack **a, t_stack **b);
 void pb(t_stack **a, t_stack **b);
 void	*ft_memmove(void *dst, const void *src, size_t len);
-int init_stack(t_stack **stack_a);
+void init_stack(t_stack **stack_a);
 void sort_five(t_stack **stack_a, t_stack **stack_b);
+void	assign_index(t_stack **stack, int *sorted_values, int size);
 void assign_indices(t_stack **stack);
 void sort_stack_100(t_stack **stack_a, t_stack **stack_b);
+int find_position_of_first_min(t_stack *stack);
+int find_position_by_index(t_stack *stack, int index);
+void smart_move(t_stack **stack);
+void smart_move_b(t_stack **stack_b);
 #endif

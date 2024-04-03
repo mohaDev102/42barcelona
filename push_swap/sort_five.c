@@ -174,57 +174,152 @@ void insert_from_b_to_a(t_stack **stack_a, t_stack **stack_b)
     }
 }
 
+int find_min_index(t_stack *stack) {
+    if (stack == NULL) return -1; // Retornar -1 si el stack está vacío
+
+    int min_index = stack->index; // Inicializar con el índice del primer nodo
+
+    for (t_stack *current = stack; current != NULL; current = current->next) {
+        if (current->index < min_index) {
+            min_index = current->index;
+        }
+    }
+
+    return min_index;
+}
+
+int find_max_index(t_stack *stack) {
+    if (stack == NULL) return -1; // Retornar -1 si el stack está vacío
+
+    int max_index = stack->index; // Inicializar con el índice del primer nodo
+
+    for (t_stack *current = stack; current != NULL; current = current->next) {
+        if (current->index > max_index) {
+            max_index = current->index;
+        }
+    }
+
+    return max_index;
+}
+
+int find_position_by_index(t_stack *stack, int index)
+{
+    int position = 0; // Comienza en 0 y se incrementa para cada nodo que se recorre
+
+    while (stack != NULL) {
+        if (stack->index == index) {
+            return position; // Retorna la posición actual cuando el índice coincide
+        }
+        stack = stack->next; // Avanza al siguiente nodo
+        position++; // Incrementa la posición para el próximo nodo
+    }
+
+    return -1; // Retorna -1 si no se encuentra el índice en el stack
+}
+
+int find_position_of_second_min(t_stack *stack, int minPos) {
+    if (stack == NULL || stack->next == NULL) return -1; // Si hay menos de dos nodos, retorna -1.
+
+    // Preparar para encontrar el segundo mínimo.
+    int secondMinIndex = -1;
+    int secondMinPosition = 0;
+    int position = 0;
+    int skipPosition = minPos; // Posición del mínimo absoluto a ignorar.
+
+    // Inicializar secondMinIndex con un valor que no sea el del primer mínimo.
+    for (t_stack *current = stack; current != NULL; current = current->next, position++) {
+        if (position != skipPosition) {
+            secondMinIndex = current->index;
+            break; // Rompe después de asignar un valor inicial a secondMinIndex que no sea el mínimo absoluto.
+        }
+    }
+
+    position = 0; // Restablecer posición para la búsqueda del segundo mínimo.
+    for (t_stack *current = stack; current != NULL; current = current->next, position++) {
+        if (position != skipPosition && current->index < secondMinIndex) {
+            secondMinIndex = current->index;
+            secondMinPosition = position;
+        }
+    }
+
+    return secondMinPosition; // Retorna la posición del segundo número más pequeño en el stack.
+}
+
+int find_position_of_first_min(t_stack *stack)
+{
+    if (stack == NULL) return -1; // Si el stack está vacío, retorna -1.
+
+    int minIndex = stack->index; // Inicializa con el índice del primer nodo.
+    int minPosition = 0; // La posición del nodo más pequeño, comenzando desde 0.
+    int position = 0;
+
+    for (t_stack *current = stack; current != NULL; current = current->next, position++) {
+        if (current->index < minIndex) {
+            minIndex = current->index;
+            minPosition = position; // Actualiza cuando encuentres un índice más pequeño.
+        }
+    }
+
+    return minPosition; // Retorna la posición del número más pequeño en el stack.
+}
+void smart_move_b(t_stack **stack_b)
+{
+    int max;
+    int size;
+
+    max = -1;
+    max = find_max_index(*stack_b);
+    size = ft_lstsize(stack_b);
+    int maxPos = find_position_of_max(*stack_b);
+    // if ()
+}
+
+void smart_move(t_stack **stack)
+{
+    // int max;
+    int min;
+    int size;
+
+    min = -1;
+    min = find_min_index(*stack);
+    size = ft_lstsize(stack);
+    int minPos = find_position_of_first_min(*stack);
+    int secondPos = find_position_of_second_min(*stack, minPos);
+    if (secondPos < minPos)
+    {
+        if (secondPos <= size / 2)
+        {
+            while (secondPos-- > 0)
+                ra(stack);
+        }
+        else
+        {
+            while (size - secondPos++ > 0)
+                rra(stack);
+        }
+        minPos = find_position_by_index(*stack, min);
+    }
+
+    if (minPos <= size / 2)
+    {
+        while (minPos-- > 0)
+            ra(stack);
+    }
+    else
+    {
+        while (size - minPos++ > 0)
+            rra(stack);
+    }
+}
+
 void sort_five(t_stack **stack_a, t_stack **stack_b)
 {
     assign_indices(stack_a);
-    // move_smallest_two_to_b(stack_a, stack_b);
-    if ((*stack_a)->value > (*stack_a)->next->value)
-        ra(stack_a);
+    smart_move(stack_a);
     pb(stack_a, stack_b);
+    smart_move(stack_a);
     pb(stack_a, stack_b);
     sort_three(stack_a);
     pa(stack_a, stack_b);
-    if ((*stack_a)->value > (*stack_a)->next->value)
-    {
-        ra(stack_a);
-        pa(stack_a, stack_b);
-    }
     pa(stack_a, stack_b);
-    if ((*stack_a)->value > (*stack_a)->next->value && 
-        (*stack_a)->value > (*stack_a)->next->next->next->value)
-    {
-        //pa(stack_a, stack_b);
-        ra(stack_a);
-    }
-    // else
-
-    // insert_from_b_to_a(stack_a, stack_b);
-    // pa(stack_a, stack_b);
-    // finalize_sort(stack_a);
-    // while (*stack_b != NULL)
-    // {
-    //     if ((*stack_b)->value < (*stack_a)->value) {
-    //         pa(stack_a, stack_b); // Mueve stack_b->value a stack_a
-    //         ra(stack_a); // Rota stack_a para ajustar la posición
-    //     }
-    //     // Si stack_b->value debe ir después del último elemento en stack_a
-    //     else if ((*stack_b)->value > (*stack_a)->value) {
-    //         pa(stack_a, stack_b); // Mueve stack_b->value a stack_a sin rotar, necesita más lógica aquí
-    //     }
-    //     else {
-    //         // En caso de que stack_b->value deba ir en medio, requeriría más lógica para determinar la posición exacta
-    //         pa(stack_a, stack_b); // Simplificación, esto necesita una lógica más precisa
-    //     }
-
-    //     // if (hypothetical_position_decider(*stack_a, (*stack_b)->value)) {
-    //     //     ra(stack_a); // Coloca el top de stack_a en la posición correcta antes de pa
-    //     // }
-    //     // if ((*stack_b)->value < (*stack_b)->next->value)
-    //     //     ra(stack_a);
-    //     // pa(stack_a, stack_b);
-    //     // if ((*stack_a)->value > (*stack_a)->next->value) {
-    //     //     sa(stack_a); // Ajusta si el último elemento reintegrado necesita intercambio
-    //     // }
-    //     // printf("ef");
-    // }
 }

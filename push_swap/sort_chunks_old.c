@@ -153,28 +153,6 @@ void ft_chunk_sort(t_stack *stack_a, t_stack *stack_b, int chunk_size)
     ft_push(&stack_a, &stack_b);
 }
 
-int init_stack(t_stack **stack_a)
-{
-    t_stack *curr;
-
-    curr = *stack_a;
-    if (curr == NULL)
-    {
-        curr = (t_stack *)malloc(sizeof(t_stack));
-        if (curr == NULL)
-        {
-            // Manejar el error si no se puede asignar memoria
-            exit(1);
-        }
-    }
-    curr->size = 0;
-        // printf("ss%d", (*stack_a)->size);
-        // write(1, "s", 1);
-        curr->middle = 0;
-        curr->next = NULL; // Asegurar que el puntero 'next' esté inicializado correctamente
-    return (1);
-}
-
 // void ft_do_rotate(t_stack *stack)
 // {
 //     if (stack->size > 0)
