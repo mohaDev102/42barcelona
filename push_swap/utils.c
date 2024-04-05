@@ -10,10 +10,12 @@ int ft_atoi(char *str)
     i = 0;
     sign = 1;
     res = 0;
+    if (str[i] == '-')
+    {
+        sign *= -1;
+    }
     while (str[i] == '-' || str[i] == '+')
         i++;
-    if (str[i] == '-')
-        sign *= -1;
     while (str[i] >= '0' && str[i] <= '9')
     {
         res = res * 10 + str[i] - '0';
@@ -54,10 +56,7 @@ int is_sorted(t_stack **stack_a)
     while (curr->next != NULL)
     {
         if (curr->value > curr->next->value)
-        {
-            // printf("%d", curr->value);
             return (0);
-        }
         curr = curr->next;
     }
     return (1);
@@ -77,7 +76,6 @@ t_stack	*ft_lstnew(int value)
 
 void push_stack(t_stack **stack_a, char **str)
 {
-
     int i;
     int num;
     i = 1;
@@ -121,12 +119,36 @@ void print_stack(t_stack *stack)
     }
 }
 
+void ft_free(t_stack *stack)
+{
+     t_stack *current;
+    t_stack *next;
+
+    if (stack == NULL) {
+        return ;
+    }
+
+    current = stack;
+    while (current != NULL) 
+    {
+        next = current->next; // Guarda el siguiente nodo
+        free(current); // Libera el nodo actual
+        current = next; // Mueve al siguiente nodo
+    }
+
+    stack = NULL; 
+}
+
+void free_stacks(t_stack *stack_a, t_stack *stack_b)
+{
+    ft_free(stack_a);
+    ft_free(stack_b);
+}
+
 int is_duplicated(int  num, t_stack *value_stack)
 {
         while (value_stack != NULL)
         {
-            // printf("\n num arg:%d", num);
-            // printf("\nnum stack:%d", value_stack->value);
             if (num == value_stack->value)
                 return (1);
             value_stack = value_stack->next;

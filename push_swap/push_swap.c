@@ -12,21 +12,19 @@ int main(int argc, char *argv[])
             write(1, "error\n", 6);
             exit(1);
         }
-        // if (!init_stack(&stack_a))
-        //     exit(1);
         push_stack(&stack_a, argv);
         // init_stack(&stack_a);
         if (is_sorted(&stack_a))
         {
-            // write(1, "ordenada", 8);
-            free(stack_a);
+            free_stacks(stack_a, stack_b);
             exit(0);
         }
         else
             sort_stack(&stack_a, &stack_b);
-        print_stack(stack_a);
-        printf("stack_b\n");
-        print_stack(stack_b);
+        // print_stack(stack_a);
+        free_stacks(stack_a, stack_b);
+        // printf("stack_b\n");
+        // print_stack(stack_b);
         return (0);
     }
 }

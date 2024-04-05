@@ -1,6 +1,11 @@
 
 #include "push_swap.h"
 
+int is_empty(t_stack *stack) 
+{
+    return stack == NULL;
+}
+
 void	bubble_sort(int *array, int n)
 {
 	int	temp;
@@ -20,7 +25,6 @@ void	bubble_sort(int *array, int n)
 	}
 }
 
-// Función para crear y ordenar la matriz de valores
 int	*create_and_sort_values_array(t_stack *stack, int size)
 {
 	int	*values;
@@ -35,26 +39,6 @@ int	*create_and_sort_values_array(t_stack *stack, int size)
 	}
 	bubble_sort(values, size);
 	return (values);
-}
-
-void	assign_index(t_stack **stack, int *sorted_values, int size)
-{
-	t_stack	*current;
-
-	for (int i = 0; i < size; i++)
-	{
-		current = *stack;
-		while (current)
-		{
-			if (current->value == sorted_values[i])
-			{
-				current->index = i;
-				break ;
-					// Rompe el bucle interno una vez que se encuentra el valor
-			}
-			current = current->next;
-		}
-	}
 }
 
 void	assign_indices(t_stack **stack)
@@ -83,33 +67,33 @@ void	assign_indices(t_stack **stack)
 	free(sorted_values); // Limpia la memoria
 }
 
-void	sort_chunks(t_stack **stack_a, t_stack **stack_b, int num_chunks)
-{
-	int	size;
-	int	chunk_size;
-	int	i;
-	// int	chunk_max;
-	// int	first_min_pos;
-    // (void) stack_b;
-	size = ft_lstsize(stack_a);
-	assign_indices(stack_a);
-	chunk_size = size / num_chunks;
-	i = 0;
-    while (num_chunks > 0)
-    {
-        smart_move(stack_a);
-        pb(stack_a, stack_b);
-        num_chunks--;
-    }
-    // smart_move(stack_a);
-    // while (*stack_a != NULL)
-    //     pb(stack_a, stack_b);
-    // smart_move_b(stack_b);
-    // while (*stack_b != NULL)
-    // {
-    //     pa(stack_a, stack_b);
-    // }
-}
+// void	sort_chunks(t_stack **stack_a, t_stack **stack_b, int num_chunks)
+// {
+// 	int size = ft_lstsize(stack_a);
+//     int chunk_size = size / num_chunks;
+//     int max_chunk_index = chunk_size;
+    
+//     for (int i = 0; i < num_chunks; ++i) {
+//         int count = 0; // Contador para saber cuántos números hemos movido en este chunk.
+//         while (count < chunk_size) {
+//             if ((*stack_a)->index < max_chunk_index) {
+//                 pb(stack_a, stack_b);
+//                 count++;
+//             } else {
+//                 ra(stack_a);
+//             }
+//         }
+//         max_chunk_index += chunk_size;
+//     }
+
+//     // Este bucle es para manejar cualquier número restante en caso de que el total no sea divisible exactamente por num_chunks.
+//     while (ft_lstsize(stack_a) > 0) {
+//         pa(stack_a, stack_b);
+//     }
+// }
+
+
+
 
 int	find_hold_first(t_stack *stack, int start_range, int end_range)
 {
@@ -125,7 +109,7 @@ int	find_hold_first(t_stack *stack, int start_range, int end_range)
 		stack = stack->next;
 		index++;
 	}
-	return (-1);
+	return (-1); // Retorna
 }
 
 int	find_hold_second(t_stack *stack, int start_range, int end_range)
@@ -133,10 +117,11 @@ int	find_hold_second(t_stack *stack, int start_range, int end_range)
 	int		index;
 	t_stack	*current;
 	int		stack_length;
+	int		hold_second_position;
 
 	index = 0;
-	int hold_second_position = -1;
-		// Almacena la posición desde el fondo de la pila para el 'hold_second'.
+	hold_second_position = -1;
+	// Almacena la posición desde el fondo de la pila para el 'hold_second'.
 	current = stack;
 	// Recorremos la pila una vez para contar su tamaño.
 	stack_length = 0;
@@ -157,8 +142,37 @@ int	find_hold_second(t_stack *stack, int start_range, int end_range)
 		index++;
 	}
 	return (hold_second_position);
-		// Posición desde el fondo para 'hold_second'.
+	// Posición desde el fondo para 'hold_second'.
 }
+
+void sort_chunks(t_stack **stack_a, t_stack **stack_b, int num_chunks) {
+    int size = ft_lstsize(stack_a); // Asume que esta función devuelve el tamaño de la pila
+    int chunk_size = size / num_chunks;
+    int remaining_elements = size;
+
+    // Asigna índices a los elementos de la pila si aún no se ha hecho
+    assign_indices(stack_a); // Asume que esta función asigna un índice ordenado a cada elemento
+
+    while (num_chunks > 0) {
+        int elements_moved = 0;
+        while (elements_moved < chunk_size && remaining_elements > 0) {
+            // Selecciona y mueve el elemento adecuado de `stack_a` a `stack_b`
+            smart_move(stack_a); // Adapta esta función para seleccionar inteligentemente qué elemento mover
+            pb(stack_a, stack_b); // Mueve el elemento superior de `stack_a` a `stack_b`
+            elements_moved++;
+            remaining_elements--;
+        }
+        num_chunks--;
+    }
+
+    // Una vez que todos los chunks se han movido a `stack_b`, los reinsertamos en `stack_a` en el orden correcto
+    while (*stack_b != NULL) {
+        pa(stack_a, stack_b); // Mueve el elemento superior de `stack_b` a `stack_a`
+        // Puede ser necesario usar una estrategia similar a `smart_move` aquí para decidir cuándo rotar `stack_a`
+    }
+}
+
+
 
 int	find_max(t_stack *stack)
 {
@@ -182,70 +196,192 @@ int	find_max(t_stack *stack)
 	return (max_position); // Posición del nodo con el mayor índice.
 }
 
-int	stack_size(t_stack *stack)
+// condigo de kurval
+
+static int	calc_size(t_stack *root)
 {
-	int	size;
+	t_stack *current;
+	int		size;
 
 	size = 0;
-	while (stack)
+	current = root;
+	while (current)
 	{
+		current = current->next;
 		size++;
-		stack = stack->next;
 	}
 	return (size);
 }
 
-void	move_to_top(t_stack **stack, int use_ra, int num_moves)
+int			shortest_way(t_stack *root, int value)
 {
-	while (num_moves-- > 0)
+	int		size;
+	int		moves;
+	int		pos;
+	t_stack *current;
+	int		mid;
+
+	pos = 0;
+	moves = 0;
+	size = calc_size(root);
+	mid = size / 2;
+	current = root;
+	while (current->value != value)
 	{
-		if (use_ra)
+		current = current->next;
+		pos++;
+	}
+	if (pos <= mid)
+		moves += pos;
+	else
+		moves = (-1 * (size - pos));
+	return (moves);
+}
+
+static void	ft_swap(int *a, int *b)
+{
+	int tmp;
+
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
+
+static void	sort_list(int *tab, unsigned int size)
+{
+	unsigned int	i;
+	unsigned int	j;
+
+	i = 0;
+	while (i < size - 1)
+	{
+		j = i;
+		while (j < size)
 		{
-			ra(stack);
+			if (tab[i] > tab[j])
+				ft_swap(&tab[i], &tab[j]);
+			j += 1;
 		}
-		else
-		{
-			rra(stack);
-		}
+		i += 1;
 	}
 }
 
-void	sort_stack_100(t_stack **stack_a, t_stack **stack_b)
+int			*sort_tab(t_stack *root_a, int size)
 {
-	for (int i = 0; i < 100; i++)
-	{
-		int start_range = i * 5;
-		int end_range = (i + 1) * 5 - 1;
-		int numbers_moved = 0;
+	t_stack *current;
+	int		*tab;
+	int		i;
 
-		while (numbers_moved < 5)
+	current = root_a;
+	i = 0;
+	if (!(tab = (int*)malloc(sizeof(int) * size + 1)))
+		return (0);
+	while (current)
+	{
+		tab[i] = current->value;
+		current = current->next;
+		i++;
+	}
+	sort_list(tab, size);
+	return (tab);
+}
+
+static void	move_b(t_stack **root_a, t_stack **root_b, int *tab, int *size)
+{
+	int way;
+
+	way = shortest_way(*root_b, tab[*size]);
+	while ((*root_b)->value != tab[*size])
+	{
+		if ((*root_b)->next)
 		{
-			int hold_first = find_hold_first(*stack_a, start_range, end_range);
-			int hold_second = find_hold_second(*stack_a, start_range,
-					end_range);
-			int size_a = stack_size(*stack_a);
-
-			// Decide whether to use ra or rra based on hold_first and hold_second
-			if (hold_first <= size_a / 2)
+			if ((*root_b)->next->value == tab[*size])
 			{
-				move_to_top(stack_a, 1, hold_first);
+				sa(root_b);
+				break ;
 			}
-			else
-			{
-				move_to_top(stack_a, 0, size_a - hold_second);
-			}
-
-			pb(stack_a, stack_b);
-			numbers_moved++;
 		}
+		if (way < 0)
+			rra(root_b);
+		else
+			ra(root_b);
 	}
+	*size -= 1;
+	pa(root_b, root_a);
+}
 
-	// Once all chunks are moved to stack_b, sort them back into stack_a
-	while (stack_size(*stack_b) > 0)
+static void	move_partitions(t_stack **root_a, t_stack **root_b,\
+		int pivot, int pos)
+{
+	int round;
+
+	round = (*root_a)->value;
+	pos = pivot - pos;
+	ra(root_a);
+	while ((*root_a)->value != round && pos > 0)
 	{
-		int max_index = find_max(*stack_b);
-		int size_b = stack_size(*stack_b);
-		move_to_top(stack_b, max_index <= size_b / 2, max_index);
-		pa(stack_b, stack_a);
+		if ((*root_a)->value <= pivot)
+		{
+			pa(root_a, root_b);
+			pos--;
+		}
+		else
+			ra(root_a);
 	}
+	if ((*root_a)->value <= pivot)
+		pa(root_a, root_b);
+}
+
+void		big_sort(t_stack **root_a, t_stack **root_b, int size)
+{
+	int mid;
+	int	*tab;
+	int len;
+	int round;
+	int pos;
+
+	mid = 0;
+	pos = 0;
+	tab = sort_tab(*root_a, size);
+	len = size - 1;
+	round = (size <= 100) ? 2 : 1;
+	while (!is_empty(*root_a) && round <= 10)
+	{
+		mid = (round == 10) ? tab[len] : tab[(size / 10) * round];
+		move_partitions(root_a, root_b, mid, pos);
+		pos = mid;
+		round = (size <= 100) ? round + 2 : round + 1;
+	}
+	while (!is_empty(*root_b))
+		move_b(root_a, root_b, tab, &len);
+	free(tab);
+}
+
+void push_swap_sort(t_stack **stack_a, t_stack **stack_b, int total_numbers, int num_chunks)
+{
+    int chunk_size = total_numbers / num_chunks;
+    int remaining_numbers = total_numbers;
+    (void) stack_b;
+    for (int i = 0; i < num_chunks; ++i) {
+        int chunk_start = i * chunk_size;
+        int chunk_end = chunk_start + chunk_size - 1;
+        
+        // Ajusta el último chunk para incluir todos los números restantes
+        if (i == num_chunks - 1) {
+            chunk_end += remaining_numbers - chunk_size;
+        }
+
+        int hold_first = find_hold_first(*stack_a, chunk_start, chunk_end);
+        int hold_second = find_hold_second(*stack_a, chunk_start, chunk_end);
+        printf("first: %d", hold_first);
+        printf("second: %d", hold_second);
+        // Decidir cuál de los dos mover a stack_b y moverlo
+        // Este esquema no incluye la lógica específica para decidir y mover,
+        // pero necesitarás implementar la lógica para elegir entre hold_first y hold_second
+        // basado en la cantidad de movimientos necesarios y luego realizar el movimiento.
+        
+        remaining_numbers -= chunk_size;
+    }
+
+    // Tras procesar todos los chunks, el siguiente paso sería reordenar los números desde stack_b a stack_a.
 }

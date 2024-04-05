@@ -50,4 +50,8 @@ int find_position_of_first_min(t_stack *stack);
 int find_position_by_index(t_stack *stack, int index);
 void smart_move(t_stack **stack);
 void smart_move_b(t_stack **stack_b);
+void		big_sort(t_stack **root_a, t_stack **root_b, int size);
+void push_swap_sort(t_stack **stack_a, t_stack **stack_b, int total_numbers, int num_chunks);
+void sort_big(t_stack **stack_a, t_stack **stack_b);
+void free_stacks(t_stack *stack_a, t_stack *stack_b);
 #endif

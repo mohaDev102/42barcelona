@@ -262,17 +262,17 @@ int find_position_of_first_min(t_stack *stack)
 
     return minPosition; // Retorna la posición del número más pequeño en el stack.
 }
-void smart_move_b(t_stack **stack_b)
-{
-    int max;
-    int size;
+// void smart_move_b(t_stack **stack_b)
+// {
+//     int max;
+//     int size;
 
-    max = -1;
-    max = find_max_index(*stack_b);
-    size = ft_lstsize(stack_b);
-    int maxPos = find_position_of_max(*stack_b);
-    // if ()
-}
+//     max = -1;
+//     max = find_max_index(*stack_b);
+//     size = ft_lstsize(stack_b);
+//     int maxPos = find_position_of_max(*stack_b);
+//     // if ()
+// }
 
 void smart_move(t_stack **stack)
 {
@@ -320,6 +320,6 @@ void sort_five(t_stack **stack_a, t_stack **stack_b)
     smart_move(stack_a);
     pb(stack_a, stack_b);
     sort_three(stack_a);
-    pa(stack_a, stack_b);
-    pa(stack_a, stack_b);
+    // pa(stack_a, stack_b);
+    // pa(stack_a, stack_b);
 }
