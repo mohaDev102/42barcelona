@@ -49,6 +49,11 @@ int	ft_space_or_null(char *str, int i)
 	return (0);
 }
 
+t_lexer *ft_lexer_addback()
+{
+    
+}
+
 int	ft_lexer(char *line, t_lexer **lexer)
 {
 	int i;
