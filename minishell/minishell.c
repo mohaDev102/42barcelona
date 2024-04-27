@@ -1,15 +1,18 @@
 
 #include "minishell.h"
+int	g_error = 0;
 
-// int g_return_value = 0;
-//t_signal_num signal_num;
-
-int main(void)
+int	main(int argc, char *argv[])
 {
-    char *line;
-   // t_signal_num signal_num;
+	t_lexer *lexer;
 
-receive_signal(0);
+	lexer = NULL;
+	(void)argv;
+	if (argc > 1)
+	{
+		printf("Error\n");
+	}
+	receive_signal(1);
     while (1)
     {
         receive_signal(0);
