@@ -1,5 +1,5 @@
 NAME = minishell
-SRC = minishell.c
+SRC = src/minishell.c src/lexer/ft_lexer.c src/lexer/lexer_utils.c src/lexer/lexer_utils2.c src/parser/ft_parser.c src/signal.c
 
 OBJ = $(SRC:.c=.o)
 HEADER = minishell.h
@@ -11,7 +11,7 @@ CFLAGS = -g -Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) $^ -o $@ -lreadline
+	$(CC) $(CFLAGS) -I./readline -L./readline_mio $^ -o $@ -lreadline -lhistory -ltermcap
 
 $(LIBFT):
 	make -C libft
