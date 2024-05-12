@@ -25,12 +25,6 @@ void	handler(int sig)
 		rl_redisplay();
 		g_error = 1;
 	}
-	else if (sig == SIGQUIT)
-	{
-		rl_on_new_line();
-		rl_redisplay();
-		g_error = 0;
-	}
 }
 
 void	handler_child(int sig)
@@ -53,12 +47,12 @@ void	handler_child(int sig)
 
 void	receive_signal(int id)
 {
-	if (id == 0)
+	if (id == 1)
 	{
 		signal(SIGINT, handler);
-		signal(SIGQUIT, handler);
+		signal(SIGQUIT, SIG_IGN);
 	}
-	else
+	else if (id == 2)
 	{
 		signal(SIGINT, handler_child);
 		signal(SIGQUIT, handler_child);

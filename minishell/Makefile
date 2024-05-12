@@ -11,7 +11,7 @@ CFLAGS = -g -Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME): $(OBJ) $(LIBFT)
-	$(CC) $(CFLAGS) -I./readline -L./readline_mio $^ -o $@ -lreadline -lhistory -ltermcap
+	$(CC) $(CFLAGS) -I./readline -L./readline $^ -o $@ -lreadline -lhistory -ltermcap
 
 $(LIBFT):
 	make -C libft
