@@ -1,8 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lexer.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/05 12:37:46 by mel-atta          #+#    #+#             */
+/*   Updated: 2024/05/05 12:37:47 by mel-atta         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
-// lo que nos pasan: // echo "Hello" | cat -e > myfile
-// lo que tendria que tener la struct: word word pipe word word ret_to word
-// mira si hay | < > << >>
 int	ft_token(t_lexer *lexer, char *str)
 {
 	int	i;
@@ -60,36 +69,6 @@ int	ft_space_or_null(char *str, int i)
 	if (str[i] == '\0')
 		return (-1);
 	add_history(str);
-	return (0);
-}
-
-int	ft_operation(t_lexer **lexer)
-{
-	char	*line;
-	// int		val;
-
-	line = readline("minishell$ ");
-	if (line == NULL)
-	{
-		printf("exit\n");
-		return (1);
-	}
-	if (ft_lexer(line, lexer) == 0)
-	{
-		// ft_print_lexer(lexer);
-		// val = execve("/bin/cat", &(*lexer)->value, NULL);
-		// if (val == -1)
-			// return (1);
-		if (ft_parse(lexer))
-		{
-			// her_doc(lexer);
-			// if (!expandor())
-			// 	executor();
-		}
-	}
-	lexer_clear(lexer);
-	lexer = NULL;
-	free(line);
 	return (0);
 }
 
