@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:01:02 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/12 12:13:25 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/05/13 13:12:06 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,14 @@ void wait_children(t_pipe *info, int *exit)
     int i;
     int status;
     (void)exit;
-    dup2(info->std_in, STDIN_FILENO);
-    dup2(info->std_out, STDOUT_FILENO);
     i = 0;
     while (i < info->n_commands)
     {
         waitpid(info->pid[i], &status, 0);
         i++;
     }
+    dup2(info->std_in, STDIN_FILENO);
+    dup2(info->std_out, STDOUT_FILENO);
     free(info->pid);
     // if (WIFEXITED(status))
     //     *exit = (WIFEXITED(status));
@@ -51,7 +51,6 @@ void search_path(t_cmd **cmd, char *env[])
     char *path_cmd;
     char *path_final;
 
-//  aqui falta algo de dup2 !!! (creo)
     path_cmd = NULL;
     (void)env;
     (void)cmd;
@@ -121,18 +120,24 @@ int executor(t_cmd **cmd, t_lexer **lexer, char **env)
     data.std_out = dup(STDOUT_FILENO);
     while ((*cmd) != NULL)
     {
-        write(1, "2", 1);
         if (pipe(data.fd) == -1)
             return (-1);
         data.pid[i] = fork();
         if (data.pid[i] == -1)
             return (-1);
         if (data.pid[i] == 0)
+        {
+            if ((*cmd)->next)
+                dup2(data.fd[1], STDOUT_FILENO);
+            redirections(cmd, data, env);
+            close(data.fd[1]);
+            close(data.fd[0]);
             search_path(cmd, env);
+        }
         // mirar los permisos y luego poner command not found
             // execve("/bin/ls", (*cmd)->args, env);
             // exec_cmd(path, cmd, env);
-        dup2(data.fd[0], data.fd[1]);
+        dup2(data.fd[0], STDIN_FILENO);
         close_pipe(data.fd[0], data.fd[1]);
         (*cmd) = (*cmd)->next;
         i++;
