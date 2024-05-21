@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:37:06 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/05 12:51:53 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/05/14 16:24:14 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	is_redirect(t_lexer **lexer, t_redir **redir)
 		return (-1);
 	if ((*lexer)->type == GREAT)
 		new->type = OUTFILE;
-	else if ((*lexer)->type == GREAT_AS)
+	else if ((*lexer)->type == GREAT_L)
 		new->type = APPEND;
 	else if ((*lexer)->type == LESS)
 		new->type = INFILE;

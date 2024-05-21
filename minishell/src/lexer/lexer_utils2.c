@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer_utils2.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/05 12:58:31 by mel-atta          #+#    #+#             */
+/*   Updated: 2024/05/21 12:00:28 by mel-atta         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
 t_lexer	*lexer_lstlast(t_lexer *list)
@@ -5,7 +17,7 @@ t_lexer	*lexer_lstlast(t_lexer *list)
 	t_lexer	*last;
 
 	if (!list)
-		return (0);
+		return (NULL);
 	last = list;
 	while (last->next != NULL)
 		last = last->next;
@@ -27,14 +39,12 @@ void	ft_lexer_addback(t_lexer **lexer, t_lexer *new)
 	}
 }
 
-int	ft_convert(char *str, t_lexer *new)
+int	ft_convert(char *str, t_lexer *new, int i)
 {
-	int	i;
 	int	temp;
 
-	i = 0;
 	if (is_signal(str[i]))
-		i += ft_token(new, str);
+		i += ft_token(new, str, i);
 	else
 	{
 		temp = init_word(str, i, new);
@@ -42,7 +52,6 @@ int	ft_convert(char *str, t_lexer *new)
 			return (-1);
 		i += temp;
 	}
-	free(str);
 	return (i);
 }
 
