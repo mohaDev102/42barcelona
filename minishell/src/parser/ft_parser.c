@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:36:41 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/07 16:07:04 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/05/21 12:43:03 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	ft_parse(t_cmd **commands, t_lexer *lexer)
 	}
 	while (aux != NULL)
 	{
-		count_args = ft_count_args(aux);//ft_count_lexer(aux);
+		count_args = ft_count_args(aux);
 		new = init_parser();
 		if (!new)
 			return (1);

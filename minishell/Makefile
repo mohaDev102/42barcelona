@@ -1,14 +1,14 @@
 NAME = minishell
 SRC = src/minishell.c src/lexer/ft_lexer.c src/lexer/lexer_utils.c src/lexer/lexer_utils2.c src/parser/ft_parser.c \
 	src/signal.c src/parser/ft_parser_utils.c src/parser/ft_parser_utils2.c src/parser/ft_free.c src/parser/ft_parser_utils3.c \
-	src/executor/ft_executor.c
+	src/executor/ft_executor.c src/executor/ft_redirects.c src/her_doc/her_doc.c src/her_doc/utils.c
 
 OBJ = $(SRC:.c=.o)
 HEADER = inc/minishell.h
 LIBFT = libft/libft.a
 RM = rm -f
 CC = gcc
-CFLAGS = -g -Wall -Wextra -Werror  #-fsanitize=address
+CFLAGS = -g -Wall -Wextra -Werror #-fsanitize=address
 
 all: $(NAME)
 

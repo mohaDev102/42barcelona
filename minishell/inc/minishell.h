@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:56:42 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/12 12:39:13 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/21 14:31:43 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
 #  define READLINE_LIBRARY
 # endif
 # include <stdio.h>
-# include "../readline/history.h"
 # include "../readline/readline.h"
+# include "../readline/history.h"
+# include <fcntl.h>
 # include <limits.h>
 # include <stdlib.h>
 # include <unistd.h>
-#include	<fcntl.h>
 int					g_error;
 
 # define PIPE_AS 124
@@ -45,7 +45,7 @@ typedef enum s_type_redir
 	APPEND,
 	HERDOC,
 	INFILE
-} t_type_redir;
+}					t_type_redir;
 
 typedef struct s_lexer
 {
@@ -70,11 +70,11 @@ typedef struct s_cmd
 
 typedef struct s_pipe
 {
-	int fd[2];
-	pid_t *pid;
-	int n_commands;
-	int std_in;
-	int std_out;
+	int				fd[2];
+	pid_t			*pid;
+	int				n_commands;
+	int				std_in;
+	int				std_out;
 }					t_pipe;
 
 typedef struct s_list
@@ -97,29 +97,29 @@ char				*ft_strcpy(char *s1, char *s2);
 int					ft_lexer(char *line, t_lexer **lexer);
 int					ft_isquote(int c);
 int					ft_isspace(int c);
-int	ft_operation(t_lexer **lexer, t_cmd **cmd, char *env[]);
+int					ft_operation(t_lexer **lexer, t_cmd **cmd, char *env[]);
 void				ft_print_lexer(t_lexer **lexer);
 int					ft_parse(t_cmd **commands, t_lexer *lexer);
-void	lexer_clear(t_cmd **cmd, t_lexer **lxr);
+void				lexer_clear(t_cmd **cmd, t_lexer **lxr);
 void				reset_quotes(char c, int *quoted, int *quoted2);
-int					ft_convert(char *str, t_lexer *new);
+int					ft_convert(char *str, t_lexer *new, int i);
 t_lexer				*init_lexer(void);
 void				ft_lexer_addback(t_lexer **lexer, t_lexer *new);
-int					ft_token(t_lexer *lexer, char *str);
+int					ft_token(t_lexer *lexer, char *str, int i);
 int					is_signal(char c);
 int					init_word(char *str, int i, t_lexer *new);
 void				change_quotes(char c, int *quoted, int *quoted2);
 void				receive_signal(int id);
-void 				ft_cd(char *cdcmd, t_list **envlist);
+void				ft_cd(char *cdcmd, t_list **envlist);
 void				cd_action(char *cdcmd, t_list **envlist);
 char				*change_pwd(t_list **envlist);
-char 				*my_getenv(t_list *envlist, char *name, int flag);
-char 				*clean_content(char *content);
-int     			ft_strstr(char **env, char *find_to);
+char				*my_getenv(t_list *envlist, char *name, int flag);
+char				*clean_content(char *content);
+int					ft_strstr(char **env, char *find_to);
 char				*ft_strjoin(char const *s1, char const *s2);
-char 				**generate_my_own_enviroment(char **env);
-void 				ft_export(t_list **envlist, char *str);
-void 				ft_env(t_list **envlist);
+char				**generate_my_own_enviroment(char **env);
+void				ft_export(t_list **envlist, char *str);
+void				ft_env(t_list **envlist);
 void				ft_pwd(void);
 void				ft_unset(t_list **envlist, char *unscmd);
 void				generate_env_list(char **env, t_list **envlist);
@@ -127,25 +127,32 @@ t_list				*init_list(void);
 char				*add_env_name(char **env, int i, int j);
 char				*add_env_content(char **env, int i, int j);
 void				ft_echo(char *echocmd, int flag, t_list *envlist);
-
-
 int					ft_count_lexer(t_lexer *lexer);
 t_cmd				*init_parser(void);
 void				ft_add_cmd_back(t_cmd **command, t_cmd *new);
 int					create_cmd(t_lexer **lexer, t_cmd **cmd, int i);
 int					add_cmd(t_lexer **lexer, t_cmd **cmd, t_redir **redir);
-void ft_print_parser(t_cmd **cmd);
-void	ft_parser_addback(t_redir **redir, t_redir *new);
-t_redir *redir_lstlast(t_redir *redir);
-int is_redirect(t_lexer **lexer, t_redir **redir);
-void ft_print_redir(t_redir **redir);
-char	**ft_free(char **mat, int i);
-void parser_free(t_cmd **cmd);
-void free_cmd_list(t_cmd *cmd);
-void her_doc(t_cmd *cmd, char **env);
-int executor(t_cmd **cmd, t_lexer **lexer, char **env);
-int ft_count_args(t_lexer *aux);
-char	**ft_split(char const *s, char c);
-char	*ft_strjoin(char const *s1, char const *s2);
-
+void				ft_print_parser(t_cmd **cmd);
+void				ft_parser_addback(t_redir **redir, t_redir *new);
+t_redir				*redir_lstlast(t_redir *redir);
+int					is_redirect(t_lexer **lexer, t_redir **redir);
+void				ft_print_redir(t_redir **redir);
+char				**ft_free(char **mat, int i);
+void				parser_free(t_cmd **cmd);
+void				free_cmd_list(t_cmd *cmd);
+void				her_doc(t_cmd *cmd, char **env);
+int					executor(t_cmd **cmd, char **env);
+int					ft_count_args(t_lexer *aux);
+char				**ft_split(char const *s, char c);
+char				*ft_strjoin(char const *s1, char const *s2);
+void				her_doc(t_cmd *cmd, char **env);
+char				*ft_itoa(int n);
+void				ft_putstr_fd(char *s, int fd);
+void				infile_herdoc(t_redir *aux, int fd);
+void				outfile(t_redir *aux, int fd);
+void				append(t_redir *aux, int fd);
+void				ft_error_cmd(t_cmd **cmd, char *msg);
+int					parser_lstsize(t_cmd *lst);
+void				redirections(t_cmd **cmd, t_pipe data, char *env[]);
+t_pipe				*ft_pipes(t_cmd **cmd);
 #endif

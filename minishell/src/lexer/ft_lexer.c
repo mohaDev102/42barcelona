@@ -6,17 +6,14 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:37:46 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/05 12:37:47 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/05/18 10:56:50 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	ft_token(t_lexer *lexer, char *str)
+int	ft_token(t_lexer *lexer, char *str, int i)
 {
-	int	i;
-
-	i = 0;
 	if (str[i] == PIPE_AS)
 		lexer->type = PIPE;
 	else if (str[i] == GREAT_AS && str[i + 1] == GREAT_AS)
@@ -64,7 +61,7 @@ int	init_word(char *str, int i, t_lexer *new)
 
 int	ft_space_or_null(char *str, int i)
 {
-	while (str[i] == 32)
+	while (str[i] == ' ')
 		i++;
 	if (str[i] == '\0')
 		return (-1);
@@ -74,29 +71,46 @@ int	ft_space_or_null(char *str, int i)
 
 int	ft_lexer(char *line, t_lexer **lexer)
 {
-	size_t	i;
+	int	i;
 	t_lexer	*new;
 	int		checker;
-
+	(void)new;
+	(void)checker;
+	(void)lexer;
 	i = 0;
 	if (ft_space_or_null(line, i) == -1)
 		return (1);
-	while (i < ft_strlen(line))
+	while (line[i])
 	{
-		if (ft_isspace(line[i]))
-			i++;
-		else
+		if (!ft_isspace(line[i]))
 		{
 			new = init_lexer();
 			if (!new)
 				return (1);
 			ft_lexer_addback(lexer, new);
-			checker = ft_convert(ft_substr(line, i, ft_strlen(line)), new);
-			if (!checker)
+			i = ft_convert(line, new, i);
+			// i = ft_convert(ft_substr(line, i, ft_strlen(line)), new);
+			if (i == -1)
 				return (1);
-			i += checker;
-			i++;
+			// i += checker;
+			// i++;
 		}
+		else
+			i++;
+		// else
+		// {
+		// 	new = init_lexer();
+		// 	if (!new)
+		// 		return (1);
+			// ft_lexer_addback(lexer, new);
+			// checker = ft_convert("ls -la|wc -l", new);
+			// checker = ft_convert(ft_substr(line, i, ft_strlen(line)), new);
+			// if (!checker)
+				// return (1);
+			// i += checker;
+			// i++;
+		// }
+		// i++;
 	}
 	return (0);
 }

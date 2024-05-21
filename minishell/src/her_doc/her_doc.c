@@ -1,61 +1,77 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   her_doc.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/21 11:58:34 by mel-atta          #+#    #+#             */
+/*   Updated: 2024/05/21 11:58:35 by mel-atta         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../inc/minishell.h"
 
-void create_herdoc(char *limiter, char *path)
+void	ft_putstr_fd(char *s, int fd)
 {
-    // hacer el open y mirar si ya esta creado el file o no y despues de guardar en el file
-    // printarlo y cerrar el archivo
-    int fd;
-    char *str;
+	int	len;
 
-    fd = open(path, O_CREAT |  O_WRONLY | O_TRUNC, 0655);
-    if (fd < 0)
-        return ;
-    str = readline("minishell$ ");
-    while (str && ft_strcmp(limiter, str) != 0)
-    {
-        str = ft_strjoin(str, '\n');
-        printf("%s", str);
-        free(str);
-        str = readline("minishell$ ");
-    }
-    close(fd);
-    free(str);
-    // algo de señales
+	len = ft_strlen(s);
+	write(fd, s++, len);
 }
 
-
-void do_herdoc(t_redir *tmp, int i)
+void	create_herdoc(char *limiter, char *path)
 {
-    char *num;
-    char *path;
+	int		fd;
+	char	*str;
 
-    num = ft_itoa(i);
-    path = ft_strjoin("minishell", num);
-    free(num);
-    create_herdoc(tmp->file, path);
-    free(tmp->file);
-    tmp->file = ft_strdup(path);
+	fd = open(path, O_CREAT | O_WRONLY | O_TRUNC, 0666);
+	if (fd < 0)
+		return ;
+	str = readline(" ");
+	while (str && ft_strcmp(limiter, str) != 0)
+	{
+		str = ft_strjoin(str, "\n");
+		ft_putstr_fd(str, fd);
+		free(str);
+		str = readline(" ");
+	}
+	close(fd);
+	free(str);
+	// algo de señales
 }
 
-
-void her_doc(t_cmd *cmd, char **env)
+void	do_herdoc(t_redir *tmp, int i)
 {
-    int i;
-    t_redir *tmp;
+	char	*num;
+	char	*path;
 
-    i = 0;
-    while (cmd != NULL)
-    {
-        tmp = cmd->redir;
-        while (tmp != NULL)
-        {
-            if (tmp->type == HERDOC)
-            {
-                do_herdoc(tmp, i);
-                i++;
-                tmp = tmp->next;
-            }
-        }
-        cmd = cmd->next;
-    }
+	num = ft_itoa(i);
+	path = ft_strjoin("minishell", num);
+	free(num);
+	create_herdoc(tmp->file, path);
+	free(tmp->file);
+	tmp->file = ft_strdup(path);
+}
+
+void	her_doc(t_cmd *cmd, char **env)
+{
+	int i;
+	t_redir *tmp;
+	(void)env;
+	i = 0;
+	while (cmd != NULL)
+	{
+		tmp = cmd->redir;
+		while (tmp != NULL)
+		{
+			if (tmp->type == HERDOC)
+			{
+				do_herdoc(tmp, i);
+				i++;
+			}
+			tmp = tmp->next;
+		}
+		cmd = cmd->next;
+	}
 }
