@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 20:13:08 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/11 20:06:39 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/20 19:52:59 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*my_getenv(t_list *envlist, char *name, int flag)
 	{
 		if (flag == 1)
 			write(2, "cd: HOME not set\n", 18);
-		else
+		else if (flag == 2)
 			write(2, "cd: OLDPWD not set\n", 20);
 		exit(EXIT_FAILURE);
 	}
@@ -93,6 +93,7 @@ char	*clean_content(char *content)
 	return (res);
 }
 
+// cd ~
 void	ft_cd(char *cdcmd, t_list **envlist)
 {
 	char	*envcontent;

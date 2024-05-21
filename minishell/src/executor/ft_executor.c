@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_executor.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:01:02 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/13 13:12:06 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/05/21 16:56:38 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ int executor(t_cmd **cmd, t_lexer **lexer, char **env)
         return (-1);
     data.std_in = dup(STDIN_FILENO);
     data.std_out = dup(STDOUT_FILENO);
+    // is_buildins(cmd, );
     while ((*cmd) != NULL)
     {
         if (pipe(data.fd) == -1)
@@ -129,7 +130,7 @@ int executor(t_cmd **cmd, t_lexer **lexer, char **env)
         {
             if ((*cmd)->next)
                 dup2(data.fd[1], STDOUT_FILENO);
-            redirections(cmd, data, env);
+            //redirections(cmd, data, env);
             close(data.fd[1]);
             close(data.fd[0]);
             search_path(cmd, env);
@@ -140,8 +141,10 @@ int executor(t_cmd **cmd, t_lexer **lexer, char **env)
         dup2(data.fd[0], STDIN_FILENO);
         close_pipe(data.fd[0], data.fd[1]);
         (*cmd) = (*cmd)->next;
+        // printf("arg = %s", (*cmd)->args[1]);
         i++;
     }
+    
     // tengo que hay el wait_children
     // printf("%d", i);
     wait_children(&data, 0);

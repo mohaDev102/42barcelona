@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:56:42 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/12 12:39:13 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/20 21:00:22 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
+int					ft_isprint(int c);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 size_t				ft_strlen(const char *c);
 int					ft_strcmp(const char *s1, const char *s2);
@@ -119,15 +120,21 @@ int     			ft_strstr(char **env, char *find_to);
 char				*ft_strjoin(char const *s1, char const *s2);
 char 				**generate_my_own_enviroment(char **env);
 void 				ft_export(t_list **envlist, char *str);
+void 	ft_export_alone(t_list **envlist);
 void 				ft_env(t_list **envlist);
 void				ft_pwd(void);
 void				ft_unset(t_list **envlist, char *unscmd);
 void				generate_env_list(char **env, t_list **envlist);
 t_list				*init_list(void);
+t_list	*ft_list(char **env);
 char				*add_env_name(char **env, int i, int j);
 char				*add_env_content(char **env, int i, int j);
 void				ft_echo(char *echocmd, int flag, t_list *envlist);
-
+int 				expandor(t_cmd *cmd, t_list **envlist);
+char *expand(char **str, int j, t_list **envlist);
+char	*handle_quote(char *str, int i, int flag);
+char *clean_str(char *str, int start, int end);
+char *extract_var_name(char *str, int i);
 
 int					ft_count_lexer(t_lexer *lexer);
 t_cmd				*init_parser(void);
