@@ -1,16 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_export.c                                        :+:      :+:    :+:   */
+/*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/05 15:00:24 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/20 21:15:42 by alounici         ###   ########.fr       */
+/*   Created: 2024/05/20 20:43:16 by alounici          #+#    #+#             */
+/*   Updated: 2024/05/20 20:44:36 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "../../inc/minishell.h"
 
 char	*extract_env_name(char *str)
@@ -69,45 +68,18 @@ void	ft_add_node(char *name, char *content, t_list **envlist)
 	tmp->next = NULL;
 }
 
-void	ft_export(t_list **envlist, char *str)
+int	check_format(char *str)
 {
-	char	*envname;
-	char	*envcontent;
-	t_list	*tmp;
-	int		found;
+	int	i;
+	int j;
 
-	found = 0;
-	init_list();
-	tmp = *envlist;
-	// if (check_format(str) == 0)
-	// 	return;
-	envname = extract_env_name(str);
-	envcontent = extract_env_content(str);
-	while (tmp->next)
+	i = 0;
+	j = 0;
+	while(str[i])
 	{
-		if (strcmp(tmp->name, envname) == 0)
-		{
-			found = 1;
-			free(tmp->content);
-			tmp->content = envcontent;
-			break ;
-		}
-		tmp = tmp->next;
+		if (str[i] == '=')
+			return(1);
+		i++;
 	}
-	if (found == 0)
-		ft_add_node(envname, envcontent, &tmp);
-}
-
-void 	ft_export_alone(t_list **envlist)
-{
-	t_list *tmp;
-
-	tmp = *envlist;
-	while (tmp->next)
-	{
-		printf("declare -x ");
-		printf("%s", tmp->name);
-		printf("%s\n", tmp->content);
-		tmp = tmp->next;
-	}
+	return (0);
 }
