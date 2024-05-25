@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:01:02 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/25 20:10:43 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/05/25 22:43:47 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ int	executor(t_cmd **cmd, char **env, t_list **envlist)
 	if (is_buildins(cmd, envlist))
 	{
 		return (0);
-		write(2, "ee", 2);
 	}
 	else
 	{

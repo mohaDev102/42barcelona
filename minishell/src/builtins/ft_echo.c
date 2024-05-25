@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 22:28:48 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/25 16:31:53 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/25 22:17:32 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,11 +153,11 @@ void	ft_echo(char *echocmd, int flag, t_list *envlist)
 	}
 	// if (echocmd == NULL || echocmd[0] == '\0')// && flag == 1)
 	// {
-		if (flag == 1)
-		{
-				write(1, "\n", 1);
-				// write(1, "fin", 3);
-		}
+		// if (flag == 1)
+		// {
+		// 		write(1, "\n", 1);
+		// 		// write(1, "fin", 3);
+		// }
 		// return ;
 	// }
 }
