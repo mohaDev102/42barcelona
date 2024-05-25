@@ -1,30 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy.c                                        :+:      :+:    :+:   */
+/*   ft_lstnew.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/25 11:48:08 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/17 22:14:52 by alounici         ###   ########.fr       */
+/*   Created: 2023/10/20 21:49:30 by alounici          #+#    #+#             */
+/*   Updated: 2024/05/25 15:01:41 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
 
-char	*ft_strcpy(char *s1, char *s2)
+t_list	*ft_lstnew(char *name,  char *content)
 {
-	int	i;
+	t_list	*node;
 
-	i = 0;
-	while (s2[i])
-	{
-		s1[i] = s2[i];
-		i++;
-	}
-	s1[i] = '\0';
-	return (s1);
+	node = (t_list *) malloc(sizeof(t_list));
+	if (node == NULL)
+		return (NULL);
+	node->name = name;
+	node->content = content;
+	node->next = NULL;
+	return (node);
 }

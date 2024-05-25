@@ -1,30 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy.c                                        :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/25 11:48:08 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/17 22:14:52 by alounici         ###   ########.fr       */
+/*   Created: 2024/05/24 19:06:11 by alounici          #+#    #+#             */
+/*   Updated: 2024/05/24 19:06:14 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
-#include <unistd.h>
 
-char	*ft_strcpy(char *s1, char *s2)
+int	ft_atoi(const char *str)
 {
 	int	i;
+	int	res;
+	int	aux;
+	int	sign;
 
+	sign = 1;
 	i = 0;
-	while (s2[i])
+	aux = 0;
+	res = 0;
+	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
+		i++;
+	if (str[i] == '-' || str[i] == '+')
 	{
-		s1[i] = s2[i];
+		if (str[i] == '-')
+			sign = -1;
 		i++;
 	}
-	s1[i] = '\0';
-	return (s1);
+	while (str[i] <= '9' && str[i] >= '0')
+	{
+		res = (res * 10) + (str[i] - '0');
+		i++;
+	}
+	return (res * sign);
 }

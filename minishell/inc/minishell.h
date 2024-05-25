@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:56:42 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/21 17:16:19 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/25 15:01:18 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct s_cmd
 {
 	char			**args;
 	t_redir			*redir;
-	struct s_cmd	*next;
+	struct s_cmd	*next; 
 }					t_cmd;
 
 typedef struct s_pipe
@@ -98,7 +98,10 @@ char				*ft_strcpy(char *s1, char *s2);
 int					ft_lexer(char *line, t_lexer **lexer);
 int					ft_isquote(int c);
 int					ft_isspace(int c);
-int					ft_operation(t_lexer **lexer, t_cmd **cmd, char *env[]);
+int					ft_isdigit(int c);
+int					ft_atoi(const char *str);
+t_list				*ft_lstlast(t_list *lst);
+int					ft_operation(t_lexer **lexer, t_cmd **cmd, char *env[], t_list **envlist);
 void				ft_print_lexer(t_lexer **lexer);
 int					ft_parse(t_cmd **commands, t_lexer *lexer);
 void				lexer_clear(t_cmd **cmd, t_lexer **lxr);
@@ -138,6 +141,12 @@ char *expand(char **str, int j, t_list **envlist);
 char	*handle_quote(char *str, int i, int flag);
 char *clean_str(char *str, int start, int end);
 char *extract_var_name(char *str, int i);
+char *last_exit(void);
+int	exit_status(int value);
+char **copy_env(char **env);
+int    is_buildins(t_cmd **cmd, t_list **envlist);
+int    is_buildins2(t_cmd **tmp, t_list *envlist);
+void ft_exit(char **args);
 
 int					ft_count_lexer(t_lexer *lexer);
 t_cmd				*init_parser(void);
@@ -153,7 +162,7 @@ char				**ft_free(char **mat, int i);
 void				parser_free(t_cmd **cmd);
 void				free_cmd_list(t_cmd *cmd);
 void				her_doc(t_cmd *cmd, char **env);
-int					executor(t_cmd **cmd, char **env);
+int					executor(t_cmd **cmd, char **env, t_list **envlist);
 int					ft_count_args(t_lexer *aux);
 char				**ft_split(char const *s, char c);
 char				*ft_strjoin(char const *s1, char const *s2);
@@ -167,4 +176,6 @@ void				ft_error_cmd(t_cmd **cmd, char *msg);
 int					parser_lstsize(t_cmd *lst);
 void				redirections(t_cmd **cmd, t_pipe data, char *env[]);
 t_pipe				*ft_pipes(t_cmd **cmd);
+void	ft_lstadd_back(t_list **lst, t_list *new);
+t_list	*ft_lstnew(char *name, char *content);
 #endif

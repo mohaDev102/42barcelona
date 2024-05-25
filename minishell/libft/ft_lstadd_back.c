@@ -1,30 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy.c                                        :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/25 11:48:08 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/17 22:14:52 by alounici         ###   ########.fr       */
+/*   Created: 2023/10/20 23:24:04 by alounici          #+#    #+#             */
+/*   Updated: 2024/05/25 15:16:47 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
 
-char	*ft_strcpy(char *s1, char *s2)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	int	i;
-
-	i = 0;
-	while (s2[i])
+	t_list	*last;
+	last = NULL;
+	if (lst != NULL)
 	{
-		s1[i] = s2[i];
-		i++;
+		if (*lst)
+		{
+			last = ft_lstlast(*lst);
+			last->next = new;
+		}
+		else
+			*lst = new;
 	}
-	s1[i] = '\0';
-	return (s1);
 }

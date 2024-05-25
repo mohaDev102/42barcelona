@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42barcel>       +#+  +:+       +#+        */
+/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 22:01:41 by mel-atta          #+#    #+#             */
-/*   Updated: 2023/12/16 17:01:47 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/05/15 21:46:43 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../minishell.h"
+
+#include "../inc/minishell.h"
 
 size_t	ft_strlen(const char *c)
 {

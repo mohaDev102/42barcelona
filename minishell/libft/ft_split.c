@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42barcel>       +#+  +:+       +#+        */
+/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 11:17:04 by mel-atta          #+#    #+#             */
-/*   Updated: 2023/09/25 11:56:45 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/05/17 22:14:52 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../inc/minishell.h"
+// #include "../inc/minishell.h"
 #include <stdio.h>
 
 static int	ft_count_word(char const *s, char c)

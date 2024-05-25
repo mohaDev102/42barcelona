@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 15:00:24 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/20 21:15:42 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/25 19:10:51 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,10 @@ char	*extract_env_content(char *str)
 
 	i = 0;
 	j = 0;
-	len = ft_strlen(str);
 	while (str[i] && str[i] != '=')
 		i++;
-	res = malloc(sizeof(char) * (len - i) + 1);
+	len = ft_strlen(str) - i;
+	res = malloc(sizeof(char) * len + 1);
 	if (res == NULL)
 		return (NULL);
 	while (j < len)
@@ -59,14 +59,27 @@ char	*extract_env_content(char *str)
 void	ft_add_node(char *name, char *content, t_list **envlist)
 {
 	t_list	*tmp;
-	// t_list	*last;
+	t_list *last;
 
+	(void)name;
+	(void)content;
 	tmp = *envlist;
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->name = name;
-	tmp->content = content;
-	tmp->next = NULL;
+	// last = NULL;
+	// write(2, "33", 2);
+	// while (tmp)
+	// {
+	// 	// last = tmp->next;
+	// 	tmp = tmp->next;
+	// }
+	tmp = ft_lstlast(tmp);
+	last = malloc(sizeof(t_list));
+	if (!last)
+		return ;
+	last->name = name;
+	last->content = content;
+	last->next = NULL;
+	// envlist = &tmp;
+	// printf("%s", tmp->content);
 }
 
 void	ft_export(t_list **envlist, char *str)
@@ -74,18 +87,18 @@ void	ft_export(t_list **envlist, char *str)
 	char	*envname;
 	char	*envcontent;
 	t_list	*tmp;
+	t_list	*new;
 	int		found;
 
 	found = 0;
-	init_list();
 	tmp = *envlist;
-	// if (check_format(str) == 0)
-	// 	return;
+	new = NULL;
 	envname = extract_env_name(str);
 	envcontent = extract_env_content(str);
-	while (tmp->next)
+	new = ft_lstnew(envname, envcontent);
+	while (tmp)
 	{
-		if (strcmp(tmp->name, envname) == 0)
+		if (ft_strcmp(tmp->name, envname) == 0)
 		{
 			found = 1;
 			free(tmp->content);
@@ -95,7 +108,8 @@ void	ft_export(t_list **envlist, char *str)
 		tmp = tmp->next;
 	}
 	if (found == 0)
-		ft_add_node(envname, envcontent, &tmp);
+		ft_lstadd_back(envlist, new);
+		// ft_add_node(envname, envcontent, envlist);
 }
 
 void 	ft_export_alone(t_list **envlist)
@@ -103,7 +117,8 @@ void 	ft_export_alone(t_list **envlist)
 	t_list *tmp;
 
 	tmp = *envlist;
-	while (tmp->next)
+	// printf("%s", tmp->name);
+	while (tmp)
 	{
 		printf("declare -x ");
 		printf("%s", tmp->name);

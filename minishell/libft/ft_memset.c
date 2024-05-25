@@ -3,13 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42barcel>       +#+  +:+       +#+        */
+/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 17:14:55 by mel-atta          #+#    #+#             */
-/*   Updated: 2023/12/16 17:05:52 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/05/17 22:14:45 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../minishell.h"
+
 #include <stddef.h>
 
 void	*ft_memset(void *b, int c, size_t len)
