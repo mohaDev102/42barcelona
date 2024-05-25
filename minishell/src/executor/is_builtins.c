@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_builtins.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 20:15:13 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/25 19:14:16 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/25 22:16:54 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ int    is_buildins2(t_cmd **tmp, t_list *envlist)
     int i;
 
     i = 0;
-    if (ft_strcmp((*tmp)->args[0], "echo") == 0) //&& ft_strcmp((*tmp)->args[1], "-n") == 0)
+    if ((*tmp)->args[0])
+    {
+         if (ft_strcmp((*tmp)->args[0], "echo") == 0) //&& ft_strcmp((*tmp)->args[1], "-n") == 0)
         {
             if ((*tmp)->args[1] && ft_strcmp((*tmp)->args[1], "-n") == 0)
             {
@@ -34,9 +36,11 @@ int    is_buildins2(t_cmd **tmp, t_list *envlist)
                 i++;
                 while ((*tmp)->args[i])
                     ft_echo((*tmp)->args[i++], 1, envlist);
+                write(1, "\n", 1);
                 return(1);
             }
         }
+    }
         return (0);
 }
 
@@ -50,7 +54,9 @@ int    is_buildins(t_cmd **cmd, t_list **envlist)
     tmp = *cmd;
     i = 1;
     //  write(1, "ic222\n\n", 7);
-    if (is_buildins2(&tmp, *envlist) == 1)
+    if (tmp->args[0])
+    {
+         if (is_buildins2(&tmp, *envlist) == 1)
         return (1);
     else if (ft_strcmp(tmp->args[0], "cd") == 0)
     {
@@ -97,6 +103,8 @@ int    is_buildins(t_cmd **cmd, t_list **envlist)
         ft_export_alone(envlist);
         return (1);
     }
+    }
+   
     return (0);
     // tmp = tmp->next;
 }
