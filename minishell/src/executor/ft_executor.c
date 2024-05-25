@@ -3,22 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_executor.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:01:02 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/21 17:14:36 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/25 04:07:54 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-void	close_pipe(int in, int out)
-{
-	if (in != -1)
-		close(in);
-	if (out != -1)
-		close(out);
-}
 
 void	wait_children(t_pipe *info, int *exit)
 {
@@ -63,6 +55,8 @@ void	search_path(t_cmd **cmd, char *env[])
 	{
 		path_final = ft_strjoin(paths[i], "/");
 		path_cmd = ft_strjoin(path_final, *(*cmd)->args);
+		if (!path_cmd)
+			exit(-1);
 		execve(path_cmd, (*cmd)->args, env);
 		free(path_final);
 		free(path_cmd);
@@ -107,49 +101,49 @@ int	executor(t_cmd **cmd, char **env)
 	return (0);
 }
 
-int executor(t_cmd **cmd, t_lexer **lexer, char **env)
-{
-    t_pipe data;
-    int i = 0;
-    (void) lexer;
-    data.n_commands = parser_lstsize(*cmd);
-    // data.n_commands = 1;
-    data.fd[0] = -1;
-    data.fd[1] = -1;
-    data.pid = malloc(sizeof(pid_t) * data.n_commands);
-    if (!data.pid)
-        return (-1);
-    data.std_in = dup(STDIN_FILENO);
-    data.std_out = dup(STDOUT_FILENO);
-    // is_buildins(cmd, );
-    while ((*cmd) != NULL)
-    {
-        if (pipe(data.fd) == -1)
-            return (-1);
-        data.pid[i] = fork();
-        if (data.pid[i] == -1)
-            return (-1);
-        if (data.pid[i] == 0)
-        {
-            if ((*cmd)->next)
-                dup2(data.fd[1], STDOUT_FILENO);
-            //redirections(cmd, data, env);
-            close(data.fd[1]);
-            close(data.fd[0]);
-            search_path(cmd, env);
-        }
-        // mirar los permisos y luego poner command not found
-            // execve("/bin/ls", (*cmd)->args, env);
-            // exec_cmd(path, cmd, env);
-        dup2(data.fd[0], STDIN_FILENO);
-        close_pipe(data.fd[0], data.fd[1]);
-        (*cmd) = (*cmd)->next;
-        // printf("arg = %s", (*cmd)->args[1]);
-        i++;
-    }
+// int executor(t_cmd **cmd, t_lexer **lexer, char **env)
+// {
+//     t_pipe data;
+//     int i = 0;
+//     (void) lexer;
+//     data.n_commands = parser_lstsize(*cmd);
+//     // data.n_commands = 1;
+//     data.fd[0] = -1;
+//     data.fd[1] = -1;
+//     data.pid = malloc(sizeof(pid_t) * data.n_commands);
+//     if (!data.pid)
+//         return (-1);
+//     data.std_in = dup(STDIN_FILENO);
+//     data.std_out = dup(STDOUT_FILENO);
+//     // is_buildins(cmd, );
+//     while ((*cmd) != NULL)
+//     {
+//         if (pipe(data.fd) == -1)
+//             return (-1);
+//         data.pid[i] = fork();
+//         if (data.pid[i] == -1)
+//             return (-1);
+//         if (data.pid[i] == 0)
+//         {
+//             if ((*cmd)->next)
+//                 dup2(data.fd[1], STDOUT_FILENO);
+//             //redirections(cmd, data, env);
+//             close(data.fd[1]);
+//             close(data.fd[0]);
+//             search_path(cmd, env);
+//         }
+//         // mirar los permisos y luego poner command not found
+//             // execve("/bin/ls", (*cmd)->args, env);
+//             // exec_cmd(path, cmd, env);
+//         dup2(data.fd[0], STDIN_FILENO);
+//         close_pipe(data.fd[0], data.fd[1]);
+//         (*cmd) = (*cmd)->next;
+//         // printf("arg = %s", (*cmd)->args[1]);
+//         i++;
+//     }
     
-    // tengo que hay el wait_children
-    // printf("%d", i);
-    wait_children(&data, 0);
-    return (0);
-}
+//     // tengo que hay el wait_children
+//     // printf("%d", i);
+//     wait_children(&data, 0);
+//     return (0);
+// }

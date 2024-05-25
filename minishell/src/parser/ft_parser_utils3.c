@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:52:50 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/06 11:12:44 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/05/25 04:18:27 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,24 @@ t_redir	*redir_lstlast(t_redir *redir)
 		aux = aux->next;
 	}
 	return (aux);
+}
+int check_error(t_lexer *lexer)
+{
+	// if (lexer->type != NOTH)
+	// {
+		
+	// }
+
+    while (lexer->next != NULL)
+    {
+        if ((lexer->type != NOTH && lexer->next->type == GREAT) || 
+			(lexer->type != NOTH && lexer->next->type == LESS) || 
+			(lexer->type != NOTH && lexer->next->type == PIPE))
+        {
+            write(2, "bash: syntax error near unexpected token 'newline'\n", 52);
+            return (-1);
+        }
+        lexer = lexer->next;
+    }
+    return (0);
 }

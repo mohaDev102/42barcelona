@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 12:42:57 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/21 14:33:52 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/05/25 19:53:31 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,4 +70,11 @@ void	ft_error_cmd(t_cmd **cmd, char *msg)
 			write(2, msg, ft_strlen(msg));
 		exit(127);
 	}
+}
+void	close_pipe(int in, int out)
+{
+	if (in != -1)
+		close(in);
+	if (out != -1)
+		close(out);
 }

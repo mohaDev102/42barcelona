@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:36:41 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/21 12:43:03 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/05/25 04:18:24 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,10 @@ int	check_pipes(t_lexer **lexer)
 void	ft_error(t_lexer **lexer)
 {
 	if ((*lexer)->type == 1 || ft_last_lexer(lexer)->type == 1)
-		write(1, "bash: syntax error near unexpected token |\n", 44);
+		write(2, "bash: syntax error near unexpected token |\n", 44);
 	else if (ft_last_lexer(lexer)->type == 2 || ft_last_lexer(lexer)->type == 3
 		|| ft_last_lexer(lexer)->type == 4 || ft_last_lexer(lexer)->type == 5)
-		write(1, "bash: syntax error near unexpected token 'newline'\n", 52);
+		write(2, "bash: syntax error near unexpected token 'newline'\n", 52);
 }
 
 int ft_count_args(t_lexer *aux)
@@ -64,7 +64,7 @@ int	ft_parse(t_cmd **commands, t_lexer *lexer)
 	if (check_pipes(&lexer) || ft_last_lexer(&lexer)->type == 1
 		|| ft_last_lexer(&lexer)->type == 1 || ft_last_lexer(&lexer)->type == 2
 		|| ft_last_lexer(&lexer)->type == 3 || ft_last_lexer(&lexer)->type == 4
-		|| ft_last_lexer(&lexer)->type == 5)
+		|| ft_last_lexer(&lexer)->type == 5 || check_error(aux))
 	{
 		return (ft_error(&lexer), -1);
 	}

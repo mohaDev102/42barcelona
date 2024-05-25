@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:56:42 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/21 17:16:19 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/25 00:23:09 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,4 +167,6 @@ void				ft_error_cmd(t_cmd **cmd, char *msg);
 int					parser_lstsize(t_cmd *lst);
 void				redirections(t_cmd **cmd, t_pipe data, char *env[]);
 t_pipe				*ft_pipes(t_cmd **cmd);
+int check_error(t_lexer *lexer);
+void	close_pipe(int in, int out);
 #endif
