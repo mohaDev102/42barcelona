@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:10:01 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/20 19:42:45 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/25 17:10:18 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ char *clean_str(char *str, int start, int end)
 
     i = 0;
     j = 0;
-	// printf("ici%s", str);
-    res = malloc(sizeof(char) * (ft_strlen(str) - 2));
+
+    res = malloc(sizeof(char) * (ft_strlen(str) - 1));
     if (res == NULL)
         return (NULL);
     while (str[j])
@@ -51,7 +51,7 @@ char *extract_var_name(char *str, int i)
     {
         i++;
     }
-    var = malloc(sizeof(char) * (i - j));
+    var = malloc(sizeof(char) * i + 1);
     while (j <= i)
     {
         var[k++] = str[j++];
@@ -59,4 +59,22 @@ char *extract_var_name(char *str, int i)
     }
     var[k] = '\0';
     return (var);
+}
+
+char *last_exit()
+{
+    char *res;
+
+    res = ft_itoa(exit_status(0));
+    return (res);
+}
+
+int	exit_status(int value)
+{
+	static int	prev = 0;
+	int			ret;
+
+	ret = prev;
+	prev = value;
+	return (ret);
 }

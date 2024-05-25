@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 20:13:08 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/20 19:52:59 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/25 19:18:58 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ char	*change_pwd(t_list **envlist)
 	if (!buf)
 	{
 		perror("malloc");
-		exit(EXIT_FAILURE);
+		//exit(EXIT_FAILURE);
 	}
 	if (!getcwd(buf, PATH_MAX))
 	{
 		perror("getcwd");
-		exit(EXIT_FAILURE);
+		//exit(EXIT_FAILURE);
 	}
 	full_env = ft_strjoin("OLDPWD=", buf);
 	ft_export(envlist, full_env);
@@ -58,10 +58,12 @@ char	*my_getenv(t_list *envlist, char *name, int flag)
 	init_list();
 	tmp = envlist;
 	content = NULL;
-	while (tmp->next)
+	while (tmp != NULL)
 	{
 		if (ft_strcmp(name, tmp->name) == 0)
+		{
 			content = tmp->content;
+		}
 		tmp = tmp->next;
 	}
 	if (content == NULL)
@@ -70,7 +72,7 @@ char	*my_getenv(t_list *envlist, char *name, int flag)
 			write(2, "cd: HOME not set\n", 18);
 		else if (flag == 2)
 			write(2, "cd: OLDPWD not set\n", 20);
-		exit(EXIT_FAILURE);
+		return (NULL);
 	}
 	content = clean_content(content);
 	return (content);
@@ -84,12 +86,12 @@ char	*clean_content(char *content)
 	char	*res;
 
 	len = ft_strlen(content);
-	res = malloc(sizeof(char) * len - 1);
+	res = malloc(sizeof(char) * len);
 	i = 1;
 	j = 0;
 	while (content[i])
 		res[j++] = content[i++];
-	res[len - 1] = '\0';
+	res[j] = '\0';
 	return (res);
 }
 
@@ -98,16 +100,13 @@ void	ft_cd(char *cdcmd, t_list **envlist)
 {
 	char	*envcontent;
 
-	if (cdcmd == NULL)
+	if ((cdcmd == NULL) || ft_strcmp(cdcmd, "~") == 0)
 	{
 		envcontent = my_getenv(*envlist, "HOME", 1);
 		cd_action(envcontent, envlist);
 	}
 	else if (!strcmp(cdcmd, "-"))
-	{
-		envcontent = my_getenv(*envlist, "OLDPWD", 2);
-		cd_action(envcontent, envlist);
-	}
+		ft_pwd();
 	else
 	{
 		cd_action(cdcmd, envlist);

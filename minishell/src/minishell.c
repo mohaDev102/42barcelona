@@ -6,17 +6,18 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:37:57 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/21 17:17:16 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/25 01:51:57 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int	ft_operation(t_lexer **lexer, t_cmd **cmd, char *env[])
+int	ft_operation(t_lexer **lexer, t_cmd **cmd, char *env[], t_list **envlist)
 {
 	char	*line;
 	// int		val;
-	t_list	*envlist;
+	char **my_env;
+	// int i = 0;
 
 	(void)env;
 	line = readline("minishell$ ");
@@ -25,20 +26,18 @@ int	ft_operation(t_lexer **lexer, t_cmd **cmd, char *env[])
 		printf("exit\n");
 		return (1);
 	}
-	envlist = ft_list(env);
+	
+	my_env = copy_env(env);
 	if (ft_lexer(line, lexer) == 0)
 	{
 		if (ft_parse(cmd, *lexer) != -1)
 		{
 			her_doc(*cmd, env);
-			// if (!expandor())
-			// write(1, "ici", 3);
-			if (!expandor(*cmd, &envlist))
+			if (!expandor(*cmd, envlist))
 			{
-				// printf("iciii%s\n", (*cmd)->args[0]);
-				executor(cmd, lexer, env);
+				executor(cmd, env, envlist);
 			}
-			executor(cmd, env);
+			// executor(cmd, env);
 		}
 	}
 	lexer_clear(cmd, lexer);
@@ -54,19 +53,22 @@ int	main(int argc, char *argv[], char *env[])
 {
 	t_lexer *lexer;
 	t_cmd *cmd;
+	t_list *envlist;
 
 	lexer = NULL;
 	cmd = NULL;
+	envlist = NULL;
 	rl_catch_signals = 0;
 	(void)argv;
 	if (argc > 1)
 	{
 		printf("Error\n");
 	}
+	envlist = ft_list(env);
 	receive_signal(1);
 	while (1)
 	{
-		if (ft_operation(&lexer, &cmd, env))
+		if (ft_operation(&lexer, &cmd, env, &envlist))
 			break ;
 	}
 	return (g_error);

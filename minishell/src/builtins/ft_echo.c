@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 22:28:48 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/20 20:48:12 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/25 16:31:53 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,47 +69,45 @@ void	ft_putnbr(int nb)
 // 	ft_putnbr(error);
 // }
 
-char *extract_name(char *echocmd)
-{
-	int i;
-	int j;
-	int k;
-	char *res;
+// char *extract_name(char *echocmd)
+// {
+// 	int i;
+// 	int j;
+// 	int k;
+// 	char *res;
 
-	k = 0;
-	i = 0;
-	j = 1;
-	res = NULL;
-	while(echocmd[i])
-	{
-		if (echocmd[i] == '$')
-		{
-			i = i + 2;
-			while(echocmd[i] != ' ')
-			{
-				i++;
-				j++;
-			}
-			res = malloc(sizeof(char) * (j + 1));
-			i = i - j;
-			while(k < j)
-			{
-				res[k++] = echocmd[i++];
-			}
-			res[k] = '\0';
-			break;
-		}
-		i++;
-	}
-	return (res);
-}
+// 	k = 0;
+// 	i = 0;
+// 	j = 1;
+// 	res = NULL;
+// 	while(echocmd[i])
+// 	{
+// 			i = i + 2;
+// 			while(echocmd[i] != ' ')
+// 			{
+// 				i++;
+// 				j++;
+// 			}
+// 			res = malloc(sizeof(char) * (j + 1));
+// 			i = i - j;
+// 			while(k < j)
+// 			{
+// 				res[k++] = echocmd[i++];
+// 			}
+// 			res[k] = '\0';
+// 			break;
+// 		}
+// 		i++;
+// 	}
+// 	return (res);
+// }
 
 void	ft_echo(char *echocmd, int flag, t_list *envlist)
 {
 	int		i;
 	// int j = 0;
-	char *envname;
-
+	// char *envname;
+	(void)envlist;
 	i = 0;
 	// ft_putnbr(flag);
 	if (echocmd == NULL)
@@ -125,22 +123,22 @@ void	ft_echo(char *echocmd, int flag, t_list *envlist)
 		{
 			// while (echocmd[i] && (echocmd[i] != 36))
 			// 	write(1, &echocmd[i++], 1);
-			if (echocmd[1] == '-')
-                    write(1, "si", 2);
-			if (echocmd[i] == 36 && echocmd[i + 1] > 32 && echocmd[i + 1] < 127 && echocmd[i + 1] != 63)
-			{	
-				envname = extract_name(echocmd);
-				print_env(envname, envlist);
-				while(echocmd[i] && echocmd[i + 1] != ' ')
-					i++;
-			}
+			// if (echocmd[1] == '-')
+            //         write(1, "si", 2);
+			// if (echocmd[i] == 36 && echocmd[i + 1] > 32 && echocmd[i + 1] < 127 && echocmd[i + 1] != 63)
+			// {	
+			// 	envname = extract_name(echocmd);
+			// 	print_env(envname, envlist);
+			// 	while(echocmd[i] && echocmd[i + 1] != ' ')
+			// 		i++;
+			// }
 			// else if (echocmd[i] == 36 && echocmd[i + 1] == 63)
 			// {
 			// 	print_error(error);
 			// 	i++;
 			// }
-			else
-			{
+			// else
+			// {
 				write(1, &echocmd[i], 1);
 				// while(echocmd[i])
 				// {
@@ -149,7 +147,7 @@ void	ft_echo(char *echocmd, int flag, t_list *envlist)
 					// printf("eef");
 					// i++;
 				// }
-			}
+			// }
 			i++;
 		}
 	}
@@ -158,7 +156,7 @@ void	ft_echo(char *echocmd, int flag, t_list *envlist)
 		if (flag == 1)
 		{
 				write(1, "\n", 1);
-				write(1, "fin", 3);
+				// write(1, "fin", 3);
 		}
 		// return ;
 	// }

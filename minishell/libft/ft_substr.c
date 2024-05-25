@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42barcel>       +#+  +:+       +#+        */
+/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 00:54:10 by mel-atta          #+#    #+#             */
-/*   Updated: 2023/12/16 17:02:10 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/05/17 22:13:45 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../minishell.h"
+
+#include "../inc/minishell.h"
 #include <unistd.h>
 #include <stdio.h>
 

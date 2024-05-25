@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 15:14:33 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/11 17:30:57 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/23 17:47:21 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,5 @@ void	ft_pwd(void)
 		exit(EXIT_FAILURE);
 	}
 	printf("%s\n", buf);
+	free(buf);
 }

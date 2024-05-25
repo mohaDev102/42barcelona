@@ -1,15 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42barcel>       +#+  +:+       +#+        */
+/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 15:15:38 by mel-atta          #+#    #+#             */
-/*   Updated: 2023/12/16 22:26:47 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/05/25 12:08:44 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../minishell.h"
+
+#include "../inc/minishell.h"
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>

@@ -6,11 +6,12 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:31:37 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/20 20:28:56 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/25 19:08:59 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
 
 char	*handle_quote(char *str, int i, int flag)
 {
@@ -33,6 +34,8 @@ char	*handle_quote(char *str, int i, int flag)
 	{
 		if (str[i] == c)
 		{
+			if (i == 1)
+				return (NULL);
 			if (flag == 1)
 				singleq = 1;
 			if (flag == 2)
@@ -47,24 +50,49 @@ char	*handle_quote(char *str, int i, int flag)
 	return (res);
 }
 
-char *handle_dollar(char *str, int i, t_list **envlist)
+char *handle_dollar(char *str, int i, t_list **envlist, int quote)
 {
 	char *varname;
 	char *res;
 
-	// if (str[i] == "?")
-	// {
-
-	// }
-	// else
-	// {
+	if (str[i] == '?' && quote != 1)
+	{
+		res = last_exit();
+	}
+	else if (quote != 1)
+	{
 		varname = extract_var_name(str, i);
-				// printf("varname %s\n", varname);
 		res = my_getenv(*envlist, varname, 0);
-		// printf("res %s\n", res);
-
-	// }
+		if (res == NULL)
+			return (NULL);
+	}
+	else
+		return (str);
 	return (res);
+}
+
+int	quote_found(char **str, int j, int i)
+{
+	int cleaned;
+
+	cleaned = 0;
+		if (str[j][i] == '\'')
+		{
+			str[j] = handle_quote(str[j], i, 1);
+			if (!str[j])
+				return (0);
+			cleaned = 1;
+		}
+		else if (str[j][i] == '\"')
+		{
+			str[j] = handle_quote(str[j], i, 2);
+			if (!str[j])
+			{
+				return (0);
+			}
+			cleaned = 2;
+		}
+	return (cleaned);
 }
 
 char *expand(char **str, int j, t_list **envlist)
@@ -74,29 +102,42 @@ char *expand(char **str, int j, t_list **envlist)
 
 	cleaned = 0;
 	i = 0;
-		(void)envlist;
-
-	while (str[j][i])
+	// j = 0;
+	(void)envlist;
+	// str[1][0] = '$';
+	// while (str[j])
+	// {
+	// // 	printf("icic %s", str[j]);
+	// 	j++;
+	// }
+	// j = 1;
+		while (str[j][i])
+		{
+			if ((str[j][i] == '\'' || str[j][i] == '\"') && cleaned == 0)
+			{
+				cleaned = quote_found(str, j, i);
+				if (cleaned == 0)
+					return (NULL);
+			}
+			if (str[j][i] == '$')
+			{
+				str[j] = handle_dollar(str[j], i + 1, envlist, cleaned);
+				if (!str[j])
+					return (NULL);
+			}
+			i++;
+		}
+	// 		j++;
+	// }
+	// write(2, "r3", 2);
+	// if (cleaned == 2)
+	// {
+	// 	return (NULL);
+	// }
+	if (cleaned == 1 || cleaned == 2)
 	{
-		if (str[j][i] == '\'')
-		{
-			str[j] = handle_quote(str[j], i, 1);
-			cleaned = 1;
-		}
-		else if (str[j][i] == '\"')
-		{
-			str[j] = handle_quote(str[j], i, 2);
-			cleaned = 1;
-		}
-		if (str[j][i] == '$')
-		{
-			str[j] = ft_strjoin(str[j], handle_dollar(str[j], i + 1, envlist));
-			cleaned = 1;
-		}
-		i++;
-	}
-	if (cleaned == 1)
 		return (str[j]);
+	}
 	return(NULL);
 }
 
@@ -104,11 +145,12 @@ int expandor(t_cmd *cmd, t_list **envlist)
 {
     int i;
 	char *expanded;
-	// (void)envlist;
+	t_redir *tmp;
+	
     i = 0;
     while (cmd)
     {
-
+		i = 0;
         while (cmd->args[i])
         {
 			expanded = expand(cmd->args, i, envlist);
@@ -116,6 +158,14 @@ int expandor(t_cmd *cmd, t_list **envlist)
 				cmd->args[i] = expanded;
 			i++;
         }
+		tmp = cmd->redir;
+		while (tmp)
+		{
+			if (expand(&(tmp->file), 0, envlist))
+				return (1);
+			tmp = tmp->next;
+		}
+		
         cmd = cmd->next;
     }
 	return (0);

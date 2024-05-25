@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42barcel>       +#+  +:+       +#+        */
+/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 17:30:02 by mel-atta          #+#    #+#             */
-/*   Updated: 2023/12/16 17:02:39 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/05/17 22:13:28 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../minishell.h"
+
+#include "../inc/minishell.h"
 #include <string.h>
 
 char	*ft_strdup(const char *s1)

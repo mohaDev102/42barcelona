@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy.c                                        :+:      :+:    :+:   */
+/*   ft_lstlast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/25 11:48:08 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/17 22:14:52 by alounici         ###   ########.fr       */
+/*   Created: 2024/05/25 14:28:48 by alounici          #+#    #+#             */
+/*   Updated: 2024/05/25 14:30:22 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
-
-char	*ft_strcpy(char *s1, char *s2)
+typedef struct s_list
 {
-	int	i;
+	char			*name;
+	char			*content;
+	struct s_list	*next;
+}					t_list;
 
-	i = 0;
-	while (s2[i])
+
+t_list	*ft_lstlast(t_list *lst)
+{
+	while (lst)
 	{
-		s1[i] = s2[i];
-		i++;
+		if (!lst->next)
+			return (lst);
+		lst = lst->next;
 	}
-	s1[i] = '\0';
-	return (s1);
+	return (lst);
 }

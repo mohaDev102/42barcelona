@@ -1,30 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcpy.c                                        :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/25 11:48:08 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/17 22:14:52 by alounici         ###   ########.fr       */
+/*   Created: 2024/05/24 19:07:30 by alounici          #+#    #+#             */
+/*   Updated: 2024/05/24 19:07:31 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
-#include <stdio.h>
-#include <string.h>
-#include <unistd.h>
 
-char	*ft_strcpy(char *s1, char *s2)
+
+int	ft_isdigit(int c)
 {
-	int	i;
-
-	i = 0;
-	while (s2[i])
-	{
-		s1[i] = s2[i];
-		i++;
-	}
-	s1[i] = '\0';
-	return (s1);
+	if (c >= 48 && c <= 57)
+		return (c);
+	return (0);
 }

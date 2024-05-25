@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:01:02 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/25 04:07:54 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/05/25 20:10:43 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,32 +72,44 @@ void	exec_cmd(char *path, t_cmd **cmd, char *env[])
 	(void)env;
 }
 
-int	executor(t_cmd **cmd, char **env)
+int	executor(t_cmd **cmd, char **env, t_list **envlist)
 {
 	t_pipe	data;
 	int		i;
-
+	// t_list	*envlist;
 	i = -1;
 	data = *ft_pipes(cmd);
-	while ((*cmd) != NULL)
+	// envlist = ft_list(env);
+	// arreglar porque hace buildins pero no el executor cuando se pone
+	// echo hola$ | cat -e
+	// correcto: hola$$ sale: hola$
+	if (is_buildins(cmd, envlist))
 	{
-		if (pipe(data.fd) == -1)
-			return (-1);
-		data.pid[++i] = fork();
-		if (data.pid[i] == -1)
-			return (-1);
-		if (data.pid[i] == 0)
-		{
-			redirections(cmd, data, env);
-			close(data.fd[1]);
-			close(data.fd[0]);
-			search_path(cmd, env);
-		}
-		dup2(data.fd[0], STDIN_FILENO);
-		close_pipe(data.fd[0], data.fd[1]);
-		(*cmd) = (*cmd)->next;
+		return (0);
+		write(2, "ee", 2);
 	}
-	wait_children(&data, 0);
+	else
+	{
+		while ((*cmd) != NULL)
+		{
+			if (pipe(data.fd) == -1)
+				return (-1);
+			data.pid[++i] = fork();
+			if (data.pid[i] == -1)
+				return (-1);
+			if (data.pid[i] == 0)
+			{
+				redirections(cmd, data, env);
+				close(data.fd[1]);
+				close(data.fd[0]);
+				search_path(cmd, env);
+			}
+			dup2(data.fd[0], STDIN_FILENO);
+			close_pipe(data.fd[0], data.fd[1]);
+			(*cmd) = (*cmd)->next;
+		}
+		wait_children(&data, 0);
+	}
 	return (0);
 }
 
