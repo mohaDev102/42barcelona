@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:01:02 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/25 22:43:47 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/05/28 15:17:13 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,21 @@ void	search_path(t_cmd **cmd, char *env[])
 	if (!path)
 		exit(1);
 	paths = ft_split(path, ':');
-	if (access(*(*cmd)->args, X_OK) != -1)
-		execve((*cmd)->args[0], (*cmd)->args, env);
-	while (paths[i] != NULL)
+	if ((*cmd)->args)
 	{
-		path_final = ft_strjoin(paths[i], "/");
-		path_cmd = ft_strjoin(path_final, *(*cmd)->args);
-		if (!path_cmd)
-			exit(-1);
-		execve(path_cmd, (*cmd)->args, env);
-		free(path_final);
-		free(path_cmd);
-		i++;
+		if (access(*(*cmd)->args, X_OK) != -1)
+			execve((*cmd)->args[0], (*cmd)->args, env);
+		while (paths[i] != NULL)
+		{
+			path_final = ft_strjoin(paths[i], "/");
+			path_cmd = ft_strjoin(path_final, *(*cmd)->args);
+			if (!path_cmd)
+				exit(-1);
+			execve(path_cmd, (*cmd)->args, env);
+			free(path_final);
+			free(path_cmd);
+			i++;
+		}
 	}
 	ft_error_cmd(cmd, "Command not found\n");
 }
@@ -86,9 +89,10 @@ int	executor(t_cmd **cmd, char **env, t_list **envlist)
 	if (is_buildins(cmd, envlist))
 	{
 		return (0);
+		// write(2, "si", 1);
 	}
-	else
-	{
+	// else
+	// {
 		while ((*cmd) != NULL)
 		{
 			if (pipe(data.fd) == -1)
@@ -108,7 +112,7 @@ int	executor(t_cmd **cmd, char **env, t_list **envlist)
 			(*cmd) = (*cmd)->next;
 		}
 		wait_children(&data, 0);
-	}
+	// }
 	return (0);
 }
 

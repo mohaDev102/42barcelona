@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 12:42:57 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/25 19:53:31 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/05/28 11:45:17 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,14 @@ t_pipe	*ft_pipes(t_cmd **cmd)
 
 void	ft_error_cmd(t_cmd **cmd, char *msg)
 {
-	if (access(*(*cmd)->args, F_OK) == -1)
+	if ((*cmd)->args)
 	{
-		if (msg != NULL)
-			write(2, msg, ft_strlen(msg));
-		exit(127);
+		if (access(*(*cmd)->args, F_OK) == -1)
+		{
+			if (msg != NULL)
+				write(2, msg, ft_strlen(msg));
+			exit(127);
+		}
 	}
 }
 void	close_pipe(int in, int out)

@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 20:15:13 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/25 22:16:54 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/05/28 13:09:49 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ int    is_buildins(t_cmd **cmd, t_list **envlist)
     tmp = *cmd;
     i = 1;
     //  write(1, "ic222\n\n", 7);
-    if (tmp->args[0])
+    if (tmp && tmp->args && tmp->args[0])
     {
          if (is_buildins2(&tmp, *envlist) == 1)
-        return (1);
+            return (1);
     else if (ft_strcmp(tmp->args[0], "cd") == 0)
     {
         ft_cd(tmp->args[1], envlist);
