@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:37:57 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/25 01:51:57 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/27 22:49:40 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,5 +71,5 @@ int	main(int argc, char *argv[], char *env[])
 		if (ft_operation(&lexer, &cmd, env, &envlist))
 			break ;
 	}
-	return (g_error);
+	return (exit_status(0));
 }

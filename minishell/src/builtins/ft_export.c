@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 15:00:24 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/25 19:10:51 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/27 22:50:48 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ char	*extract_env_name(char *str)
 		return (NULL);
 	while (j < i)
 	{
+		if (ft_isdigit(str[j]) == 0 && str[i] != '=')
+			return (0);
 		res[j] = str[j];
 		j++;
 	}
@@ -94,6 +96,12 @@ void	ft_export(t_list **envlist, char *str)
 	tmp = *envlist;
 	new = NULL;
 	envname = extract_env_name(str);
+	if (envname == 0)
+	{
+		print_export_error(str);
+		// printf("minishell: export: '%s': not a valid identifier\n", str);
+		return ;
+	}
 	envcontent = extract_env_content(str);
 	new = ft_lstnew(envname, envcontent);
 	while (tmp)

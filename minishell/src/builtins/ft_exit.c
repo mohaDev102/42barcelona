@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 18:11:46 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/24 19:37:56 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/25 23:41:47 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,30 @@ void    check_exit(char *str)
     {
         if (!ft_isdigit(str[i]))
         {
-            printf("exit\nminishell: exit: %s: numeric argument required", str);
+            print_limit_exit(str);
             exit(255);
         }
         i++;
     }
 }
 
+void print_limit_exit(char *str)
+{
+    int i;
+
+    i = 0;
+    write(2, "exit\nminishell: exit: ", 23);
+    while(str[i])
+            write(2, &str[i++], 1);
+    write(2, " numeric argument required\n", 28);
+}
+
 void check_limit(char *str)
 {
     int neg;
+    int i;
 
+    i = 0;
     neg = 0;
     if (*str == '-')
     {
@@ -55,11 +68,17 @@ void check_limit(char *str)
         neg = 1;
     }
     if (ft_strlen(str) > 19)
-        printf("exit\nminishell: exit: %s: numeric argument required\n", str);
+    {
+        print_limit_exit(str);
+    }
     else if (ft_strlen(str) == 19 && ft_strcmp(str, "9223372036854775807") > 0 && !neg)
-	    printf("exit\nminishell: exit: %s: numeric argument required\n", str);
+	{
+        print_limit_exit(str);
+    }
 	else if (ft_strlen(str) == 19 && ft_strcmp(str, "9223372036854775808") > 0 && neg)
-	    printf("exit\nminishell: exit: %s: numeric argument required\n", str);
+    {
+        print_limit_exit(str);
+    }
     else
         return;
     exit (255);
@@ -70,24 +89,25 @@ void ft_exit(char **args)
     
     if (args[1] == NULL || ft_strcmp(args[1], "--") == 0)
     {
-        printf("exit\n");
+        write(2, "exit\n", 5);
         exit(0);
-    }
-    else if (args[1] && args[2])
-    {
-        printf("bash: exit: too many arguments");
-        exit (1);
     }
     else if (!args[1][0])
     {
-        printf("exit\nminishell : exit: : numeric argument required");
+        write(2, "exit\nminishell : exit: : numeric argument required\n", 51);
         exit (255);
+    }
+    else if (args[1] && args[2])
+    {
+        write(2, "minishell: exit: too many arguments\n", 36);
+        exit (1);
     }
     else if (args[1])
     {
         check_exit(args[1]);
         check_limit(args[1]);
     }
-    printf("exit\n");
+        // write(1, "ici", 3);
+    write(2, "exit\n", 5);
     exit (ft_atoi(args[1]));
 }
