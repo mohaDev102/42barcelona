@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:36:41 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/25 04:18:24 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/05/28 11:38:40 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,10 @@ int ft_count_args(t_lexer *aux)
 	i = 0;
 	while (aux && aux->type != PIPE)
 	{
-		i++;
+		if (aux->type == NOTH)
+			i++;
+		if (aux->type != NOTH && aux->next != NULL)
+			aux = aux->next;
 		aux = aux->next;
 	}
 	return (i);

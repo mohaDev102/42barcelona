@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 20:15:13 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/27 23:02:52 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/28 18:40:19 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,58 +101,33 @@ int    is_buildins(t_cmd **cmd, t_list **envlist)
     // printf("cmd = %s", tmp->args[0]);
     i = 1;
     //  write(1, "ic222\n\n", 7);
-        while (tmp)
-        {
-            while (tmp->args[i])
-            {
-                // if (tmp->args[0])
-                    if (is_buildins2(&tmp, *envlist) == 1)
-                        return (1);
-                // }
-                else if (ft_strcmp(tmp->args[0], "cd") == 0)
-                {
-                    ft_cd(tmp->args[1], envlist);
-                    return (1);
-                }
-                else if (ft_strcmp(tmp->args[0], "unset") == 0)
-                {
-                    while (tmp->args[i])
-                        ft_unset(envlist, tmp->args[i++]);
-                    return (1);
-                }
-                else if (ft_strcmp(tmp->args[0], "export") == 0 && tmp->args[1])
-                {
-                    while (tmp->args[i])
-                        ft_export(envlist, tmp->args[i++]);
-                        return (1);
-                }
-                else if (ft_strcmp(tmp->args[0], "env") == 0)
-                {
-                    ft_env(envlist);
-                    return (1);
-                }
-                else if (ft_strcmp(tmp->args[0], "pwd") == 0)
-                {
-                    ft_pwd();
-                    return (1);
-                }
-                else if (ft_strcmp(tmp->args[0], "exit") == 0)
-                {
-                    ft_exit(tmp->args);
-                    return (1);
-                }
-                else if (ft_strcmp(tmp->args[0], "export") == 0)
-                {
-                    ft_export_alone(envlist);
-                    return (1);
-                }
-            i++;
-        }
-        tmp = tmp->next;
-
-        }
+    if (tmp && tmp->args && tmp->args[0])
+    {
+         if (is_buildins2(&tmp, *envlist) == 1)
+            return (1);
+    }
+    else if (ft_strcmp(tmp->args[0], "cd") == 0)
+    {
+        ft_cd(tmp->args[1], envlist);
+        return (1);
+    }
+    else if (ft_strcmp(tmp->args[0], "unset") == 0)
+    {
+        while (tmp->args[i])
+            ft_unset(envlist, tmp->args[i++]);
+        return (1);
+    }
+    else if (ft_strcmp(tmp->args[0], "export") == 0 && tmp->args[1])
+    {
+        while (tmp->args[i])
+            ft_export(envlist, tmp->args[i++]);
+        // printf("%s", (*envlist)->name);
+    // while ((*envlist) != NULL)
+    // {
+    //     printf("%s\t%s\n",(*envlist)->name, (*envlist)->content);
+    //     envlist = &(*envlist)->next;
         
-    // }
+    }
     return (0);
     // tmp = tmp->next;
 }

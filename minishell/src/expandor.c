@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:31:37 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/25 22:05:24 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/05/28 11:39:09 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ int expandor(t_cmd *cmd, t_list **envlist)
     while (cmd)
     {
 		i = 0;
-        while (cmd->args[i])
+        while (cmd->args && cmd->args[i])
         {
 			expanded = expand(cmd->args, i, envlist);
             if (expanded)
