@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 20:15:13 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/29 19:42:30 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/29 19:47:39 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,33 +108,38 @@ int    is_buildins(t_cmd **cmd, t_list **envlist)
     //      if (is_buildins2(&tmp, *envlist) == 1)
     //         return (1);
         // // }
-   is_buildins2(tmp, envlist);
-   if (ft_strcmp(tmp->args[0], "cd") == 0)
+   if (tmp && tmp->args && tmp->args[0])
     {
-        ft_cd(tmp->args[1], envlist);
-        return (1);
-    }
-    else if (ft_strcmp(tmp->args[0], "unset") == 0)
-    {
-        while (tmp->args[i])
-            ft_unset(envlist, tmp->args[i++]);
-        return (1);
-    }
-    else if (ft_strcmp(tmp->args[0], "export") == 0 && tmp->args[1])
-    {
-        while (tmp->args[i])
-            ft_export(envlist, tmp->args[i++]);
-        // printf("%s", (*envlist)->name);
-    // while ((*envlist) != NULL)
-    // {
-    //     printf("%s\t%s\n",(*envlist)->name, (*envlist)->content);
-    //     envlist = &(*envlist)->next;
-        
-    }
-    else if (ft_strcmp(tmp->args[0], "exit") == 0)
-    {
-        ft_exit(tmp->args);
-    }
+        // if (tmp && tmp->args && tmp->args[0])
+        // {
+         if (is_buildins2(&tmp, *envlist) == 1)
+            return (1);
+    if (ft_strcmp(tmp->args[0], "cd") == 0)
+        {
+            ft_cd(tmp->args[1], envlist);
+            return (1);
+        }
+        else if (ft_strcmp(tmp->args[0], "unset") == 0)
+        {
+            while (tmp->args[i])
+                ft_unset(envlist, tmp->args[i++]);
+            return (1);
+        }
+        else if (ft_strcmp(tmp->args[0], "export") == 0 && tmp->args[1])
+        {
+            while (tmp->args[i])
+                ft_export(envlist, tmp->args[i++]);
+            // printf("%s", (*envlist)->name);
+        // while ((*envlist) != NULL)
+        // {
+        //     printf("%s\t%s\n",(*envlist)->name, (*envlist)->content);
+        //     envlist = &(*envlist)->next;
+            
+        }
+        else if (ft_strcmp(tmp->args[0], "exit") == 0)
+        {
+            ft_exit(tmp->args);
+        }
     }
     
     return (0);
