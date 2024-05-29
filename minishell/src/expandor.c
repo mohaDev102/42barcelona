@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expandor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:31:37 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/28 11:39:09 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/05/29 21:54:32 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ char *expand(char **str, int j, t_list **envlist)
 
 	cleaned = 0;
 	i = 0;
-	// j = 0;
+	j = 0;
 	(void)envlist;
 	// str[1][0] = '$';
 	// while (str[j])
@@ -113,6 +113,8 @@ char *expand(char **str, int j, t_list **envlist)
 	// j = 1;
 		while (str[j][i])
 		{
+			if (ft_strcmp(str[j], """"))
+				return (NULL);
 			if ((str[j][i] == '\'' || str[j][i] == '\"') && cleaned == 0)
 			{
 				cleaned = quote_found(str, j, i);

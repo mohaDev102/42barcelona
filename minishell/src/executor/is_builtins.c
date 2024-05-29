@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 20:15:13 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/29 20:00:58 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/29 22:55:28 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int echo_flag(char **args, int i)
     while (args[i])
     {
 
-        if (args[i][0] == '-' && args[i][1] == 'n' && ft_strcmp(args[i - 1], "echo"))
+        if (args[i][0] == '-' && args[i][1] == 'n' && (ft_strcmp(args[i - 1], "echo") == 0 || ft_strcmp(args[i - 1], "-n") == 0))
         {
             j = 1;
             while (args[i][j] == 'n')
@@ -50,22 +50,28 @@ int    is_buildins2(t_cmd **tmp, t_list *envlist)
     ret = 0;
     i = 0;
     j = 0;
-    if ((*tmp)->args[0])
-    {
+    // if ((*tmp)->args[0])
+    // {
+        // while (tmp)
+        // {
+            i = 0;
+            ret = 0;
         while ((*tmp)->args[i])
         {
+            // printf("%s\n", (*tmp)->args[i]);
             if (ft_strcmp((*tmp)->args[i], "echo") == 0)
             {
                 ret  = echo_flag(&(*tmp)->args[i], i);
+                // printf("ret%d\n", ret);
                 if (ret != 0)
                 {
                     ret++;
                     while ((*tmp)->args[ret])
                     {
                         ft_echo((*tmp)->args[ret], 0, envlist);
-                        // write(1, " ", 1);
                         ret++;
                     }
+                    write(1, "ici", 3);
                     return (1);
                 }
                 else
@@ -80,12 +86,15 @@ int    is_buildins2(t_cmd **tmp, t_list *envlist)
                         ft_echo((*tmp)->args[i++], 1, envlist);
                     }
                     write(1, "\n", 1);
+                    write(1, "ici", 3);
                     return(1);
                 }
             }
             i++;
         }
-    }
+        // tmp = &(*tmp)->next;
+        // }
+    // }
         return (0);
 }
 
@@ -108,13 +117,15 @@ int    is_buildins(t_cmd **cmd, t_list **envlist)
     //      if (is_buildins2(&tmp, *envlist) == 1)
     //         return (1);
         // // }
+        // while (tmp)
+        // {
    if (tmp && tmp->args && tmp->args[0])
     {
-        // if (tmp && tmp->args && tmp->args[0])
-        // {
+        if (tmp && tmp->args && tmp->args[0])
+        {
          if (is_buildins2(&tmp, *envlist) == 1)
             return (1);
-        else if (ft_strcmp(tmp->args[0], "cd") == 0)
+        if (ft_strcmp(tmp->args[0], "cd") == 0)
         {
             ft_cd(tmp->args[1], envlist);
             return (1);
@@ -129,19 +140,30 @@ int    is_buildins(t_cmd **cmd, t_list **envlist)
         {
             while (tmp->args[i])
                 ft_export(envlist, tmp->args[i++]);
+            // write(1, "ici", 3);
+                return (1);
             // printf("%s", (*envlist)->name);
         // while ((*envlist) != NULL)
         // {
         //     printf("%s\t%s\n",(*envlist)->name, (*envlist)->content);
         //     envlist = &(*envlist)->next;
-            
+        // }
+        }
+        else if (ft_strcmp(tmp->args[0], "env") == 0)
+        {
+            ft_env(envlist);
+            return (1);
         }
         else if (ft_strcmp(tmp->args[0], "exit") == 0)
         {
             ft_exit(tmp->args);
         }
+        // else if (ft_strcmp(tmp->args[0], "export") == 0)
+        //     ft_export_alone(envlist);
     }
-    
+    }
+    // tmp = tmp->next;
+    //     }
     return (0);
     // tmp = tmp->next;
 }

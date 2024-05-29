@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 15:00:24 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/29 10:38:49 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/05/29 22:26:27 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,12 +111,16 @@ void	ft_export(t_list **envlist, char *str)
 			found = 1;
 			free(tmp->content);
 			tmp->content = envcontent;
-			break ;
+			// break ;
 		}
+		// printf("%s", tmp->name);
+		// printf("%s\n", tmp->content);
 		tmp = tmp->next;
 	}
 	if (found == 0)
 		ft_lstadd_back(envlist, new);
+    // write(1, "ici", 3);
+
 		// ft_add_node(envname, envcontent, envlist);
 }
 

@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 20:13:08 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/25 19:18:58 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/29 21:06:33 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	cd_action(char *cdcmd, t_list **envlist)
 	if (chdir(cdcmd) != 0)
 	{
 		perror("chdir");
-		exit (EXIT_FAILURE);
+		// exit (EXIT_FAILURE);
 	}
 	change_pwd(envlist);
 }

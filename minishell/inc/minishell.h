@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:56:42 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/25 20:08:03 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/05/28 19:25:33 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,8 @@ char **copy_env(char **env);
 int    is_buildins(t_cmd **cmd, t_list **envlist);
 int    is_buildins2(t_cmd **tmp, t_list *envlist);
 void ft_exit(char **args);
+void    print_export_error(char *str);
+void print_limit_exit(char *str);
 
 int					ft_count_lexer(t_lexer *lexer);
 t_cmd				*init_parser(void);

@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 22:22:46 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/25 02:22:55 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/29 23:08:22 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,35 @@
 #include <string.h>
 #include <stdlib.h>
 #include "../../inc/minishell.h"
+
+// void	generate_env_list(char **env, t_list **envlist)
+// {
+// 	t_list *lst;
+// 	t_list	*new;
+// 	int i;
+// 	int j;
+// 	// char *name;
+// 	// char *content;
+
+// 	j = 0;
+// 	i = 0;
+// 	lst = *envlist;
+// 	new = NULL;
+// 	while (env[i])
+// 	{
+// 		while (env[i][j])
+// 		{
+// 			if (env[i][j] == '=')
+// 			{
+// 				new = ft_lstnew(add_env_name(env, i, j), add_env_content(env, i, j));
+// 				ft_lstadd_back(&lst, new);
+// 				lst = lst->next;
+// 			}
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// }
 
 void	generate_env_list(char **env, t_list **envlist)
 {
