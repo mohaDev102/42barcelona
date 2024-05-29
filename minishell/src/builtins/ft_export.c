@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 15:00:24 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/27 22:50:48 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/29 10:38:49 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,8 @@ void	ft_export(t_list **envlist, char *str)
 	envname = extract_env_name(str);
 	if (envname == 0)
 	{
-		print_export_error(str);
-		// printf("minishell: export: '%s': not a valid identifier\n", str);
+		// print_export_error(str);
+		printf("minishell: export: '%s': not a valid identifier\n", str);
 		return ;
 	}
 	envcontent = extract_env_content(str);

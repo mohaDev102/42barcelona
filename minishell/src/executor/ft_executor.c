@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:01:02 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/28 15:17:13 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/05/29 14:01:50 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	search_path(t_cmd **cmd, char *env[])
 	i = 0;
 	path = getenv("PATH");
 	if (!path)
-		exit(1);
+		exit(0);
 	paths = ft_split(path, ':');
 	if ((*cmd)->args)
 	{
@@ -65,7 +65,7 @@ void	search_path(t_cmd **cmd, char *env[])
 			i++;
 		}
 	}
-	ft_error_cmd(cmd, "Command not found\n");
+	ft_error_cmd(cmd, "command not found\n");
 }
 
 void	exec_cmd(char *path, t_cmd **cmd, char *env[])
@@ -75,43 +75,73 @@ void	exec_cmd(char *path, t_cmd **cmd, char *env[])
 	(void)env;
 }
 
+int	is_build(t_cmd *cmd, t_list **envlist)
+{
+	int		i;
+	t_cmd	*tmp;
+
+	tmp = cmd;
+	i = 1;
+	if (tmp && tmp->args && tmp->args[0])
+	{
+		// if (tmp && tmp->args && tmp->args[0])
+		// {
+		if (is_buildins2(&tmp, *envlist) == 1)
+		    return (1);
+		else if (ft_strcmp(tmp->args[0], "cd") == 0)
+			return (1);
+		else if (ft_strcmp(tmp->args[0], "unset") == 0)
+			return (1);
+		else if (ft_strcmp(tmp->args[0], "export") == 0 && tmp->args[1])
+			return (1);
+		else if (ft_strcmp(tmp->args[0], "exit") == 0)
+			return (1);
+	}
+	return (0);
+}
+
 int	executor(t_cmd **cmd, char **env, t_list **envlist)
 {
 	t_pipe	data;
 	int		i;
+
 	// t_list	*envlist;
 	i = -1;
 	data = *ft_pipes(cmd);
 	// envlist = ft_list(env);
-	// arreglar porque hace buildins pero no el executor cuando se pone
+	// ya funciona pero no del todo revisar is_buildins2
 	// echo hola$ | cat -e
 	// correcto: hola$$ sale: hola$
-	if (is_buildins(cmd, envlist))
+	if (is_build(*cmd, envlist))
 	{
-		return (0);
-		// write(2, "si", 1);
+		is_buildins(cmd, envlist);
 	}
+	// if (is_buildins(cmd, envlist))
+	// {
+	// 	return (0);
+	// 	// write(2, "si", 1);
+	// }
 	// else
 	// {
-		while ((*cmd) != NULL)
+	while ((*cmd) != NULL)
+	{
+		if (pipe(data.fd) == -1)
+			return (-1);
+		data.pid[++i] = fork();
+		if (data.pid[i] == -1)
+			return (-1);
+		if (data.pid[i] == 0)
 		{
-			if (pipe(data.fd) == -1)
-				return (-1);
-			data.pid[++i] = fork();
-			if (data.pid[i] == -1)
-				return (-1);
-			if (data.pid[i] == 0)
-			{
-				redirections(cmd, data, env);
-				close(data.fd[1]);
-				close(data.fd[0]);
-				search_path(cmd, env);
-			}
-			dup2(data.fd[0], STDIN_FILENO);
-			close_pipe(data.fd[0], data.fd[1]);
-			(*cmd) = (*cmd)->next;
+			redirections(cmd, data, env);
+			close(data.fd[1]);
+			close(data.fd[0]);
+			search_path(cmd, env);
 		}
-		wait_children(&data, 0);
+		dup2(data.fd[0], STDIN_FILENO);
+		close_pipe(data.fd[0], data.fd[1]);
+		(*cmd) = (*cmd)->next;
+	}
+	wait_children(&data, 0);
 	// }
 	return (0);
 }
@@ -156,7 +186,7 @@ int	executor(t_cmd **cmd, char **env, t_list **envlist)
 //         // printf("arg = %s", (*cmd)->args[1]);
 //         i++;
 //     }
-    
+
 //     // tengo que hay el wait_children
 //     // printf("%d", i);
 //     wait_children(&data, 0);
