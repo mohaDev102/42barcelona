@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 20:15:13 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/28 18:40:19 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/29 19:29:52 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,12 +101,13 @@ int    is_buildins(t_cmd **cmd, t_list **envlist)
     // printf("cmd = %s", tmp->args[0]);
     i = 1;
     //  write(1, "ic222\n\n", 7);
-    if (tmp && tmp->args && tmp->args[0])
-    {
-         if (is_buildins2(&tmp, *envlist) == 1)
-            return (1);
-    }
-    else if (ft_strcmp(tmp->args[0], "cd") == 0)
+    // if (tmp && tmp->args && tmp->args[0])
+    // {
+    //      if (is_buildins2(&tmp, *envlist) == 1)
+    //         return (1);
+    // }
+   is_buildins2(tmp, envlist);
+   if (ft_strcmp(tmp->args[0], "cd") == 0)
     {
         ft_cd(tmp->args[1], envlist);
         return (1);
