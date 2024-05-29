@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 20:15:13 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/29 19:47:39 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/29 20:00:58 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ int    is_buildins(t_cmd **cmd, t_list **envlist)
         // {
          if (is_buildins2(&tmp, *envlist) == 1)
             return (1);
-    if (ft_strcmp(tmp->args[0], "cd") == 0)
+        else if (ft_strcmp(tmp->args[0], "cd") == 0)
         {
             ft_cd(tmp->args[1], envlist);
             return (1);
