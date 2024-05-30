@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expandor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:31:37 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/30 14:09:33 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/05/30 22:10:02 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char *handle_dollar(char *str, int i, t_list **envlist, int quote)
 {
 	char *varname;
 	char *res;
-	write(2, "22", 2);
+	// write(2, "22", 2);
 	if (str[i] == '?' && quote != 1)
 	{
 		res = last_exit();
@@ -102,45 +102,34 @@ char *expand(char **str, int j, t_list **envlist)
 
 	cleaned = 0;
 	i = 0;
-	// j = 0;
-	(void)envlist;
-	// str[1][0] = '$';
-	// while (str[j])
-	// {
-	// // 	printf("icic %s", str[j]);
-	// 	j++;
-	// }
-	// j = 1;
+			if (!str[j])
+				return (NULL);
 		while (str[j][i])
 		{
-			if (ft_strcmp(str[j], """"))
-				return (NULL);
 			if ((str[j][i] == '\'' || str[j][i] == '\"') && cleaned == 0)
 			{
 				cleaned = quote_found(str, j, i);
-				if (cleaned == 0)
+				if (cleaned == 0 || str[j] == NULL)  
 					return (NULL);
+				if (!str[j][i])
+						return (NULL);
+				if (str[j][i] == '$')
+				{
+					str[j] = handle_dollar(str[j], i + 1, envlist, cleaned);
+					if (!str[j])
+						return (NULL);
+				}
 			}
-			if (str[j][i] == '$')
+			else if (str[j][i] == '$')
 			{
 				str[j] = handle_dollar(str[j], i + 1, envlist, cleaned);
 				if (!str[j])
 					return (NULL);
+				return (str[j]);
 			}
 			i++;
 		}
-	// 		j++;
-	// }
-	// write(2, "r3", 2);
-	// if (cleaned == 2)
-	// {
-	// 	return (NULL);
-	// }
-	if (cleaned == 1 || cleaned == 2)
-	{
 		return (str[j]);
-	}
-	return(NULL);
 }
 
 int expandor(t_cmd *cmd, t_list **envlist)
@@ -153,11 +142,13 @@ int expandor(t_cmd *cmd, t_list **envlist)
     while (cmd)
     {
 		i = 0;
+
+
         while (cmd->args && cmd->args[i])
         {
 			expanded = expand(cmd->args, i, envlist);
             if (expanded)
-				cmd->args[i] = expanded;
+			cmd->args[i] = expanded;
 			i++;
         }
 		tmp = cmd->redir;

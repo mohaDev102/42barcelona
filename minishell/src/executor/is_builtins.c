@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_builtins.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 20:15:13 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/30 13:20:10 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/05/30 23:33:08 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,10 +122,7 @@ int	is_buildins(t_cmd **cmd, t_list **envlist)
 	// {
 	if (tmp && tmp->args && tmp->args[0])
 	{
-		// if (tmp && tmp->args && tmp->args[0])
-		// {
-		// if (is_buildins2(&tmp, *envlist) == 1)
-			// return (1);
+	
             if (ft_strcmp(tmp->args[0], "echo") == 0)
                 is_buildins2(&tmp, *envlist);
 			if (ft_strcmp(tmp->args[0], "cd") == 0)
@@ -152,6 +149,8 @@ int	is_buildins(t_cmd **cmd, t_list **envlist)
 				//     envlist = &(*envlist)->next;
 				// }
 			}
+			else if (ft_strcmp(tmp->args[0], "export") == 0)
+				ft_export_alone(envlist);
 			else if (ft_strcmp(tmp->args[0], "env") == 0)
 			{
 				ft_env(envlist);
@@ -161,15 +160,14 @@ int	is_buildins(t_cmd **cmd, t_list **envlist)
 			{
 				ft_exit(tmp->args);
 			}
-		// else if (ft_strcmp(tmp->args[0], "export") == 0)
-		//     ft_export_alone(envlist);
-		// }
 	}
 	// tmp = tmp->next;
 	//     }
 	return (0);
+
 	// tmp = tmp->next;
 }
+
 void	is_buildins3(t_cmd **cmd, t_list **envlist)
 {
 	int i;
@@ -222,6 +220,8 @@ void	is_buildins3(t_cmd **cmd, t_list **envlist)
 				//     envlist = &(*envlist)->next;
 				// }
 			}
+			else if (ft_strcmp(tmp->args[0], "export") == 0)
+				ft_export_alone(envlist);
 			else if (ft_strcmp(tmp->args[0], "env") == 0)
 			{
 				ft_env(envlist);
@@ -231,9 +231,6 @@ void	is_buildins3(t_cmd **cmd, t_list **envlist)
 			{
 				ft_exit(tmp->args);
 			}
-		// else if (ft_strcmp(tmp->args[0], "export") == 0)
-		//     ft_export_alone(envlist);
-		// }
 	}
 	// tmp = tmp->next;
 	//     }
