@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:56:42 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/25 20:08:03 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/05/29 10:39:55 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,4 +180,5 @@ int check_error(t_lexer *lexer);
 void	close_pipe(int in, int out);
 void	ft_lstadd_back(t_list **lst, t_list *new);
 t_list	*ft_lstnew(char *name, char *content);
+void print_limit_exit(char *str);
 #endif
