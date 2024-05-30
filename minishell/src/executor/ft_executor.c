@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_executor.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:01:02 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/29 14:01:50 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/05/29 21:41:37 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,20 +82,28 @@ int	is_build(t_cmd *cmd, t_list **envlist)
 
 	tmp = cmd;
 	i = 1;
+	(void)envlist;
 	if (tmp && tmp->args && tmp->args[0])
 	{
 		// if (tmp && tmp->args && tmp->args[0])
 		// {
-		if (is_buildins2(&tmp, *envlist) == 1)
+		// if (is_buildins2(&tmp, *envlist) == 1)
+		//     return (1);
+		if (ft_strcmp(tmp->args[0], "echo") == 0)
 		    return (1);
 		else if (ft_strcmp(tmp->args[0], "cd") == 0)
 			return (1);
 		else if (ft_strcmp(tmp->args[0], "unset") == 0)
 			return (1);
 		else if (ft_strcmp(tmp->args[0], "export") == 0 && tmp->args[1])
+		{
+			// write(1, "ici", 3);
 			return (1);
+		}
 		else if (ft_strcmp(tmp->args[0], "exit") == 0)
 			return (1);
+		// else if (ft_strcmp(tmp->args[0], "export") == 0)
+		// 	return (1);
 	}
 	return (0);
 }
@@ -106,6 +114,7 @@ int	executor(t_cmd **cmd, char **env, t_list **envlist)
 	int		i;
 
 	// t_list	*envlist;
+	// (void)envlist;
 	i = -1;
 	data = *ft_pipes(cmd);
 	// envlist = ft_list(env);
@@ -114,6 +123,7 @@ int	executor(t_cmd **cmd, char **env, t_list **envlist)
 	// correcto: hola$$ sale: hola$
 	if (is_build(*cmd, envlist))
 	{
+		
 		is_buildins(cmd, envlist);
 	}
 	// if (is_buildins(cmd, envlist))

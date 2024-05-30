@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 22:28:48 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/25 22:17:32 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/05/29 21:08:09 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,44 +63,6 @@ void	ft_putnbr(int nb)
 		ft_putnbr(nb / 10);
 	ft_putchar(nb % 10 + '0');
 }
-
-// void	print_error(int error)
-// {
-// 	ft_putnbr(error);
-// }
-
-// char *extract_name(char *echocmd)
-// {
-// 	int i;
-// 	int j;
-// 	int k;
-// 	char *res;
-
-// 	k = 0;
-// 	i = 0;
-// 	j = 1;
-// 	res = NULL;
-// 	while(echocmd[i])
-// 	{
-// 			i = i + 2;
-// 			while(echocmd[i] != ' ')
-// 			{
-// 				i++;
-// 				j++;
-// 			}
-// 			res = malloc(sizeof(char) * (j + 1));
-// 			i = i - j;
-// 			while(k < j)
-// 			{
-// 				res[k++] = echocmd[i++];
-// 			}
-// 			res[k] = '\0';
-// 			break;
-// 		}
-// 		i++;
-// 	}
-// 	return (res);
-// }
 
 void	ft_echo(char *echocmd, int flag, t_list *envlist)
 {
