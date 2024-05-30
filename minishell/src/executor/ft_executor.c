@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_executor.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:01:02 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/29 21:41:37 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/30 14:01:53 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,27 @@ void	wait_children(t_pipe *info, int *exit)
 	// {
 	// }
 }
+char	*ft_getenv(char *name, char *env[])
+{
+	int		i;
+	char	**var;
 
-void	search_path(t_cmd **cmd, char *env[])
+	i = 0;
+	while (env[i] != NULL)
+	{
+		var = ft_split(env[i], '=');
+		if (var != NULL && var[0] != NULL && var[1] != NULL)
+		{
+			if (ft_strcmp(var[0], name) == 0)
+				return (var[1]);
+		}
+		free(var);
+		i++;
+	}
+	return (NULL);
+}
+
+void	search_path(t_cmd **cmd, char *env[], t_list **envlist, char *myenv[])
 {
 	char	*path;
 	char	**paths;
@@ -44,11 +63,13 @@ void	search_path(t_cmd **cmd, char *env[])
 	int		i;
 
 	path_cmd = NULL;
+	path = NULL;
 	i = 0;
-	path = getenv("PATH");
-	if (!path)
-		exit(0);
+
+	path = ft_getenv("PATH", myenv);
 	paths = ft_split(path, ':');
+	if (is_build(*cmd, envlist))
+		exit(is_buildins(cmd, envlist));
 	if ((*cmd)->args)
 	{
 		if (access(*(*cmd)->args, X_OK) != -1)
@@ -108,31 +129,17 @@ int	is_build(t_cmd *cmd, t_list **envlist)
 	return (0);
 }
 
-int	executor(t_cmd **cmd, char **env, t_list **envlist)
+int	executor(t_cmd **cmd, char **env, t_list **envlist, char *myenv[])
 {
 	t_pipe	data;
 	int		i;
 
-	// t_list	*envlist;
-	// (void)envlist;
 	i = -1;
 	data = *ft_pipes(cmd);
 	// envlist = ft_list(env);
-	// ya funciona pero no del todo revisar is_buildins2
-	// echo hola$ | cat -e
-	// correcto: hola$$ sale: hola$
-	if (is_build(*cmd, envlist))
-	{
-		
-		is_buildins(cmd, envlist);
-	}
-	// if (is_buildins(cmd, envlist))
-	// {
-	// 	return (0);
-	// 	// write(2, "si", 1);
-	// }
-	// else
-	// {
+	// ya funciona cuando es echo hi$ | cat -e el problema que el ejecutor tambien lo hace
+	if (data.n_commands == 1 && is_build(*cmd, envlist))
+		return (is_buildins(cmd, envlist));
 	while ((*cmd) != NULL)
 	{
 		if (pipe(data.fd) == -1)
@@ -145,14 +152,13 @@ int	executor(t_cmd **cmd, char **env, t_list **envlist)
 			redirections(cmd, data, env);
 			close(data.fd[1]);
 			close(data.fd[0]);
-			search_path(cmd, env);
+			search_path(cmd, env, envlist, myenv);
 		}
 		dup2(data.fd[0], STDIN_FILENO);
 		close_pipe(data.fd[0], data.fd[1]);
 		(*cmd) = (*cmd)->next;
 	}
 	wait_children(&data, 0);
-	// }
 	return (0);
 }
 

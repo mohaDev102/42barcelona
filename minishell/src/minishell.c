@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:37:57 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/27 22:49:40 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/30 12:09:29 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	ft_operation(t_lexer **lexer, t_cmd **cmd, char *env[], t_list **envlist)
 			her_doc(*cmd, env);
 			if (!expandor(*cmd, envlist))
 			{
-				executor(cmd, env, envlist);
+				executor(cmd, env, envlist, my_env);
 			}
 			// executor(cmd, env);
 		}

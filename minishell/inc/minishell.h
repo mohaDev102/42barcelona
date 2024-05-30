@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:56:42 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/30 11:21:46 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/05/30 13:04:40 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ char				**ft_free(char **mat, int i);
 void				parser_free(t_cmd **cmd);
 void				free_cmd_list(t_cmd *cmd);
 void				her_doc(t_cmd *cmd, char **env);
-int					executor(t_cmd **cmd, char **env, t_list **envlist);
+int					executor(t_cmd **cmd, char **env, t_list **envlist, char *myenv[]);
 int					ft_count_args(t_lexer *aux);
 char				**ft_split(char const *s, char c);
 char				*ft_strjoin(char const *s1, char const *s2);
@@ -183,4 +183,6 @@ void	close_pipe(int in, int out);
 void	ft_lstadd_back(t_list **lst, t_list *new);
 t_list	*ft_lstnew(char *name, char *content);
 void print_limit_exit(char *str);
+int	is_build(t_cmd *cmd, t_list **envlist);
+void	is_buildins3(t_cmd **cmd, t_list **envlist);
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expandor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:31:37 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/29 21:54:32 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/30 14:09:33 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char *handle_dollar(char *str, int i, t_list **envlist, int quote)
 {
 	char *varname;
 	char *res;
-
+	write(2, "22", 2);
 	if (str[i] == '?' && quote != 1)
 	{
 		res = last_exit();
@@ -102,7 +102,7 @@ char *expand(char **str, int j, t_list **envlist)
 
 	cleaned = 0;
 	i = 0;
-	j = 0;
+	// j = 0;
 	(void)envlist;
 	// str[1][0] = '$';
 	// while (str[j])
