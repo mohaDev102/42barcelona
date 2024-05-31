@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:56:42 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/30 13:04:40 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/05/31 21:02:26 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ char *extract_var_name(char *str, int i);
 char *last_exit(void);
 int	exit_status(int value);
 char **copy_env(char **env);
-int    is_buildins(t_cmd **cmd, t_list **envlist);
+int    is_buildins(t_cmd **cmd, t_list **envlist, t_pipe *data);
 int    is_buildins2(t_cmd **tmp, t_list *envlist);
 void ft_exit(char **args);
 void    print_export_error(char *str);
@@ -184,5 +184,8 @@ void	ft_lstadd_back(t_list **lst, t_list *new);
 t_list	*ft_lstnew(char *name, char *content);
 void print_limit_exit(char *str);
 int	is_build(t_cmd *cmd, t_list **envlist);
-void	is_buildins3(t_cmd **cmd, t_list **envlist);
+char	*extract_env_name(char *str);
+char	*extract_env_content(char *str);
+void   print_notdigit_exit(char *str);
+int     ft_isalpha(int c);
 #endif

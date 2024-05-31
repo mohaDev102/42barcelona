@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_builtins.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 20:15:13 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/30 23:33:08 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/31 20:58:31 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,61 @@ int	echo_flag(char **args, int i)
 		i++;
 	}
 	return (ret);
+}
+
+void unlink_herdoc(t_redir *redir)
+{
+	while (redir)
+	{
+		if (redir->type == HERDOC)
+			unlink(redir->file);
+		redir = redir->next;
+	}
+}
+
+int dup_redir(t_pipe *data, t_redir *temp)
+{
+	if (temp->type == INFILE || temp->type == HERDOC)
+	{
+		data->std_in = open(temp->file, O_RDONLY);
+		if (data->std_in < 0)
+			return (1);
+		dup2(data->std_in, STDIN_FILENO);
+		close(data->std_in);
+	}
+	else if (temp->type == OUTFILE || temp->type == APPEND)
+	{
+		if (temp->type == OUTFILE)
+			data->std_out = open(temp->file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		else
+			data->std_out = open(temp->file, O_WRONLY | O_CREAT | O_APPEND,
+					0644);
+		if (data->std_out < 0)
+			return (1);
+		dup2(data->std_out, STDOUT_FILENO);
+		close(data->std_out);
+	}
+	return (0);
+}
+
+int manage_redir(t_cmd *cmd, t_pipe *data)
+{
+	t_redir *temp;
+
+	// if (cmd->next != NULL)
+	// 	dup2(data->fd[1], STDOUT_FILENO);
+	// close_pipe(data->fd[0], data->fd[1]);
+	temp = cmd->redir;
+	while (temp)
+	{
+		if (dup_redir(data, temp))
+		{
+			unlink_herdoc(cmd->redir);
+		}
+		temp = temp->next;
+	}
+	unlink_herdoc(cmd->redir);
+	return (0);
 }
 
 int	is_buildins2(t_cmd **tmp, t_list *envlist)
@@ -98,33 +153,25 @@ int	is_buildins2(t_cmd **tmp, t_list *envlist)
 	// }
 	return (0);
 }
-
-int	is_buildins(t_cmd **cmd, t_list **envlist)
+int	is_buildins(t_cmd **cmd, t_list **envlist, t_pipe *data)
 {
 	int i;
 	t_cmd *tmp;
-	// int i;
 
-	// i = 0;
-	// envlist = generate_env_list(env, &envlist);
 	tmp = *cmd;
-	// printf("cmd = %s", tmp->args[0]);
 	i = 1;
-	//  write(1, "ic222\n\n", 7);
-	// if (tmp && tmp->args && tmp->args[0])
-	// {
-	// if (tmp && tmp->args && tmp->args[0])
-	// {
-	//      if (is_buildins2(&tmp, *envlist) == 1)
-	//         return (1);
-	// // }
-	// while (tmp)
-	// {
+	int std_out = dup(STDOUT_FILENO);
+	int std_in = dup(STDIN_FILENO);
+	if (manage_redir(*cmd, data))
+	{
+		dup2(std_in, STDIN_FILENO);
+		dup2(std_out, STDOUT_FILENO);
+		return (0);
+	}
 	if (tmp && tmp->args && tmp->args[0])
 	{
-	
             if (ft_strcmp(tmp->args[0], "echo") == 0)
-                is_buildins2(&tmp, *envlist);
+            	is_buildins2(&tmp, *envlist);
 			if (ft_strcmp(tmp->args[0], "cd") == 0)
 			{
 				ft_cd(tmp->args[1], envlist);
@@ -140,14 +187,6 @@ int	is_buildins(t_cmd **cmd, t_list **envlist)
 			{
 				while (tmp->args[i])
 					ft_export(envlist, tmp->args[i++]);
-				// write(1, "ici", 3);
-				// return (1);
-				// printf("%s", (*envlist)->name);
-				// while ((*envlist) != NULL)
-				// {
-				//     printf("%s\t%s\n",(*envlist)->name, (*envlist)->content);
-				//     envlist = &(*envlist)->next;
-				// }
 			}
 			else if (ft_strcmp(tmp->args[0], "export") == 0)
 				ft_export_alone(envlist);
@@ -161,79 +200,10 @@ int	is_buildins(t_cmd **cmd, t_list **envlist)
 				ft_exit(tmp->args);
 			}
 	}
-	// tmp = tmp->next;
-	//     }
+	dup2(std_in, STDIN_FILENO);
+	dup2(std_out, STDOUT_FILENO);
+	close(std_in);
+	close(std_out);
 	return (0);
-
-	// tmp = tmp->next;
 }
 
-void	is_buildins3(t_cmd **cmd, t_list **envlist)
-{
-	int i;
-	t_cmd *tmp;
-	// int i;
-
-	// i = 0;
-	// envlist = generate_env_list(env, &envlist);
-	tmp = *cmd;
-	// printf("cmd = %s", tmp->args[0]);
-	i = 1;
-	//  write(1, "ic222\n\n", 7);
-	// if (tmp && tmp->args && tmp->args[0])
-	// {
-	// if (tmp && tmp->args && tmp->args[0])
-	// {
-	//      if (is_buildins2(&tmp, *envlist) == 1)
-	//         return (1);
-	// // }
-	// while (tmp)
-	// {
-	if (tmp && tmp->args && tmp->args[0])
-	{
-		// if (tmp && tmp->args && tmp->args[0])
-		// {
-		// if (is_buildins2(&tmp, *envlist) == 1)
-			// return (1);
-            if (ft_strcmp(tmp->args[0], "echo") == 0)
-                is_buildins2(&tmp, *envlist);
-			if (ft_strcmp(tmp->args[0], "cd") == 0)
-			{
-				ft_cd(tmp->args[1], envlist);
-				// return (1);
-			}
-			else if (ft_strcmp(tmp->args[0], "unset") == 0)
-			{
-				while (tmp->args[i])
-					ft_unset(envlist, tmp->args[i++]);
-				// return (1);
-			}
-			else if (ft_strcmp(tmp->args[0], "export") == 0 && tmp->args[1])
-			{
-				while (tmp->args[i])
-					ft_export(envlist, tmp->args[i++]);
-				// write(1, "ici", 3);
-				// printf("%s", (*envlist)->name);
-				// while ((*envlist) != NULL)
-				// {
-				//     printf("%s\t%s\n",(*envlist)->name, (*envlist)->content);
-				//     envlist = &(*envlist)->next;
-				// }
-			}
-			else if (ft_strcmp(tmp->args[0], "export") == 0)
-				ft_export_alone(envlist);
-			else if (ft_strcmp(tmp->args[0], "env") == 0)
-			{
-				ft_env(envlist);
-				// return (1);
-			}
-			else if (ft_strcmp(tmp->args[0], "exit") == 0)
-			{
-				ft_exit(tmp->args);
-			}
-	}
-	// tmp = tmp->next;
-	//     }
-	// return (0);
-	// tmp = tmp->next;
-}

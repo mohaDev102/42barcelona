@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expandor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:31:37 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/30 22:10:02 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/31 21:26:25 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ int expandor(t_cmd *cmd, t_list **envlist)
 		while (tmp)
 		{
 			if (expand(&(tmp->file), 0, envlist))
-				return (1);
+				return (0);
 			tmp = tmp->next;
 		}
 		

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   generate_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 22:22:46 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/29 23:08:22 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/31 21:22:31 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,39 @@
 // 				new = ft_lstnew(add_env_name(env, i, j), add_env_content(env, i, j));
 // 				ft_lstadd_back(&lst, new);
 // 				lst = lst->next;
+// 			}
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// }
+
+// void	generate_env_list(char **env, t_list **envlist)
+// {
+// 	int		i;
+// 	int		j;
+// 	t_list	*lst;
+
+// 	i = 0;
+// 	lst = *envlist;
+// 	t_list *new_node;
+// 	while (env[i])
+// 	{
+// 		j = 0;
+// 		while (env[i][j])
+// 		{
+// 			if (env[i][j] == '=')
+// 			{
+// 				lst->name = add_env_name(env, i, j);
+// 				lst->content = add_env_content(env, i, j);
+// 				new_node = malloc(sizeof(t_list));
+// 				if (!new_node)
+// 					return ;
+				
+// 				new_node->next = NULL;
+// 				lst->next = new_node;
+// 				lst = new_node;
+// 				break;
 // 			}
 // 			j++;
 // 		}
@@ -80,6 +113,8 @@ t_list	*ft_list(char **env)
 
 	i = 0;
 	envlist = init_list();
+	if (!envlist)
+		return (NULL);
 	generate_env_list(env, &envlist);
 	return (envlist); 
 }

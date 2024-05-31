@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_executor.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:01:02 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/30 23:34:03 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/31 21:00:43 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ char	*ft_getenv(char *name, char *env[])
 	return (NULL);
 }
 
-void	search_path(t_cmd **cmd, char *env[], t_list **envlist, char *myenv[])
+void	search_path(t_cmd **cmd, char *env[], t_list **envlist, char *myenv[], t_pipe *data)
 {
 	char	*path;
 	char	**paths;
@@ -69,7 +69,7 @@ void	search_path(t_cmd **cmd, char *env[], t_list **envlist, char *myenv[])
 	path = ft_getenv("PATH", myenv);
 	paths = ft_split(path, ':');
 	if (is_build(*cmd, envlist))
-		exit(is_buildins(cmd, envlist));
+		exit(is_buildins(cmd, envlist, data));
 	if ((*cmd)->args)
 	{
 		if (access(*(*cmd)->args, X_OK) != -1)
@@ -136,10 +136,9 @@ int	executor(t_cmd **cmd, char **env, t_list **envlist, char *myenv[])
 
 	i = -1;
 	data = *ft_pipes(cmd);
-	// envlist = ft_list(env);
-	// ya funciona cuando es echo hi$ | cat -e el problema que el ejecutor tambien lo hace
+
 	if (data.n_commands == 1 && is_build(*cmd, envlist))
-		return (is_buildins(cmd, envlist));
+		return (is_buildins(cmd, envlist, &data));
 	while ((*cmd) != NULL)
 	{
 		if (pipe(data.fd) == -1)
@@ -152,7 +151,7 @@ int	executor(t_cmd **cmd, char **env, t_list **envlist, char *myenv[])
 			redirections(cmd, data, env);
 			close(data.fd[1]);
 			close(data.fd[0]);
-			search_path(cmd, env, envlist, myenv);
+			search_path(cmd, env, envlist, myenv, &data);
 		}
 		dup2(data.fd[0], STDIN_FILENO);
 		close_pipe(data.fd[0], data.fd[1]);
