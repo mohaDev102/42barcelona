@@ -5,18 +5,17 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/30 23:17:04 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/30 23:17:18 by alounici         ###   ########.fr       */
+/*   Created: 2024/05/31 22:14:10 by alounici          #+#    #+#             */
+/*   Updated: 2024/05/31 22:14:13 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-
-int	ft_isalpha(int c)
+int     ft_isalpha(int c)
 {
-	if ((c >= 65 && c <= 90) || (c >= 97 && c <= 122))
-		return (c);
-	else
-		return (0);
+        if ((c >= 'a' && c <= 'z') || \
+                (c >= 'A' && c <= 'Z'))
+                return (1);
+        return (0);
 }

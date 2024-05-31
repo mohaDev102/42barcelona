@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:31:37 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/31 20:46:32 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/31 22:12:40 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,7 +159,7 @@ int expandor(t_cmd *cmd, t_list **envlist)
 		while (tmp)
 		{
 			if (expand(&(tmp->file), 0, envlist))
-				return (1);
+				return (0);
 			tmp = tmp->next;
 		}
 		
