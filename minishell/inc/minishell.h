@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:56:42 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/30 13:04:40 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/05/30 23:25:11 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
+int	ft_isalpha(int c);
 int					ft_isprint(int c);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 size_t				ft_strlen(const char *c);
@@ -149,6 +150,10 @@ int    is_buildins2(t_cmd **tmp, t_list *envlist);
 void ft_exit(char **args);
 void    print_export_error(char *str);
 void print_limit_exit(char *str);
+void   print_notdigit_exit(char *str);
+char	*extract_env_content(char *str);
+char	*extract_env_name(char *str);
+void    print_export_error(char *str);
 
 int					ft_count_lexer(t_lexer *lexer);
 t_cmd				*init_parser(void);
