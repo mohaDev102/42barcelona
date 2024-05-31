@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:31:37 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/30 22:10:02 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/31 20:46:32 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,10 @@ char *handle_dollar(char *str, int i, t_list **envlist, int quote)
 	if (str[i] == '?' && quote != 1)
 	{
 		res = last_exit();
+	}
+	else if (ft_strlen(str) == 1)
+	{
+		return (str);
 	}
 	else if (quote != 1)
 	{

@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:01:02 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/30 23:34:03 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/31 21:59:55 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,8 @@ int	is_build(t_cmd *cmd, t_list **envlist)
 			// write(1, "ici", 3);
 			return (1);
 		}
+		else if (ft_strcmp(tmp->args[0], "env") == 0)
+			return (1);
 		else if (ft_strcmp(tmp->args[0], "exit") == 0)
 			return (1);
 		else if (ft_strcmp(tmp->args[0], "export") == 0)

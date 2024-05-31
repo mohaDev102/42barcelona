@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 20:15:13 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/30 23:33:08 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/31 21:31:57 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	echo_flag(char **args, int i)
 	while (args[i])
 	{
 		if (args[i][0] == '-' && args[i][1] == 'n' && (ft_strcmp(args[i - 1],
-					"echo") == 0 || ft_strcmp(args[i - 1], "-n") == 0))
+					"echo") == 0 || ft_strcmp(args[i - 1], "-n") == 0 || args[i - 1][ft_strlen(args[i - 1]) - 1]))
 		{
 			j = 1;
 			while (args[i][j] == 'n')
@@ -168,6 +168,7 @@ int	is_buildins(t_cmd **cmd, t_list **envlist)
 	// tmp = tmp->next;
 }
 
+
 void	is_buildins3(t_cmd **cmd, t_list **envlist)
 {
 	int i;
@@ -189,6 +190,8 @@ void	is_buildins3(t_cmd **cmd, t_list **envlist)
 	// // }
 	// while (tmp)
 	// {
+		// printf("icii iii%s\n\n", tmp->args[0]);
+		// write(1, "iciii\n\n", 7);
 	if (tmp && tmp->args && tmp->args[0])
 	{
 		// if (tmp && tmp->args && tmp->args[0])
@@ -220,12 +223,17 @@ void	is_buildins3(t_cmd **cmd, t_list **envlist)
 				//     envlist = &(*envlist)->next;
 				// }
 			}
-			else if (ft_strcmp(tmp->args[0], "export") == 0)
-				ft_export_alone(envlist);
 			else if (ft_strcmp(tmp->args[0], "env") == 0)
 			{
+				write(1, "ici\n\n\n", 6);
 				ft_env(envlist);
 				// return (1);
+			}
+			else if (ft_strcmp(tmp->args[0], "export") == 0)
+			{
+				write(1, "ici\n\n\n", 6);
+				ft_export_alone(envlist);
+
 			}
 			else if (ft_strcmp(tmp->args[0], "exit") == 0)
 			{
