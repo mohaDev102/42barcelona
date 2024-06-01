@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 20:15:13 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/31 22:14:59 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/31 23:05:19 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,6 +199,8 @@ int	is_buildins(t_cmd **cmd, t_list **envlist, t_pipe *data)
 			{
 				ft_exit(tmp->args);
 			}
+			else if (ft_strcmp(tmp->args[0], "pwd") == 0)
+				ft_pwd();
 	}
 	dup2(std_in, STDIN_FILENO);
 	dup2(std_out, STDOUT_FILENO);

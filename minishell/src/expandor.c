@@ -6,58 +6,51 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:31:37 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/31 22:12:40 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/01 18:46:24 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
 
-char	*handle_quote(char *str, int i, int flag)
+char	*handle_quote(char *str, int i)
 {
-	int j = 0;
-	int singleq;
-	int doubleq;
+	// int j = 0;
+	// int singleq;
+	// int doubleq;
 	char c;
 	char *res;
+	// char *aux;
+	// int k;
 
-	singleq = 0;
-	doubleq = 0;
-	j = i;
+	// k = 0;
+	// singleq = 0;
+	// doubleq = 0;
+	// j = i;
 	c = str[i];
-	flag = j;
-	res = NULL;
-	i++;
+	// flag = j;
 	if (!str)
 		return (str);
-	while (str[i])
-	{
-		if (str[i] == c)
-		{
-			if (i == 1)
-				return (NULL);
-			if (flag == 1)
-				singleq = 1;
-			if (flag == 2)
-				doubleq = 1;
-			res = clean_str(str, j, i);
-			return (res);
-		}
-		i++;
-	}
-	if (singleq == 0 && doubleq == 0)
-		return(NULL);
+	if (!check_quote_number(str, c))
+		return (NULL);
+	res = clean_str(str, c, check_quote_number(str, c));
 	return (res);
 }
 
 char *handle_dollar(char *str, int i, t_list **envlist, int quote)
 {
-	char *varname;
-	char *res;
-	// write(2, "22", 2);
+	char *var_content;
+	char **res;
+	// char *joined_content;
+	int j;
+	
+	j = 0;
+	// var_content = NULL;
+	if (!str[i])
+		return (str);
 	if (str[i] == '?' && quote != 1)
 	{
-		res = last_exit();
+		return (last_exit());
 	}
 	else if (ft_strlen(str) == 1)
 	{
@@ -65,37 +58,53 @@ char *handle_dollar(char *str, int i, t_list **envlist, int quote)
 	}
 	else if (quote != 1)
 	{
-		varname = extract_var_name(str, i);
-		res = my_getenv(*envlist, varname, 0);
+		res = join_var_name(str, *envlist, i);
+		var_content = my_getenv(*envlist, res[j], 3);
+		j++;
+		while (res[j])
+		{
+			var_content = ft_strjoin(var_content, my_getenv(*envlist, res[j], 3));
+			j++;
+		}
 		if (res == NULL)
 			return (NULL);
 	}
 	else
 		return (str);
-	return (res);
+		// printf("%s\n", var_content);
+	return (var_content);
 }
 
 int	quote_found(char **str, int j, int i)
 {
 	int cleaned;
+	int start;
 
+	start = 0;
 	cleaned = 0;
+	// while (str[j][i])
+	// {
 		if (str[j][i] == '\'')
 		{
-			str[j] = handle_quote(str[j], i, 1);
+			// start = i;
+			str[j] = handle_quote(str[j], i);
 			if (!str[j])
 				return (0);
 			cleaned = 1;
 		}
 		else if (str[j][i] == '\"')
 		{
-			str[j] = handle_quote(str[j], i, 2);
+			// start = i;
+			str[j] = handle_quote(str[j], i);
 			if (!str[j])
 			{
 				return (0);
 			}
 			cleaned = 2;
 		}
+	// 	i++;
+	// }
+	// str[j] = handle_quote(str[j], start, cleaned);
 	return (cleaned);
 }
 
@@ -113,10 +122,8 @@ char *expand(char **str, int j, t_list **envlist)
 			if ((str[j][i] == '\'' || str[j][i] == '\"') && cleaned == 0)
 			{
 				cleaned = quote_found(str, j, i);
-				if (cleaned == 0 || str[j] == NULL)  
+				if (cleaned == 0 || str[j] == NULL || !str[j][i])  
 					return (NULL);
-				if (!str[j][i])
-						return (NULL);
 				if (str[j][i] == '$')
 				{
 					str[j] = handle_dollar(str[j], i + 1, envlist, cleaned);
