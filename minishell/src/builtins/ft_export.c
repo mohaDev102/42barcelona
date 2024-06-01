@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 15:00:24 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/30 23:44:50 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/01 17:32:26 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ void	ft_export(t_list **envlist, char *str)
 	found = 0;
 	tmp = *envlist;
 	new = NULL;
+	if (!str)
+		return ;
 	envname = extract_env_name(str);
 	if (envname == 0)
 	{
@@ -102,8 +104,9 @@ void	ft_export(t_list **envlist, char *str)
 		return ;
 	}
 	envcontent = extract_env_content(str);
-	// printf("envc %s", envcontent);
 	new = ft_lstnew(envname, envcontent);
+	if (!tmp)
+		return ;
 	while (tmp)
 	{
 		if (ft_strcmp(tmp->name, envname) == 0)
@@ -125,23 +128,34 @@ void 	ft_export_alone(t_list **envlist)
 	int i;
 
 	i = 0;
+
+    if (!envlist || !*envlist)
+		return ;
 	tmp = *envlist;
 	while (tmp)
 	{
 		i = 0;
-		write(1, "declare -x ", 11);
-		while (tmp->name[i])
-		{
-			write(1, &tmp->name[i++], 1);
-		}
-		i = 1;
-		write(1, &tmp->content[0], 1);
-		write(1, "\"", 1);
-		while (tmp->content[i])
-		{
-			write(1, &tmp->content[i], 1);
-			i++;
-		}
+		if (tmp->name) // Verificar si name no es NULL
+        {
+            write(1, "declare -x ", 11);
+            i = 0;
+            while (tmp->name[i])
+            {
+                write(1, &tmp->name[i], 1);
+                i++;
+            }
+        }
+        if (tmp->content) // Verificar si content no es NULL
+        {
+            write(1, "=\"", 2);
+            i = 0;
+            while (tmp->content[i])
+            {
+                write(1, &tmp->content[i], 1);
+                i++;
+            }
+            //write(1, "\"", 1);
+        }
 		write(1, "\"\n", 2);
 		tmp = tmp->next;
 	}

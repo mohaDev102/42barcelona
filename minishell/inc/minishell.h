@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:56:42 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/31 21:02:26 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/06/01 00:32:37 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,4 +188,6 @@ char	*extract_env_name(char *str);
 char	*extract_env_content(char *str);
 void   print_notdigit_exit(char *str);
 int     ft_isalpha(int c);
+char	*ft_strchr(const char *str, int c);
+void	*ft_memchr(const void *s, int c, size_t n);
 #endif

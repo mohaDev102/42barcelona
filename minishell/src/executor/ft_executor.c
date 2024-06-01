@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:01:02 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/31 21:00:43 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/06/01 17:19:48 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,9 @@ void	search_path(t_cmd **cmd, char *env[], t_list **envlist, char *myenv[], t_pi
 	path_cmd = NULL;
 	path = NULL;
 	i = 0;
-
 	path = ft_getenv("PATH", myenv);
+	if (!path)
+		return ft_error_cmd(cmd, "command not found\n");
 	paths = ft_split(path, ':');
 	if (is_build(*cmd, envlist))
 		exit(is_buildins(cmd, envlist, data));
@@ -136,7 +137,6 @@ int	executor(t_cmd **cmd, char **env, t_list **envlist, char *myenv[])
 
 	i = -1;
 	data = *ft_pipes(cmd);
-
 	if (data.n_commands == 1 && is_build(*cmd, envlist))
 		return (is_buildins(cmd, envlist, &data));
 	while ((*cmd) != NULL)

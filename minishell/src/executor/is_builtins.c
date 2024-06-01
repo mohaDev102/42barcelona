@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 20:15:13 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/31 20:58:31 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/06/01 17:25:37 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,9 @@ int	is_buildins(t_cmd **cmd, t_list **envlist, t_pipe *data)
 			else if (ft_strcmp(tmp->args[0], "export") == 0 && tmp->args[1])
 			{
 				while (tmp->args[i])
+				{
 					ft_export(envlist, tmp->args[i++]);
+				}
 			}
 			else if (ft_strcmp(tmp->args[0], "export") == 0)
 				ft_export_alone(envlist);
