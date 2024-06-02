@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:01:02 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/06/01 19:03:37 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/02 13:11:25 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	search_path(t_cmd **cmd, char *env[], t_list **envlist, char *myenv[], t_pi
 			i++;
 		}
 	}
-	ft_error_cmd(cmd, " : command not found");
+	ft_error_cmd(cmd, ": command not found\n");
 }
 
 void	exec_cmd(char *path, t_cmd **cmd, char *env[])

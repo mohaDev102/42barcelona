@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 20:15:13 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/01 19:04:04 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/02 13:11:32 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,10 @@ int dup_redir(t_pipe *data, t_redir *temp)
 	{
 		data->std_in = open(temp->file, O_RDONLY);
 		if (data->std_in < 0)
-			return (1);
+        {
+            write(2, "Permission denied\n", 18);
+            return (-1);
+        }
 		dup2(data->std_in, STDIN_FILENO);
 		close(data->std_in);
 	}
@@ -70,7 +73,10 @@ int dup_redir(t_pipe *data, t_redir *temp)
 			data->std_out = open(temp->file, O_WRONLY | O_CREAT | O_APPEND,
 					0644);
 		if (data->std_out < 0)
-			return (1);
+        {
+            write(2, "Permission denied\n", 18);
+            return (-1);
+        }
 		dup2(data->std_out, STDOUT_FILENO);
 		close(data->std_out);
 	}
@@ -87,9 +93,10 @@ int manage_redir(t_cmd *cmd, t_pipe *data)
 	temp = cmd->redir;
 	while (temp)
 	{
-		if (dup_redir(data, temp))
+		if (dup_redir(data, temp) == -1)
 		{
 			unlink_herdoc(cmd->redir);
+			return (-1);
 		}
 		temp = temp->next;
 	}
@@ -162,7 +169,7 @@ int	is_buildins(t_cmd **cmd, t_list **envlist, t_pipe *data)
 	i = 1;
 	int std_out = dup(STDOUT_FILENO);
 	int std_in = dup(STDIN_FILENO);
-	if (manage_redir(*cmd, data))
+	if (manage_redir(*cmd, data) == -1)
 	{
 		dup2(std_in, STDIN_FILENO);
 		dup2(std_out, STDOUT_FILENO);
