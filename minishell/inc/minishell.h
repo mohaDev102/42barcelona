@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:56:42 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/06/01 00:32:37 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/06/02 11:51:10 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
+int	ft_isalpha(int c);
+char *ft_realloc(char *str, int i);
 int					ft_isprint(int c);
 int					ft_strncmp(const char *s1, const char *s2, size_t n);
 size_t				ft_strlen(const char *c);
@@ -138,8 +140,8 @@ char				*add_env_content(char **env, int i, int j);
 void				ft_echo(char *echocmd, int flag, t_list *envlist);
 int 				expandor(t_cmd *cmd, t_list **envlist);
 char *expand(char **str, int j, t_list **envlist);
-char	*handle_quote(char *str, int i, int flag);
-char *clean_str(char *str, int start, int end);
+char	*handle_quote(char *str, int i);
+char *clean_str(char *str, char c, int quote);
 char *extract_var_name(char *str, int i);
 char *last_exit(void);
 int	exit_status(int value);
@@ -149,6 +151,13 @@ int    is_buildins2(t_cmd **tmp, t_list *envlist);
 void ft_exit(char **args);
 void    print_export_error(char *str);
 void print_limit_exit(char *str);
+void   print_notdigit_exit(char *str);
+char	*extract_env_content(char *str);
+char	*extract_env_name(char *str);
+void    print_export_error(char *str);
+char *clean_quote(char *str, int i);
+int check_quote_number(char *str, char c);
+char **join_var_name(char *str, t_list *envlist, int i);
 
 int					ft_count_lexer(t_lexer *lexer);
 t_cmd				*init_parser(void);

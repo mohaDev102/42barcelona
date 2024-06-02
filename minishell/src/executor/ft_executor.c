@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:01:02 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/06/01 17:19:48 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/06/02 11:50:02 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,23 @@ void	wait_children(t_pipe *info, int *exit)
 	while (i < info->n_commands)
 	{
 		waitpid(info->pid[i], &status, 0);
+		if (WIFEXITED(status))
+			status = WEXITSTATUS(status);
+		
 		i++;
 	}
+	if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == SIGQUIT)
+			status = 131;
+		else if (WTERMSIG(status) == SIGTERM)
+			status = 130;
+	}
+	// printf("status %d", status);
 	dup2(info->std_in, STDIN_FILENO);
 	dup2(info->std_out, STDOUT_FILENO);
 	free(info->pid);
-	// if (WIFEXITED(status))
-	//     *exit = (WIFEXITED(status));
-	// señales
-	// else if ()
-	// {
-	// }
+	exit_status(status);
 }
 char	*ft_getenv(char *name, char *env[])
 {
@@ -87,7 +93,7 @@ void	search_path(t_cmd **cmd, char *env[], t_list **envlist, char *myenv[], t_pi
 			i++;
 		}
 	}
-	ft_error_cmd(cmd, "command not found\n");
+	ft_error_cmd(cmd, " : command not found");
 }
 
 void	exec_cmd(char *path, t_cmd **cmd, char *env[])
@@ -122,9 +128,13 @@ int	is_build(t_cmd *cmd, t_list **envlist)
 			// write(1, "ici", 3);
 			return (1);
 		}
+		else if (ft_strcmp(tmp->args[0], "env") == 0)
+			return (1);
 		else if (ft_strcmp(tmp->args[0], "exit") == 0)
 			return (1);
 		else if (ft_strcmp(tmp->args[0], "export") == 0)
+			return (1);
+		else if (ft_strcmp(tmp->args[0], "pwd") == 0)
 			return (1);
 	}
 	return (0);
@@ -134,7 +144,9 @@ int	executor(t_cmd **cmd, char **env, t_list **envlist, char *myenv[])
 {
 	t_pipe	data;
 	int		i;
+	int status;
 
+	status = 0;
 	i = -1;
 	data = *ft_pipes(cmd);
 	if (data.n_commands == 1 && is_build(*cmd, envlist))
@@ -157,6 +169,7 @@ int	executor(t_cmd **cmd, char **env, t_list **envlist, char *myenv[])
 		close_pipe(data.fd[0], data.fd[1]);
 		(*cmd) = (*cmd)->next;
 	}
+	// exit_status(WSTOPSIG(status));
 	wait_children(&data, 0);
 	return (0);
 }

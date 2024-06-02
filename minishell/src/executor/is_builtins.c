@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 20:15:13 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/01 17:25:37 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/06/02 11:50:19 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	echo_flag(char **args, int i)
 	while (args[i])
 	{
 		if (args[i][0] == '-' && args[i][1] == 'n' && (ft_strcmp(args[i - 1],
-					"echo") == 0 || ft_strcmp(args[i - 1], "-n") == 0))
+					"echo") == 0 || ft_strcmp(args[i - 1], "-n") == 0 || args[i - 1][ft_strlen(args[i - 1]) - 1]))
 		{
 			j = 1;
 			while (args[i][j] == 'n')
@@ -201,6 +201,8 @@ int	is_buildins(t_cmd **cmd, t_list **envlist, t_pipe *data)
 			{
 				ft_exit(tmp->args);
 			}
+			else if (ft_strcmp(tmp->args[0], "pwd") == 0)
+				ft_pwd();
 	}
 	dup2(std_in, STDIN_FILENO);
 	dup2(std_out, STDOUT_FILENO);

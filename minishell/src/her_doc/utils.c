@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 12:43:05 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/21 14:30:16 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/06/01 16:59:25 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,16 @@ void	infile_herdoc(t_redir *aux, int fd)
 		{
 			if (access(aux->file, F_OK) == -1)
 			{
-				write(2, "no such file or directory: ", 28);
 				write(2, aux->file, ft_strlen(aux->file));
+				write(2, ": No such file or directory", 27);
 				write(2, "\n", 2);
 				exit(1);
 			}
 			else
 			{
 				write(2, "Permission denied\n", 19);
-				exit(126);
+				// exit_status(1);
+				exit(1);
 			}
 		}
 		dup2(fd, STDIN_FILENO);
@@ -46,6 +47,7 @@ void	outfile(t_redir *aux, int fd)
 		{
 			if (access(aux->file, X_OK) == -1)
 				write(2, "Permission denied\n", 19);
+			exit_status(126);
 			exit(126);
 		}
 		dup2(fd, STDOUT_FILENO);
@@ -62,6 +64,7 @@ void	append(t_redir *aux, int fd)
 		{
 			if (access(aux->file, X_OK) == -1)
 				write(2, "Permission denied\n", 19);
+			exit_status(126);
 			exit(126);
 		}
 		dup2(fd, STDOUT_FILENO);

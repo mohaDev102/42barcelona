@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 22:28:48 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/29 21:08:09 by alounici         ###   ########.fr       */
+/*   Updated: 2024/05/31 21:01:47 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,24 +83,6 @@ void	ft_echo(char *echocmd, int flag, t_list *envlist)
 	{
 		while (echocmd[i])
 		{
-			// while (echocmd[i] && (echocmd[i] != 36))
-			// 	write(1, &echocmd[i++], 1);
-			// if (echocmd[1] == '-')
-            //         write(1, "si", 2);
-			// if (echocmd[i] == 36 && echocmd[i + 1] > 32 && echocmd[i + 1] < 127 && echocmd[i + 1] != 63)
-			// {	
-			// 	envname = extract_name(echocmd);
-			// 	print_env(envname, envlist);
-			// 	while(echocmd[i] && echocmd[i + 1] != ' ')
-			// 		i++;
-			// }
-			// else if (echocmd[i] == 36 && echocmd[i + 1] == 63)
-			// {
-			// 	print_error(error);
-			// 	i++;
-			// }
-			// else
-			// {
 				write(1, &echocmd[i], 1);
 				// while(echocmd[i])
 				// {

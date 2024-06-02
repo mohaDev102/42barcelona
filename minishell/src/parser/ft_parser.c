@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:36:41 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/28 11:38:40 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/06/01 12:59:22 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	ft_error(t_lexer **lexer)
 	else if (ft_last_lexer(lexer)->type == 2 || ft_last_lexer(lexer)->type == 3
 		|| ft_last_lexer(lexer)->type == 4 || ft_last_lexer(lexer)->type == 5)
 		write(2, "bash: syntax error near unexpected token 'newline'\n", 52);
+	exit_status(2);
 }
 
 int ft_count_args(t_lexer *aux)
