@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_redirects.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 12:42:57 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/06/01 17:08:17 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/02 12:07:06 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,10 @@ void	ft_error_cmd(t_cmd **cmd, char *msg)
 		if (access(*(*cmd)->args, F_OK) == -1)
 		{
 			if (msg != NULL)
+			{
+				write(2, *(*cmd)->args, ft_strlen(*(*cmd)->args));
 				write(2, msg, ft_strlen(msg));
+			}
 			exit(127);
 		}
 	}
