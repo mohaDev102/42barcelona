@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:37:57 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/30 12:09:29 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/06/01 17:23:48 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int	ft_operation(t_lexer **lexer, t_cmd **cmd, char *env[], t_list **envlist)
 		printf("exit\n");
 		return (1);
 	}
-	
 	my_env = copy_env(env);
 	if (ft_lexer(line, lexer) == 0)
 	{
@@ -65,6 +64,11 @@ int	main(int argc, char *argv[], char *env[])
 		printf("Error\n");
 	}
 	envlist = ft_list(env);
+	// while (envlist)
+	// {
+	// 	printf("%s\n", envlist->name);
+	// 	envlist = envlist->next;
+	// }
 	receive_signal(1);
 	while (1)
 	{

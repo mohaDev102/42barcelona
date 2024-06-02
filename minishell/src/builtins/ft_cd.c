@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 20:13:08 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/31 00:05:25 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/01 13:45:07 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,12 @@ char	*my_getenv(t_list *envlist, char *name, int flag)
 	char	*content;
 	t_list	*tmp;
 
-	init_list();
+	// init_list();
 	tmp = envlist;
 	content = NULL;
 	while (tmp != NULL)
 	{
-		if (ft_strcmp(name, tmp->name) == 0)
+		if (tmp->name && ft_strcmp(name, tmp->name) == 0)
 		{
 			content = tmp->content;
 		}
