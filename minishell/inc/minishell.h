@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:56:42 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/06/02 13:10:38 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/02 14:54:33 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,12 +150,12 @@ int    is_buildins(t_cmd **cmd, t_list **envlist, t_pipe *data);
 int    is_buildins2(t_cmd **tmp, t_list *envlist);
 void ft_exit(char **args);
 void    print_export_error(char *str);
-void print_limit_exit(char *str);
-void   print_notdigit_exit(char *str);
+void   print_exit_error(char *str);
 char	*extract_env_content(char *str);
 char	*extract_env_name(char *str);
 void    print_export_error(char *str);
-char *clean_quote(char *str, int i);
+char *clean_exit_space(char *str);
+// char *clean_space(char *str, int i);
 int check_quote_number(char *str, char c);
 char **join_var_name(char *str, t_list *envlist, int i);
 

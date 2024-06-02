@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:10:01 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/01 18:42:18 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/02 16:17:18 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ char *extract_var_name(char *str, int i)
 
     }
     var[k] = '\0';
+    // printf("var%s\n", var);
     return (var);
 }
 

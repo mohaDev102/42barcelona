@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 20:13:08 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/01 13:45:07 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/06/02 16:20:14 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ char	*my_getenv(t_list *envlist, char *name, int flag)
 		return (NULL);
 	}
 	content = clean_content(content);
+	// printf("content%s\n", content);
 	return (content);
 }
 
@@ -95,10 +96,10 @@ char	*clean_content(char *content)
         res[0] = '\0';
         return res;
 	}
-	res = malloc(sizeof(char) * len);
+	res = malloc(sizeof(char) * (len + 1));
 	if (res == NULL)
 		return (NULL);
-	i = 1;
+	i = 0;
 	j = 0;
 	while (content[i])
 		res[j++] = content[i++];
