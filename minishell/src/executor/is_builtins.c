@@ -12,10 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-// echo $?
-// cd ok
-// unset path
-
 int	echo_flag(char **args, int i)
 {
 	int	j;
@@ -108,11 +104,9 @@ int	is_buildins2(t_cmd **tmp, t_list *envlist)
 {
 	int	i;
 	int	ret;
-	int	j;
 
 	ret = 0;
 	i = 0;
-	j = 0;
 	// if ((*tmp)->args[0])
 	// {
 	// while (tmp)

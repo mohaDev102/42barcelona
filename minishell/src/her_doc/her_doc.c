@@ -60,6 +60,7 @@ void	her_doc(t_cmd *cmd, char **env)
 	t_redir *tmp;
 	(void)env;
 	i = 0;
+	receive_signal(1);
 	while (cmd != NULL)
 	{
 		tmp = cmd->redir;

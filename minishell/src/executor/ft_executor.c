@@ -19,6 +19,7 @@ void	wait_children(t_pipe *info, int *exit)
 
 	(void)exit;
 	i = 0;
+	receive_signal(2);
 	while (i < info->n_commands)
 	{
 		waitpid(info->pid[i], &status, 0);
@@ -105,11 +106,11 @@ void	exec_cmd(char *path, t_cmd **cmd, char *env[])
 
 int	is_build(t_cmd *cmd, t_list **envlist)
 {
-	int		i;
+	// int		i;
 	t_cmd	*tmp;
 
 	tmp = cmd;
-	i = 1;
+	// i = 1;
 	(void)envlist;
 	if (tmp && tmp->args && tmp->args[0])
 	{
@@ -144,9 +145,9 @@ int	executor(t_cmd **cmd, char **env, t_list **envlist, char *myenv[])
 {
 	t_pipe	data;
 	int		i;
-	int status;
+	// int status;
 
-	status = 0;
+	// status = 0;
 	i = -1;
 	data = *ft_pipes(cmd);
 	if (data.n_commands == 1 && is_build(*cmd, envlist))

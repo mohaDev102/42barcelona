@@ -15,102 +15,6 @@
 #include <stdlib.h>
 #include "../../inc/minishell.h"
 
-// void	generate_env_list(char **env, t_list **envlist)
-// {
-// 	t_list *lst;
-// 	t_list	*new;
-// 	int i;
-// 	int j;
-// 	// char *name;
-// 	// char *content;
-
-// 	j = 0;
-// 	i = 0;
-// 	lst = *envlist;
-// 	new = NULL;
-// 	while (env[i])
-// 	{
-// 		while (env[i][j])
-// 		{
-// 			if (env[i][j] == '=')
-// 			{
-// 				new = ft_lstnew(add_env_name(env, i, j), add_env_content(env, i, j));
-// 				ft_lstadd_back(&lst, new);
-// 				lst = lst->next;
-// 			}
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// }
-
-// void	generate_env_list(char **env, t_list **envlist)
-// {
-// 	int		i;
-// 	int		j;
-// 	t_list	*lst;
-
-// 	i = 0;
-// 	lst = *envlist;
-// 	t_list *new_node;
-// 	while (env[i])
-// 	{
-// 		j = 0;
-// 		while (env[i][j])
-// 		{
-// 			if (env[i][j] == '=')
-// 			{
-// 				lst->name = add_env_name(env, i, j);
-// 				lst->content = add_env_content(env, i, j);
-// 				new_node = malloc(sizeof(t_list));
-// 				if (!new_node)
-// 					return ;
-				
-// 				new_node->next = NULL;
-// 				lst->next = new_node;
-// 				lst = new_node;
-// 				break;
-// 			}
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// }
-
-// void	generate_env_list(char **env, t_list **envlist)
-// {
-// 	int		i;
-// 	int		j;
-// 	t_list	*lst;
-
-// 	i = 0;
-// 	lst = *envlist;
-// 	write(2, "33", 2);
-// 	if (!env)
-// 		return ;
-// 	while (env[i + 1])
-// 	{
-// 		write(2, "44", 2);
-// 		j = 0;
-// 		while (env[i][j])
-// 		{
-// 				write(2, "66", 2);
-// 			if (env[i][j] == '=')
-// 			{
-// 				lst->name = add_env_name(env, i, j);
-// 				lst->content = add_env_content(env, i, j);
-// 				lst->next = malloc(sizeof(t_list));
-// 				lst = lst->next;
-// 			}
-// 			j++;
-// 		}
-// 		i++;
-// 	}
-// 	lst->name = add_env_name(env, i, j);
-// 	lst->content = add_env_content(env, i, j);
-// 	lst->next = NULL;
-// }
-
 
 void	generate_env_list(char **env, t_list **envlist)
 {
@@ -154,13 +58,9 @@ void	generate_env_list(char **env, t_list **envlist)
 
 t_list	*ft_list(char **env)
 {
-	int		i;
 	t_list	*envlist;
+	
 	envlist = NULL;
-	i = 0;
-	// envlist = init_list();
-	// if (!envlist)
-	// 	return (NULL);
 	generate_env_list(env, &envlist);
 	return (envlist); 
 }

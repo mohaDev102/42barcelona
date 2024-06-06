@@ -12,50 +12,6 @@
 
 #include "../../inc/minishell.h"
 
-// char	*extract_env_name(char *str)
-// {
-// 	int		i;
-// 	int		j;
-// 	char	*res;
-
-// 	i = 0;
-// 	j = 0;
-// 	while (str[i] && str[i] != '=')
-// 		i++;
-// 	res = malloc(sizeof(char) * (i + 1));
-// 	if (res == NULL)
-// 		return (NULL);
-// 	while (j < i)
-// 	{
-// 		res[j] = str[j];
-// 		j++;
-// 	}
-// 	res[j] = '\0';
-// 	return (res);
-// }
-
-// char	*extract_env_content(char *str)
-// {
-// 	char	*res;
-// 	int		i;
-// 	int		j;
-// 	int		len;
-
-// 	i = 0;
-// 	j = 0;
-// 	len = ft_strlen(str);
-// 	while (str[i] && str[i] != '=')
-// 		i++;
-// 	res = malloc(sizeof(char) * (len - i) + 1);
-// 	if (res == NULL)
-// 		return (NULL);
-// 	while (j < len)
-// 		res[j++] = str[i++];
-// 	res[j] = '\0';
-// 	return (res);
-// }
-
-
 char	*extract_env_name(char *str)
 {
 	int		i;
@@ -75,11 +31,6 @@ char	*extract_env_name(char *str)
 		return (NULL);
 	while (j < i)
 	{
-		// if (ft_isdigit(str[j]) == 0 && str[i] != '=')
-		// {
-		// 	write(1, "ici", 3);
-		// 	return (0);
-		// }
 		res[j] = str[j];
 		j++;
 	}
@@ -98,6 +49,7 @@ char	*extract_env_content(char *str)
 	j = 0;
 	while (str[i] && str[i] != '=')
 		i++;
+	i++;
 	len = ft_strlen(str) - i;
 	res = malloc(sizeof(char) * len + 1);
 	if (res == NULL)
@@ -108,6 +60,8 @@ char	*extract_env_content(char *str)
 	return (res);
 }
 
+
+
 void	ft_add_node(char *name, char *content, t_list **envlist)
 {
 	t_list	*tmp;
@@ -116,13 +70,6 @@ void	ft_add_node(char *name, char *content, t_list **envlist)
 	(void)name;
 	(void)content;
 	tmp = *envlist;
-	// last = NULL;
-	// write(2, "33", 2);
-	// while (tmp)
-	// {
-	// 	// last = tmp->next;
-	// 	tmp = tmp->next;
-	// }
 	tmp = ft_lstlast(tmp);
 	last = malloc(sizeof(t_list));
 	if (!last)
@@ -130,17 +77,13 @@ void	ft_add_node(char *name, char *content, t_list **envlist)
 	last->name = name;
 	last->content = content;
 	last->next = NULL;
-	// envlist = &tmp;
-	// printf("%s", tmp->content);
 }
 
 int	check_format(char *str)
 {
 	int	i;
-	int j;
 
 	i = 0;
-	j = 0;
 	while(str[i])
 	{
 		if (str[i] == '=')

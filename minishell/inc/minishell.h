@@ -22,7 +22,7 @@
 # include <limits.h>
 # include <stdlib.h>
 # include <unistd.h>
-int					g_error;
+# include <sys/wait.h>
 
 # define PIPE_AS 124
 # define LESS_AS 60
@@ -150,7 +150,7 @@ int    is_buildins(t_cmd **cmd, t_list **envlist, t_pipe *data);
 int    is_buildins2(t_cmd **tmp, t_list *envlist);
 void ft_exit(char **args);
 void    print_export_error(char *str);
-void   print_exit_error(char *str);
+void   print_exit_error(char *str, int neg);
 char	*extract_env_content(char *str);
 char	*extract_env_name(char *str);
 void    print_export_error(char *str);

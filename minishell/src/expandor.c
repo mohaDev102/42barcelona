@@ -15,20 +15,10 @@
 
 char	*handle_quote(char *str, int i)
 {
-	// int j = 0;
-	// int singleq;
-	// int doubleq;
 	char c;
 	char *res;
-	// char *aux;
-	// int k;
 
-	// k = 0;
-	// singleq = 0;
-	// doubleq = 0;
-	// j = i;
 	c = str[i];
-	// flag = j;
 	if (!str)
 		return (str);
 	if (!check_quote_number(str, c))
@@ -75,22 +65,16 @@ char *handle_dollar(char *str, int i, t_list **envlist, int quote)
 	}
 	else
 		return (str);
-		// printf("%s\n", var_content);
 	return (var_content);
 }
 
 int	quote_found(char **str, int j, int i)
 {
 	int cleaned;
-	int start;
 
-	start = 0;
 	cleaned = 0;
-	// while (str[j][i])
-	// {
 		if (str[j][i] == '\'')
 		{
-			// start = i;
 			str[j] = handle_quote(str[j], i);
 			if (!str[j])
 				return (0);
@@ -98,7 +82,6 @@ int	quote_found(char **str, int j, int i)
 		}
 		else if (str[j][i] == '\"')
 		{
-			// start = i;
 			str[j] = handle_quote(str[j], i);
 			if (!str[j])
 			{
@@ -106,9 +89,6 @@ int	quote_found(char **str, int j, int i)
 			}
 			cleaned = 2;
 		}
-	// 	i++;
-	// }
-	// str[j] = handle_quote(str[j], start, cleaned);
 	return (cleaned);
 }
 
@@ -163,7 +143,7 @@ int expandor(t_cmd *cmd, t_list **envlist)
         {
 			expanded = expand(cmd->args, i, envlist);
             if (expanded)
-			cmd->args[i] = expanded;
+				cmd->args[i] = expanded;
 			i++;
         }
 		tmp = cmd->redir;

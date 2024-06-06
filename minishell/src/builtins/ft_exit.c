@@ -10,21 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-// La fonction ft_exit gère plusieurs scénarios pour la commande exit dans un shell minimaliste :
-
-// exit -- termine avec succès.
-// exit "" ou un argument vide imprime une erreur et termine avec 255.
-// exit N où N est un nombre termine avec le code de retour N.
-// exit N1 N2 avec trop d'arguments imprime une erreur et ne termine pas immédiatement le programme, mais signale une erreur via exit_status(1).
-// Cette gestion robuste permet de traiter différentes entrées utilisateur tout en fournissant des messages d'erreur clairs et appropriés.
-
-
-// La fonction limit_number vérifie si une chaîne de caractères représentant un nombre dépasse les 
-// limites des entiers de 64 bits signés (long en C). Elle prend en compte le signe du nombre, 
-// ignore les zéros initiaux et utilise des comparaisons de chaîne pour détecter les dépassements.
-//  Si le nombre dépasse les limites, un message d'erreur est affiché et le programme se termine avec
-//   un code de sortie 255, assurant ainsi que seules les valeurs valides sont acceptées.
-
 #include "../../inc/minishell.h"
 
 void    check_exit(char *str)
@@ -37,22 +22,28 @@ void    check_exit(char *str)
     {
         if (!ft_isdigit(str[i]))
         {
-            print_exit_error(str);
+            print_exit_error(str, 0);
             exit(255);
         }
         i++;
     }
 }
 
-void   print_exit_error(char *str)
+void   print_exit_error(char *str, int neg)
 {
     int i;
 
     i = 0;
     (void)str;
+    // write(1, "ici", 3);
     write(2, "exit: ", 6);
+    if (neg)
+        write(1, "-", 1);
     while(str[i])
-            write(2, &str[i++], 1);
+    {
+            write(2, &str[i], 1);
+            i++;
+    }
     write(2, ": numeric argument required", 28);
 }
 
@@ -80,6 +71,7 @@ char *clean_exit_space(char *str)
     j = 0;
     while (str[i] && ft_isspace(str[i]))
         i++;
+    // write(1, &ft_itoa(i), 1);
     res = malloc(sizeof(char) * ((ft_strlen(str) - i) + 1));
     while (str[i] && !ft_isspace(str[i]))
     {
@@ -90,36 +82,56 @@ char *clean_exit_space(char *str)
     res[j] = '\0';
     if (ft_strlen(res) == 0)
     {
-        print_exit_error(str);
+        print_exit_error(str, 0);
         exit(255);
     }
+    return (res);
+}
+
+char *clean_zero(char *str)
+{
+    int i;
+    int j;
+    char *res;
+
+    j = 0; 
+    i = 0;
+    while (str[i] == '0')
+        i++;
+    j = ft_strlen(str) - (i);
+    res = malloc(sizeof(char) * (j + 1));
+    j = 0;
+    while (str[i])
+    {
+        res[j] = str[i];
+        j++;
+        i++;
+    }
+    res[j] = '\0';
     return (res);
 }
 
 void check_limit(char *str)
 {
     int neg;
-    int i;
+    // int i;
 
-    i = 0;
+    // i = 0;
     neg = 0;
     if (*str == '-')
     {
         str++;
         neg = 1;
     }
-    if (ft_strlen(str) > 19)
-    {
-        print_exit_error(str);
-    }
+    printf("%s\n", str);
+    if (ft_strlen(str) > 19 && neg)
+        print_exit_error(str, 1);
+    else if (ft_strlen(str) > 19 && !neg)
+        print_exit_error(str, 0);
     else if (ft_strlen(str) == 19 && ft_strcmp(str, "9223372036854775807") > 0 && !neg)
-	{
-        print_exit_error(str);
-    }
-	else if (ft_strlen(str) == 19 && ft_strcmp(str, "9223372036854775808") > 0 && neg)
-    {
-        print_exit_error(str);
-    }
+        print_exit_error(str, neg);
+    else if (ft_strlen(str) == 19 && ft_strcmp(str, "9223372036854775808") > 0 && neg)
+        print_exit_error(str, neg);
     else
         return;
     exit (255);
@@ -145,6 +157,7 @@ void ft_exit(char **args)
     else if (args[1])
     {
         args[1] = clean_exit_space(args[1]);
+        args[1] = clean_zero(args[1]);
         check_exit(args[1]);
         check_limit(args[1]);
     }

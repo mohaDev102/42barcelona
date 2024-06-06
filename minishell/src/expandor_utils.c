@@ -38,13 +38,11 @@ char *clean_str(char *str, char c, int quote)
 
 char **join_var_name(char *str, t_list *envlist, int i)
 {
-    int start;
     char *aux;
     char *var_name;
     char **res;
 
     (void)envlist;
-    start = 0;
     var_name =  extract_var_name(str, i);
     while(str[i])
     {
@@ -56,13 +54,6 @@ char **join_var_name(char *str, t_list *envlist, int i)
         i++;
     }
     res = ft_split(var_name, '$');
-    start = 0;
-    // while(res[start])
-    // {
-    //     printf("%s\n", res[start]);
-    //     start++;
-    // }
-    
     return (res);
 }
 
