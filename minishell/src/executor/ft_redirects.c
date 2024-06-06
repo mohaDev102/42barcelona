@@ -6,22 +6,21 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 12:42:57 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/21 14:33:52 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/06/02 12:07:06 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	redirections(t_cmd **cmd, t_pipe data, char *env[])
+void	redirections(t_cmd *cmd, t_pipe data)
 {
 	int		fd;
 	t_redir	*aux;
 
-    fd = 0;
-	(void)env;
-	if ((*cmd)->next)
+	fd = 0;
+	if (cmd->next)
 		dup2(data.fd[1], STDOUT_FILENO);
-	aux = (*cmd)->redir;
+	aux = cmd->redir;
 	while (aux)
 	{
 		infile_herdoc(aux, fd);
@@ -56,18 +55,35 @@ t_pipe	*ft_pipes(t_cmd **cmd)
 	data->fd[1] = -1;
 	data->pid = malloc(sizeof(pid_t) * data->n_commands);
 	if (!data->pid)
+	{
+		free(data);
 		return (NULL);
+	}
 	data->std_in = dup(STDIN_FILENO);
 	data->std_out = dup(STDOUT_FILENO);
-    return (data);
+	return (data);
 }
 
 void	ft_error_cmd(t_cmd **cmd, char *msg)
 {
-	if (access(*(*cmd)->args, F_OK) == -1)
+	if ((*cmd)->args)
 	{
-		if (msg != NULL)
-			write(2, msg, ft_strlen(msg));
-		exit(127);
+		if (access(*(*cmd)->args, F_OK) == -1)
+		{
+			if (msg != NULL)
+			{
+				write(2, *(*cmd)->args, ft_strlen(*(*cmd)->args));
+				write(2, msg, ft_strlen(msg));
+			}
+			exit(127);
+		}
 	}
+}
+
+void	close_pipe(int in, int out)
+{
+	if (in != -1)
+		close(in);
+	if (out != -1)
+		close(out);
 }

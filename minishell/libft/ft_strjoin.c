@@ -9,7 +9,7 @@
 /*   Updated: 2023/12/16 16:52:52 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../minishell.h"
+#include "../inc/minishell.h"
 #include <stdio.h>
 
 char	*ft_strjoin(char const *s1, char const *s2)

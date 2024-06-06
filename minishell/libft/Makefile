@@ -1,6 +1,8 @@
 NAME = libft.a
 
-SRC = ft_strjoin.c ft_strlen.c ft_strcmp.c ft_strncmp.c ft_split.c ft_substr.c ft_strdup.c ft_calloc.c ft_memset.c ft_strcpy.c ft_memmove.c ft_isprint.c
+SRC = ft_strjoin.c ft_strlen.c ft_strcmp.c ft_strncmp.c ft_split.c ft_substr.c ft_strdup.c ft_calloc.c \
+	ft_memset.c ft_strcpy.c ft_memmove.c ft_isprint.c ft_itoa.c ft_isdigit.c ft_atoi.c ft_lstlast.c \
+	ft_lstnew.c ft_lstadd_back.c ft_isalpha.c ft_memchr.c ft_strchr.c ft_isspace.c
 
 OBJ = $(SRC:.c=.o)
 HEADER = minishell.h

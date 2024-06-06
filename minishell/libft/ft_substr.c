@@ -9,7 +9,7 @@
 /*   Updated: 2023/12/16 17:02:10 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../minishell.h"
+#include "../inc/minishell.h"
 #include <unistd.h>
 #include <stdio.h>
 

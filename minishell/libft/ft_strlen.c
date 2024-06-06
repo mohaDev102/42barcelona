@@ -9,7 +9,7 @@
 /*   Updated: 2023/12/16 17:01:47 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../minishell.h"
+#include "../inc/minishell.h"
 
 size_t	ft_strlen(const char *c)
 {

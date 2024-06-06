@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:37:06 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/14 16:24:14 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/05/23 16:39:42 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,6 @@ void	free_cmd_list(t_cmd *cmd)
 			free(cmd->args);
 			cmd->args = NULL;
 		}
-		// Liberar la memoria asignada para redir, si es necesario
-		// Aquí puedes agregar la lógica para liberar la estructura
-		// t_redir si es necesario
-		// Mover al siguiente nodo de la lista y liberar el nodo actual
 		temp = cmd;
 		cmd = cmd->next;
 		free(temp);
@@ -99,29 +95,4 @@ int	add_cmd(t_lexer **lexer, t_cmd **cmd, t_redir **redir)
 	}
 	(*cmd)->redir = *redir;
 	return (0);
-}
-// quitarlo
-void	ft_print_parser(t_cmd **cmd)
-{
-	t_cmd	*aux;
-	int		i;
-
-	i = 0;
-	aux = *cmd;
-	while (aux != NULL)
-	{
-		printf("valores: %s\n", aux->args[i++]);
-		aux = aux->next;
-	}
-}
-// quitarlo
-void	ft_print_redir(t_redir **redir)
-{
-	t_redir	*aux;
-
-	aux = *redir;
-	while (aux != NULL)
-	{
-		aux = aux->next;
-	}
 }

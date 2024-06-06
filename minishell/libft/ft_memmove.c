@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42barcel>       +#+  +:+       +#+        */
+/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 01:06:14 by mel-atta          #+#    #+#             */
-/*   Updated: 2023/09/23 01:12:45 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/05/17 22:15:38 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../minishell.h"
+
+#include "../inc/minishell.h"
 
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {

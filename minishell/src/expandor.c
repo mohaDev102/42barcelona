@@ -6,65 +6,94 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:31:37 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/20 20:28:56 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/02 16:20:20 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-char	*handle_quote(char *str, int i, int flag)
+
+char	*handle_quote(char *str, int i)
 {
-	int j = 0;
-	int singleq;
-	int doubleq;
+	// int j = 0;
+	// int singleq;
+	// int doubleq;
 	char c;
 	char *res;
+	// char *aux;
+	// int k;
 
-	singleq = 0;
-	doubleq = 0;
-	j = i;
+	// k = 0;
+	// singleq = 0;
+	// doubleq = 0;
+	// j = i;
 	c = str[i];
-	flag = j;
-	res = NULL;
-	i++;
+	// flag = j;
 	if (!str)
 		return (str);
-	while (str[i])
-	{
-		if (str[i] == c)
-		{
-			if (flag == 1)
-				singleq = 1;
-			if (flag == 2)
-				doubleq = 1;
-			res = clean_str(str, j, i);
-			return (res);
-		}
-		i++;
-	}
-	if (singleq == 0 && doubleq == 0)
-		return(NULL);
+	if (!check_quote_number(str, c))
+		return (NULL);
+	res = clean_str(str, c, check_quote_number(str, c));
 	return (res);
 }
 
-char *handle_dollar(char *str, int i, t_list **envlist)
+char *handle_dollar(char *str, int i, t_list **envlist, int quote)
 {
-	char *varname;
-	char *res;
+	char *var_content;
+	char **res;
+	int j;
 
-	// if (str[i] == "?")
-	// {
+	j = 0;
+	if (!str[i])
+		return (str);
+	if (str[i] == '?' && quote != 1)
+		return (last_exit());
+	else if (ft_strlen(str) == 1)
+		return (str);
+	else if (quote != 1)
+	{
+		res = join_var_name(str, i);
+		var_content = my_getenv(*envlist, res[j], 3);
+		if (ft_strlen(*res) > 1)
+		{
+			j++;
+			while (res[j])
+			{
+				var_content = ft_strjoin(var_content, \
+				my_getenv(*envlist, res[j], 3));
+				j++;
+			}
+		}
+		if (res == NULL)
+			return (NULL);
+	}
+	else
+		return (str);
+	return (var_content);
+}
 
-	// }
-	// else
-	// {
-		varname = extract_var_name(str, i);
-				// printf("varname %s\n", varname);
-		res = my_getenv(*envlist, varname, 0);
-		// printf("res %s\n", res);
+int	quote_found(char **str, int j, int i)
+{
+	int cleaned;
 
-	// }
-	return (res);
+	cleaned = 0;
+		if (str[j][i] == '\'')
+		{
+			str[j] = handle_quote(str[j], i);
+			if (!str[j])
+				return (0);
+			cleaned = 1;
+		}
+		else if (str[j][i] == '\"')
+		{
+			str[j] = handle_quote(str[j], i);
+			if (!str[j])
+			{
+				return (0);
+			}
+			cleaned = 2;
+		}
+	return (cleaned);
 }
 
 char *expand(char **str, int j, t_list **envlist)
@@ -74,48 +103,58 @@ char *expand(char **str, int j, t_list **envlist)
 
 	cleaned = 0;
 	i = 0;
-		(void)envlist;
-
+	if (!str[j])
+		return (NULL);
 	while (str[j][i])
 	{
-		if (str[j][i] == '\'')
+		if ((str[j][i] == '\'' || str[j][i] == '\"') && cleaned == 0)
 		{
-			str[j] = handle_quote(str[j], i, 1);
-			cleaned = 1;
+			cleaned = quote_found(str, j, i);
+			if (cleaned == 0 || str[j] == NULL || !str[j][i])  
+				return (NULL);
+			if (str[j][i] == '$')
+			{
+				str[j] = handle_dollar(str[j], i + 1, envlist, cleaned);
+				if (!str[j])
+					return (NULL);
+			}
 		}
-		else if (str[j][i] == '\"')
+		else if (str[j][i] == '$')
 		{
-			str[j] = handle_quote(str[j], i, 2);
-			cleaned = 1;
-		}
-		if (str[j][i] == '$')
-		{
-			str[j] = ft_strjoin(str[j], handle_dollar(str[j], i + 1, envlist));
-			cleaned = 1;
+			str[j] = handle_dollar(str[j], i + 1, envlist, cleaned);
+			if (!str[j])
+				return (NULL);
+			return (str[j]);
 		}
 		i++;
 	}
-	if (cleaned == 1)
-		return (str[j]);
-	return(NULL);
+	return (str[j]);
 }
 
 int expandor(t_cmd *cmd, t_list **envlist)
 {
     int i;
 	char *expanded;
-	// (void)envlist;
+	t_redir *tmp;
+
     i = 0;
     while (cmd)
     {
-
-        while (cmd->args[i])
+		i = 0;
+        while (cmd->args && cmd->args[i])
         {
 			expanded = expand(cmd->args, i, envlist);
             if (expanded)
 				cmd->args[i] = expanded;
 			i++;
         }
+		tmp = cmd->redir;
+		while (tmp)
+		{
+			if (expand(&(tmp->file), 0, envlist))
+				return (0);
+			tmp = tmp->next;
+		}
         cmd = cmd->next;
     }
 	return (0);

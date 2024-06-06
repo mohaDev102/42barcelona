@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../inc/minishell.h"
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
