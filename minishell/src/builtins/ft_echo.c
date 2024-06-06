@@ -20,17 +20,17 @@ void	print_env(char *echocmd, t_list *envlist)
 	t_list	*tmp;
 	// char	*envname;
 	int		j;
-	int		flag;
+	// int		flag;
 
 	j = 0;
-	flag = 0;
+	// flag = 0;
 	tmp = envlist;
 	while (tmp->next)
 	{
 		if (ft_strcmp(tmp->name, echocmd) == 0 && tmp)
 		{
 			j = 1;
-			flag = 1;
+			// flag = 1;
 			while(tmp->content[j])
 				write(1, &tmp->content[j++], 1);
 			return ;

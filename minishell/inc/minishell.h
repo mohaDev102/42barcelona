@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:56:42 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/06/02 11:51:10 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/06/02 14:54:33 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@
 # include <limits.h>
 # include <stdlib.h>
 # include <unistd.h>
-int					g_error;
+#include <sys/types.h>
+#include <sys/wait.h>
 
 # define PIPE_AS 124
 # define LESS_AS 60
@@ -150,14 +151,12 @@ int    is_buildins(t_cmd **cmd, t_list **envlist, t_pipe *data);
 int    is_buildins2(t_cmd **tmp, t_list *envlist);
 void ft_exit(char **args);
 void    print_export_error(char *str);
-void print_limit_exit(char *str);
-void   print_notdigit_exit(char *str);
-char	*extract_env_content(char *str);
-char	*extract_env_name(char *str);
+void   print_exit_error(char *str);
 void    print_export_error(char *str);
-char *clean_quote(char *str, int i);
+char *clean_exit_space(char *str);
+// char *clean_space(char *str, int i);
 int check_quote_number(char *str, char c);
-char **join_var_name(char *str, t_list *envlist, int i);
+char **join_var_name(char *str, int i);
 
 int					ft_count_lexer(t_lexer *lexer);
 t_cmd				*init_parser(void);
@@ -172,12 +171,10 @@ void				ft_print_redir(t_redir **redir);
 char				**ft_free(char **mat, int i);
 void				parser_free(t_cmd **cmd);
 void				free_cmd_list(t_cmd *cmd);
-void				her_doc(t_cmd *cmd, char **env);
-int					executor(t_cmd **cmd, char **env, t_list **envlist, char *myenv[]);
+void				her_doc(t_cmd *cmd);
+int					executor(t_cmd **cmd, t_list **envlist, char *myenv[]);
 int					ft_count_args(t_lexer *aux);
 char				**ft_split(char const *s, char c);
-char				*ft_strjoin(char const *s1, char const *s2);
-void				her_doc(t_cmd *cmd, char **env);
 char				*ft_itoa(int n);
 void				ft_putstr_fd(char *s, int fd);
 void				infile_herdoc(t_redir *aux, int fd);
@@ -185,18 +182,26 @@ void				outfile(t_redir *aux, int fd);
 void				append(t_redir *aux, int fd);
 void				ft_error_cmd(t_cmd **cmd, char *msg);
 int					parser_lstsize(t_cmd *lst);
-void				redirections(t_cmd **cmd, t_pipe data, char *env[]);
+void				redirections(t_cmd *cmd, t_pipe data);
 t_pipe				*ft_pipes(t_cmd **cmd);
 int check_error(t_lexer *lexer);
 void	close_pipe(int in, int out);
 void	ft_lstadd_back(t_list **lst, t_list *new);
 t_list	*ft_lstnew(char *name, char *content);
 void print_limit_exit(char *str);
-int	is_build(t_cmd *cmd, t_list **envlist);
+int	is_build(t_cmd *cmd);
 char	*extract_env_name(char *str);
 char	*extract_env_content(char *str);
 void   print_notdigit_exit(char *str);
 int     ft_isalpha(int c);
 char	*ft_strchr(const char *str, int c);
 void	*ft_memchr(const void *s, int c, size_t n);
+void search_path(char **paths, t_cmd **cmd, char *env[]);
+void free_env(char **env);
+void free_pipes(t_pipe *data);
+void free_envlist(t_list *envlist);
+void free_split(char **split);
+char	*ft_getenv(char *name, char *env[]);
+void	free_split(char **split);
+void	wait_children(t_pipe *info, int *exit);
 #endif

@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 15:00:24 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/02 11:50:36 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/06/02 13:10:55 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ void	ft_export(t_list **envlist, char *str)
 	}
 	if (found == 0)
 		ft_lstadd_back(envlist, new);
+	// free(new);
 }
 
 void 	ft_export_alone(t_list **envlist)
@@ -147,13 +148,17 @@ void 	ft_export_alone(t_list **envlist)
         }
         if (tmp->content) // Verificar si content no es NULL
         {
-            write(1, "=\"", 2);
             i = 0;
+            write(1, "=\"", 2);
+			// if (tmp->content[1])
+			// {
             while (tmp->content[i])
             {
-                write(1, &tmp->content[i], 1);
-                i++;
+				if (tmp->content[i] == '=')
+				 	i++;
+                write(1, &tmp->content[i++], 1);
             }
+			// }
             //write(1, "\"", 1);
         }
 		write(1, "\"\n", 2);

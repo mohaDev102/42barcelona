@@ -9,7 +9,7 @@
 /*   Updated: 2024/05/17 22:14:43 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
+#include <stdlib.h>
 #include "../inc/minishell.h"
 
 void	*ft_calloc(size_t count, size_t size)

@@ -1,24 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/15 22:01:41 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/15 21:46:43 by alounici         ###   ########.fr       */
+/*   Created: 2024/06/02 14:14:04 by alounici          #+#    #+#             */
+/*   Updated: 2024/06/02 14:32:59 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+
 #include "../inc/minishell.h"
 
-size_t	ft_strlen(const char *c)
+int ft_isspace(int c)
 {
-	size_t	i;
-
-	i = 0;
-	while (c[i] != '\0')
-	{
-		i++;
-	}
-	return (i);
+    if (c == ' ' || c == '\t' || c == '\v' || c == '\n')
+        return (0);
+    return (1);
 }

@@ -17,12 +17,10 @@ int	ft_atoi(const char *str)
 {
 	int	i;
 	int	res;
-	int	aux;
 	int	sign;
 
 	sign = 1;
 	i = 0;
-	aux = 0;
 	res = 0;
 	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
 		i++;

@@ -137,10 +137,10 @@ void	ft_add_node(char *name, char *content, t_list **envlist)
 int	check_format(char *str)
 {
 	int	i;
-	int j;
+	// int j;
 
 	i = 0;
-	j = 0;
+	// j = 0;
 	while(str[i])
 	{
 		if (str[i] == '=')

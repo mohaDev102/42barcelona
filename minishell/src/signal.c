@@ -15,6 +15,7 @@
 #include <signal.h>
 #include <string.h>
 #include "../inc/minishell.h"
+
 void	handler(int sig)
 {
 	if (sig == SIGINT)
@@ -23,7 +24,6 @@ void	handler(int sig)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
-		g_error = 1;
 	}
 }
 
@@ -35,13 +35,11 @@ void	handler_child(int sig)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
-		g_error = 130;
 	}
 	else if (sig == SIGQUIT)
 	{
 		// write(1, "\n", 1);
 		write(1, "Quit: 3", 7);
-		g_error = 131;
 	}
 }
 
