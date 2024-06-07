@@ -6,11 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:31:37 by alounici          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/06/01 18:46:24 by alounici         ###   ########.fr       */
-=======
 /*   Updated: 2024/06/02 16:20:20 by alounici         ###   ########.fr       */
->>>>>>> origin
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,54 +41,6 @@ char *handle_dollar(char *str, int i, t_list **envlist, int quote)
 {
 	char *var_content;
 	char **res;
-<<<<<<< HEAD
-	// char *joined_content;
-	int j;
-	
-	j = 0;
-	// var_content = NULL;
-	if (!str[i])
-		return (str);
-	if (str[i] == '?' && quote != 1)
-	{
-		return (last_exit());
-	}
-	else if (ft_strlen(str) == 1)
-	{
-		return (str);
-	}
-	else if (quote != 1)
-	{
-		res = join_var_name(str, *envlist, i);
-		var_content = my_getenv(*envlist, res[j], 3);
-		j++;
-		while (res[j])
-		{
-			var_content = ft_strjoin(var_content, my_getenv(*envlist, res[j], 3));
-			j++;
-		}
-		if (res == NULL)
-			return (NULL);
-	}
-	else
-		return (str);
-		// printf("%s\n", var_content);
-	return (var_content);
-}
-
-int	quote_found(char **str, int j, int i)
-{
-	int cleaned;
-	int start;
-
-	start = 0;
-	cleaned = 0;
-	// while (str[j][i])
-	// {
-		if (str[j][i] == '\'')
-		{
-			// start = i;
-=======
 	int j;
 
 	j = 0;
@@ -105,6 +53,8 @@ int	quote_found(char **str, int j, int i)
 	else if (quote != 1)
 	{
 		res = join_var_name(str, i);
+		if (!res || *res)
+			return (NULL);
 		var_content = my_getenv(*envlist, res[j], 3);
 		if (ft_strlen(*res) > 1)
 		{
@@ -131,7 +81,6 @@ int	quote_found(char **str, int j, int i)
 	cleaned = 0;
 		if (str[j][i] == '\'')
 		{
->>>>>>> origin
 			str[j] = handle_quote(str[j], i);
 			if (!str[j])
 				return (0);
@@ -139,10 +88,6 @@ int	quote_found(char **str, int j, int i)
 		}
 		else if (str[j][i] == '\"')
 		{
-<<<<<<< HEAD
-			// start = i;
-=======
->>>>>>> origin
 			str[j] = handle_quote(str[j], i);
 			if (!str[j])
 			{
@@ -150,12 +95,6 @@ int	quote_found(char **str, int j, int i)
 			}
 			cleaned = 2;
 		}
-<<<<<<< HEAD
-	// 	i++;
-	// }
-	// str[j] = handle_quote(str[j], start, cleaned);
-=======
->>>>>>> origin
 	return (cleaned);
 }
 
@@ -166,25 +105,6 @@ char *expand(char **str, int j, t_list **envlist)
 
 	cleaned = 0;
 	i = 0;
-<<<<<<< HEAD
-			if (!str[j])
-				return (NULL);
-		while (str[j][i])
-		{
-			if ((str[j][i] == '\'' || str[j][i] == '\"') && cleaned == 0)
-			{
-				cleaned = quote_found(str, j, i);
-				if (cleaned == 0 || str[j] == NULL || !str[j][i])  
-					return (NULL);
-				if (str[j][i] == '$')
-				{
-					str[j] = handle_dollar(str[j], i + 1, envlist, cleaned);
-					if (!str[j])
-						return (NULL);
-				}
-			}
-			else if (str[j][i] == '$')
-=======
 	if (!str[j])
 		return (NULL);
 	while (str[j][i])
@@ -195,18 +115,10 @@ char *expand(char **str, int j, t_list **envlist)
 			if (cleaned == 0 || str[j] == NULL || !str[j][i])  
 				return (NULL);
 			if (str[j][i] == '$')
->>>>>>> origin
 			{
 				str[j] = handle_dollar(str[j], i + 1, envlist, cleaned);
 				if (!str[j])
 					return (NULL);
-<<<<<<< HEAD
-				return (str[j]);
-			}
-			i++;
-		}
-		return (str[j]);
-=======
 			}
 		}
 		else if (str[j][i] == '$')
@@ -219,7 +131,6 @@ char *expand(char **str, int j, t_list **envlist)
 		i++;
 	}
 	return (str[j]);
->>>>>>> origin
 }
 
 int expandor(t_cmd *cmd, t_list **envlist)
@@ -227,25 +138,15 @@ int expandor(t_cmd *cmd, t_list **envlist)
     int i;
 	char *expanded;
 	t_redir *tmp;
-<<<<<<< HEAD
-	
-=======
-
->>>>>>> origin
     i = 0;
     while (cmd)
     {
 		i = 0;
-<<<<<<< HEAD
-
-
-=======
->>>>>>> origin
         while (cmd->args && cmd->args[i])
         {
 			expanded = expand(cmd->args, i, envlist);
             if (expanded)
-			cmd->args[i] = expanded;
+				cmd->args[i] = expanded;
 			i++;
         }
 		tmp = cmd->redir;
@@ -255,10 +156,6 @@ int expandor(t_cmd *cmd, t_list **envlist)
 				return (0);
 			tmp = tmp->next;
 		}
-<<<<<<< HEAD
-		
-=======
->>>>>>> origin
         cmd = cmd->next;
     }
 	return (0);

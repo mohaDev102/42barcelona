@@ -6,11 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 18:11:46 by alounici          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/05/30 20:13:53 by alounici         ###   ########.fr       */
-=======
 /*   Updated: 2024/06/02 14:54:50 by alounici         ###   ########.fr       */
->>>>>>> origin
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +37,14 @@ void    check_exit(char *str)
     {
         if (!ft_isdigit(str[i]))
         {
-<<<<<<< HEAD
-            print_notdigit_exit(str);
-=======
             print_exit_error(str);
->>>>>>> origin
             exit(255);
         }
         i++;
     }
 }
 
-<<<<<<< HEAD
-void   print_notdigit_exit(char *str)
-=======
 void   print_exit_error(char *str)
->>>>>>> origin
 {
     int i;
 
@@ -68,18 +56,6 @@ void   print_exit_error(char *str)
     write(2, ": numeric argument required", 28);
 }
 
-<<<<<<< HEAD
-void print_limit_exit(char *str)
-{
-    int i;
-
-    i = 0;
-    (void)str;
-    write(2, "exit: ", 6);
-    while(str[i])
-            write(2, &str[i++], 1);
-    write(2, ": numeric argument required", 27);
-=======
 // void print_limit_exit(char *str)
 // {
 //     int i;
@@ -118,21 +94,14 @@ char *clean_exit_space(char *str)
         exit(255);
     }
     return (res);
->>>>>>> origin
 }
 
 void check_limit(char *str)
 {
     int neg;
-<<<<<<< HEAD
-    int i;
-
-    i = 0;
-=======
     // int i;
 
     // i = 0;
->>>>>>> origin
     neg = 0;
     if (*str == '-')
     {
@@ -141,17 +110,6 @@ void check_limit(char *str)
     }
     if (ft_strlen(str) > 19)
     {
-<<<<<<< HEAD
-        print_limit_exit(str);
-    }
-    else if (ft_strlen(str) == 19 && ft_strcmp(str, "9223372036854775807") > 0 && !neg)
-	{
-        print_limit_exit(str);
-    }
-	else if (ft_strlen(str) == 19 && ft_strcmp(str, "9223372036854775808") > 0 && neg)
-    {
-        print_limit_exit(str);
-=======
         print_exit_error(str);
     }
     else if (ft_strlen(str) == 19 && ft_strcmp(str, "9223372036854775807") > 0 && !neg)
@@ -161,7 +119,6 @@ void check_limit(char *str)
 	else if (ft_strlen(str) == 19 && ft_strcmp(str, "9223372036854775808") > 0 && neg)
     {
         print_exit_error(str);
->>>>>>> origin
     }
     else
         return;
@@ -173,10 +130,6 @@ void ft_exit(char **args)
     
     if (args[1] == NULL || ft_strcmp(args[1], "--") == 0)
     {
-<<<<<<< HEAD
-        // write(2, "exit\n", 5);
-=======
->>>>>>> origin
         exit(0);
     }
     else if (!args[1][0])
@@ -191,17 +144,9 @@ void ft_exit(char **args)
     }
     else if (args[1])
     {
-<<<<<<< HEAD
-        check_exit(args[1]);
-        check_limit(args[1]);
-    }
-        // write(1, "ici", 3);
-    // write(2, "exit\n", 5);
-=======
         args[1] = clean_exit_space(args[1]);
         check_exit(args[1]);
         check_limit(args[1]);
     }
->>>>>>> origin
     exit (ft_atoi(args[1]));
 }

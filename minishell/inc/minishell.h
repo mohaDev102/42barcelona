@@ -24,6 +24,7 @@
 # include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <stddef.h>
 
 # define PIPE_AS 124
 # define LESS_AS 60

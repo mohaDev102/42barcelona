@@ -58,8 +58,11 @@ char	*my_getenv(t_list *envlist, char *name, int flag)
 	// init_list();
 	tmp = envlist;
 	content = NULL;
+	if (!name)
+		return (NULL);
 	while (tmp != NULL)
 	{
+		// da seg fault al poner $$
 		if (tmp->name && ft_strcmp(name, tmp->name) == 0)
 		{
 			content = tmp->content;
