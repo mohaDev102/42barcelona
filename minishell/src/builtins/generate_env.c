@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   generate_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 22:22:46 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/01 17:21:33 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/06/08 01:35:40 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,10 @@ t_list	*ft_list(char **env)
 	t_list	*envlist;
 	
 	envlist = NULL;
+	// i = 0;
+	// envlist = init_list();
+	// if (!envlist)
+	// 	return (NULL);
 	generate_env_list(env, &envlist);
 	return (envlist); 
 }

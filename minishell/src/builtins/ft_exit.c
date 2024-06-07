@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 18:11:46 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/02 14:54:50 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/08 01:35:19 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,7 @@ void    check_exit(char *str)
     }
 }
 
-// <<<<<<< HEAD
-// void   print_exit_error(char *str, int neg)
-// =======
-// <<<<<<< HEAD
-// void   print_notdigit_exit(char *str)
-// =======
-// void   print_exit_error(char *str)
+
 void   print_exit_error(char *str, int neg)
 {
     int i;

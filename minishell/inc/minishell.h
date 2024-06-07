@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:56:42 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/06/07 22:23:26 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/08 01:28:49 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <unistd.h>
 #include <sys/types.h>
 #include <sys/wait.h>
+#include <stddef.h>
 
 # define PIPE_AS 124
 # define LESS_AS 60

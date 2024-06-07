@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:10:01 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/08 01:16:36 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/08 01:30:29 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,16 +95,12 @@ char *clean_str(char *str, char c, int quote)
     return(res);
 }
 
-char **join_var_name(char *str, t_list *envlist, int i)
+char **join_var_name(char *str, int i)
 {
-    // int start;
-    char *left;
     char *aux;
     char *var_name;
     char **res;
 
-    (void)envlist;
-    // start = 0;
     var_name =  extract_var_name(str, i);
     i++;
     while(str[i])
