@@ -41,10 +41,9 @@ void	ft_error(t_lexer **lexer)
 	exit_status(2);
 }
 
-int ft_count_args(t_lexer *aux)
+int	ft_count_args(t_lexer *aux)
 {
-	//redir OJO
-	int i;
+	int	i;
 
 	i = 0;
 	while (aux && aux->type != PIPE)

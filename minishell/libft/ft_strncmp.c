@@ -9,7 +9,6 @@
 /*   Updated: 2024/05/17 22:12:47 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../inc/minishell.h"
 #include <stdio.h>
 #include <string.h>

@@ -38,7 +38,6 @@ void	create_herdoc(char *limiter, char *path)
 	}
 	close(fd);
 	free(str);
-	// algo de señales
 }
 
 void	do_herdoc(t_redir *tmp, int i)
@@ -52,13 +51,14 @@ void	do_herdoc(t_redir *tmp, int i)
 	create_herdoc(tmp->file, path);
 	free(tmp->file);
 	tmp->file = ft_strdup(path);
+	free(path);
 }
 
-void	her_doc(t_cmd *cmd, char **env)
+void	her_doc(t_cmd *cmd)
 {
-	int i;
-	t_redir *tmp;
-	(void)env;
+	int		i;
+	t_redir	*tmp;
+
 	i = 0;
 	receive_signal(1);
 	while (cmd != NULL)

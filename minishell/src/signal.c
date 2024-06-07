@@ -66,9 +66,9 @@
 // }
 
 
-void	signal_hand_default(int signum)
+void	parent_handler(int num)
 {
-	if (signum == SIGINT)
+	if (num == SIGINT)
 	{
 		write(1, "\n", 1);
 		rl_replace_line("", 1);
@@ -77,19 +77,29 @@ void	signal_hand_default(int signum)
 	}
 }
 
-void	signal_hand(int signum)
+void	child_hand(int num)
 {
 	write(1 ,"ici", 3);
-	if (signum == SIGINT)
+	 if (num == SIGINT)
+	{
 		write(1, "\n", 1);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	 }
+	// else if (sig == SIGQUIT)
+	// {
+	// 	// write(1, "\n", 1);
+	// 	write(1, "Quit: 3", 7);
+	// }
 }
 
 void	receive_signal(int status)
 {
 	if (status == 1)
-		signal(SIGINT, signal_hand_default);
+		signal(SIGINT, parent_handler);
 	else
-		signal(SIGINT, signal_hand);
-	signal(SIGQUIT, signal_hand_default);
+		signal(SIGINT, child_hand);
+	signal(SIGQUIT, parent_handler);
 	// return (1);
 }

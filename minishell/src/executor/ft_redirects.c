@@ -12,16 +12,15 @@
 
 #include "../../inc/minishell.h"
 
-void	redirections(t_cmd **cmd, t_pipe data, char *env[])
+void	redirections(t_cmd *cmd, t_pipe data)
 {
 	int		fd;
 	t_redir	*aux;
 
-    fd = 0;
-	(void)env;
-	if ((*cmd)->next)
+	fd = 0;
+	if (cmd->next)
 		dup2(data.fd[1], STDOUT_FILENO);
-	aux = (*cmd)->redir;
+	aux = cmd->redir;
 	while (aux)
 	{
 		infile_herdoc(aux, fd);
@@ -56,10 +55,13 @@ t_pipe	*ft_pipes(t_cmd **cmd)
 	data->fd[1] = -1;
 	data->pid = malloc(sizeof(pid_t) * data->n_commands);
 	if (!data->pid)
+	{
+		free(data);
 		return (NULL);
+	}
 	data->std_in = dup(STDIN_FILENO);
 	data->std_out = dup(STDOUT_FILENO);
-    return (data);
+	return (data);
 }
 
 void	ft_error_cmd(t_cmd **cmd, char *msg)
@@ -77,6 +79,7 @@ void	ft_error_cmd(t_cmd **cmd, char *msg)
 		}
 	}
 }
+
 void	close_pipe(int in, int out)
 {
 	if (in != -1)

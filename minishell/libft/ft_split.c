@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
-// #include "../inc/minishell.h"
 #include <stdio.h>
 
 static int	ft_count_word(char const *s, char c)

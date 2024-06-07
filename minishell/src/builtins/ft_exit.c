@@ -23,12 +23,20 @@ void    check_exit(char *str)
         if (!ft_isdigit(str[i]))
         {
             print_exit_error(str, 0);
+            // print_exit_error(str);
             exit(255);
         }
         i++;
     }
 }
 
+// <<<<<<< HEAD
+// void   print_exit_error(char *str, int neg)
+// =======
+// <<<<<<< HEAD
+// void   print_notdigit_exit(char *str)
+// =======
+// void   print_exit_error(char *str)
 void   print_exit_error(char *str, int neg)
 {
     int i;
@@ -47,6 +55,34 @@ void   print_exit_error(char *str, int neg)
     write(2, ": numeric argument required", 28);
 }
 
+// void print_limit_exit(char *str)
+// {
+//     int i;
+
+//     i = 0;
+//     (void)str;
+//     write(2, "exit: ", 6);
+//     while(str[i])
+//             write(2, &str[i++], 1);
+//     write(2, ": numeric argument required", 27);
+// }
+
+// char *clean_exit_space(char *str)
+
+void print_limit_exit(char *str)
+{
+    int i;
+    // int j;
+    // int k;
+    // char *res;
+
+    i = 0;
+    // (void)str;
+    write(2, "exit: ", 6);
+    while(str[i])
+            write(2, &str[i++], 1);
+    write(2, ": numeric argument required", 27);
+}
 // void print_limit_exit(char *str)
 // {
 //     int i;
@@ -82,6 +118,7 @@ char *clean_exit_space(char *str)
     res[j] = '\0';
     if (ft_strlen(res) == 0)
     {
+
         print_exit_error(str, 0);
         exit(255);
     }
@@ -108,12 +145,19 @@ char *clean_zero(char *str)
         i++;
     }
     res[j] = '\0';
+    // return (res);
+    //     print_exit_error(str);
+    //     exit(255);
+    // }
     return (res);
 }
 
 void check_limit(char *str)
 {
     int neg;
+    // int i;
+
+    // i = 0;
     // int i;
 
     // i = 0;

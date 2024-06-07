@@ -15,6 +15,19 @@
 #include <stdlib.h>
 #include "../../inc/minishell.h"
 
+void free_envlist(t_list *envlist)
+{
+    t_list *tmp;
+
+    while (envlist)
+    {
+        tmp = envlist->next;
+		free(envlist->name);
+        free(envlist->content);
+        free(envlist);
+        envlist = tmp;
+    }
+}
 
 void	generate_env_list(char **env, t_list **envlist)
 {
@@ -58,6 +71,7 @@ void	generate_env_list(char **env, t_list **envlist)
 
 t_list	*ft_list(char **env)
 {
+	// int		i;
 	t_list	*envlist;
 	
 	envlist = NULL;
@@ -87,6 +101,19 @@ char **copy_env(char **env)
 	}
 	my_env[i] = NULL;
 	return (my_env);
+}
+
+void free_env(char **env)
+{
+	int i = 0;
+	if (!env)
+		return;
+	while (env[i])
+	{
+		free(env[i]);
+		i++;
+	}
+	free(env);
 }
 
 // int main(int argc, char **argv, char **env)

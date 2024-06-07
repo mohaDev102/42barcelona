@@ -49,6 +49,7 @@ void	ft_export(t_list **envlist, char *str)
 	}
 	if (found == 0)
 		ft_lstadd_back(envlist, new);
+	// free(new);
 }
 
 void 	ft_export_alone(t_list **envlist)

@@ -9,7 +9,6 @@
 /*   Updated: 2024/05/15 21:46:43 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "../inc/minishell.h"
 
 size_t	ft_strlen(const char *c)

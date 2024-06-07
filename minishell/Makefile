@@ -3,10 +3,9 @@ SRC = src/minishell.c src/lexer/ft_lexer.c src/lexer/lexer_utils.c src/lexer/lex
 	src/signal.c src/parser/ft_parser_utils.c src/parser/ft_parser_utils2.c src/parser/ft_free.c src/parser/ft_parser_utils3.c \
 	src/executor/ft_executor.c src/expandor.c src/expandor_utils.c src/builtins/generate_env.c src/builtins/ft_cd.c \
 	src/builtins/ft_echo.c src/builtins/ft_env.c src/builtins/ft_export.c src/builtins/ft_pwd.c src/builtins/ft_unset.c \
-	src/executor/ft_executor.c src/executor/ft_redirects.c src/her_doc/her_doc.c src/her_doc/utils.c \
-	src/executor/ft_executor.c src/expandor.c src/expandor_utils.c src/builtins/generate_env.c src/builtins/env_utils.c src/builtins/ft_cd.c \
-	src/builtins/ft_echo.c src/builtins/ft_env.c src/builtins/ft_export.c src/builtins/ft_pwd.c src/builtins/ft_unset.c src/builtins/export_utils.c \
-	src/builtins/ft_exit.c src/executor/is_builtins.c src/builtins/buildins_error.c
+	src/executor/ft_redirects.c src/her_doc/her_doc.c src/her_doc/utils.c src/builtins/env_utils.c \
+	src/builtins/export_utils.c src/executor/is_buildins2.c src/builtins/ft_exit.c src/executor/is_builtins.c src/builtins/buildins_error.c src/executor/ft_free.c \
+	#src/executor/is_builtins2.c
 
 
 OBJ = $(SRC:.c=.o)
