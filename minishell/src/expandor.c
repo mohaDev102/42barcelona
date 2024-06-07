@@ -56,13 +56,13 @@ char *handle_dollar(char *str, int i, t_list **envlist, int quote)
 		if (!res || *res)
 			return (NULL);
 		var_content = my_getenv(*envlist, res[j], 3);
+		// printf("%s\n", var_content);
 		if (ft_strlen(*res) > 1)
 		{
 			j++;
 			while (res[j])
 			{
-				var_content = ft_strjoin(var_content, \
-				my_getenv(*envlist, res[j], 3));
+				var_content = ft_strjoin(var_content, my_getenv(*envlist, res[j], 3));
 				j++;
 			}
 		}

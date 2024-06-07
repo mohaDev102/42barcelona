@@ -72,6 +72,7 @@ char *extract_var_name(char *str, int i)
         var[k++] = str[j++];
     }
     var[k] = '\0';
+    // printf("var%s\n", var);
     return (var);
 }
 
