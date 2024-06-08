@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:10:01 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/08 13:09:24 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/08 13:51:50 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ char **join_var_name(char *str, int i)
     char *aux;
     char *var_name;
     char **res;
-    char *left;
+    char *temp;
 
     var_name =  extract_var_name(str, i);
     i++;
@@ -110,11 +110,14 @@ char **join_var_name(char *str, int i)
         if (str[i] == '$')
         {
             aux = extract_var_name(str, i);
+            temp = var_name;
            var_name = ft_strjoin(var_name, aux);
+            free(aux);
+            free(temp);
         }
         else if (str[i] == '\"')
         {
-            left = ft_substr(str, i + 1, ft_strlen(str) - i);
+            // left = ft_substr(str, i + 1, ft_strlen(str) - i);
             // printf("%s\n", left);
             // res = ft_strjoin(var_name, left);
             // return (res);
@@ -122,7 +125,7 @@ char **join_var_name(char *str, int i)
         i++;
     }
     res = ft_split(var_name, '$');
-    res = ft_mapjoin(res, left);
+    // res = ft_mapjoin(res, left);
         
     // start = 0;
     // while(res[start])
