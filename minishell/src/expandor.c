@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:31:37 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/08 13:18:16 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/08 13:53:03 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char *handle_dollar(char *str, int i, t_list **envlist, int quote)
 		return (str);
 	else if (quote != 1)
 	{
-		res = join_var_name(str, envlist, i);
+		res = join_var_name(str, i);
 		var_content = my_getenv(*envlist, res[j], 3);
 		// int k = ft_maplen(res);
 		// printf("k = %d", k);
