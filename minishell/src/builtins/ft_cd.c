@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 20:13:08 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/08 01:32:47 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/08 13:14:24 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,30 +61,32 @@ char	*my_getenv(t_list *envlist, char *name, int flag)
 	while (tmp)
 	{
 		// printf("%s\n%s\n", tmp->name, name);
-	if (!name)
-		return (NULL);
-	while (tmp != NULL)
-	{
-		// da seg fault al poner $$
-		if (tmp->name && ft_strcmp(name, tmp->name) == 0)
+		if (!name)
+			return (NULL);
+		while (tmp != NULL)
 		{
-			printf("ici %s\n%s\n", tmp->content, name);
-			content = tmp->content;
-			// printf("conte %s", content);
+			// da seg fault al poner $$
+			if (tmp->name && ft_strcmp(name, tmp->name) == 0)
+			{
+				printf("ici %s\n%s\n", tmp->content, name);
+				content = tmp->content;
+				// printf("conte %s", content);
+			}
+			tmp = tmp->next;
 		}
-		tmp = tmp->next;
+		if (content == NULL)
+		{
+			if (flag == 1)
+				write(2, "cd: HOME not set\n", 18);
+			else if (flag == 2)
+				write(2, "cd: OLDPWD not set\n", 20);
+			return (NULL);
+		}
+		content = clean_content(content);
+		// printf("content%s\n", content);
 	}
-	if (content == NULL)
-	{
-		if (flag == 1)
-			write(2, "cd: HOME not set\n", 18);
-		else if (flag == 2)
-			write(2, "cd: OLDPWD not set\n", 20);
-		return (NULL);
-	}
-	content = clean_content(content);
-	// printf("content%s\n", content);
-	return (content);
+		return (content);
+	// }
 }
 
 char	*clean_content(char *content)

@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:10:01 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/08 01:30:29 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/08 13:09:24 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ char **join_var_name(char *str, int i)
     char *aux;
     char *var_name;
     char **res;
+    char *left;
 
     var_name =  extract_var_name(str, i);
     i++;

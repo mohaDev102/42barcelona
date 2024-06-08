@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:31:37 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/08 01:32:17 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/08 13:18:16 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,18 +103,15 @@ char *expand(char **str, int j, t_list **envlist)
 		if ((str[j][i] == '\'' || str[j][i] == '\"') && cleaned == 0)
 		{
 			if (str[j][i + 1] == '$' && str[j][i] == '\"')
-			cleaned = quote_found(str, j, i);
-			if (cleaned == 0 || str[j] == NULL || !str[j][i])  
-				return (NULL);
-			if (str[j][i] == '$')
 			{
 				// write(1, "ici\n\n", 5);
 				str[j] = handle_dollar(str[j], i + 1, envlist, 2);
 				if (!str[j])
 					return (NULL);
-				// cleaned = quote_found(str, j, i);
-				// if (cleaned == 0 || str[j] == NULL || !str[j][i])  
-				// 	return (NULL);
+				printf("ici %s", str[j]);
+				cleaned = quote_found(str, j, i);
+				if (cleaned == 0 || str[j] == NULL || !str[j][i])  
+					return (NULL);
 				return (str[j]);
 			}
 			else
@@ -124,7 +121,6 @@ char *expand(char **str, int j, t_list **envlist)
 					return (NULL);
 			}
 			i++;
-			}
 		}
 		else if (str[j][i] == '$')
 		{
@@ -136,7 +132,7 @@ char *expand(char **str, int j, t_list **envlist)
 		}
 		i++;
 	
-	// }
+	}
 	return (str[j]);
 
 }

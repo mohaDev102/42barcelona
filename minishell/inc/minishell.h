@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:56:42 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/06/08 01:28:49 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/08 13:00:56 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ void    print_export_error(char *str);
 char *clean_exit_space(char *str);
 // char *clean_space(char *str, int i);
 int check_quote_number(char *str, char c);
-char **join_var_name(char *str, t_list *envlist, int i);
+char **join_var_name(char *str, int i);
 int	quote_found(char **str, int j, int i);
 int exec_echo_n(int nindex, char **args, t_list *envlist);
 void exec_echo(int nindex, char **args, t_list *envlist);
