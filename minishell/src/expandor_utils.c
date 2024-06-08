@@ -41,18 +41,25 @@ char **join_var_name(char *str, int i)
     char *aux;
     char *var_name;
     char **res;
+    char *temp;
 
     var_name =  extract_var_name(str, i);
+    if (!var_name)
+        return (NULL);
     while(str[i])
     {
         if (str[i] == '$')
         {
             aux = extract_var_name(str, i);
-           var_name = ft_strjoin(var_name, aux);
+            temp = var_name;
+            var_name = ft_strjoin(var_name, aux);
+            free(aux);
+            free(temp);
         }
         i++;
     }
     res = ft_split(var_name, '$');
+    free(var_name);
     return (res);
 }
 

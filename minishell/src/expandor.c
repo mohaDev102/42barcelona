@@ -42,6 +42,7 @@ char *handle_dollar(char *str, int i, t_list **envlist, int quote)
 	char *var_content;
 	char **res;
 	int j;
+	char *temp;
 
 	j = 0;
 	if (!str[i])
@@ -53,16 +54,21 @@ char *handle_dollar(char *str, int i, t_list **envlist, int quote)
 	else if (quote != 1)
 	{
 		res = join_var_name(str, i);
-		if (!res || *res)
-			return (NULL);
 		var_content = my_getenv(*envlist, res[j], 3);
-		// printf("%s\n", var_content);
+		if (!var_content)
+		{
+			free_split(res);
+			return (NULL);
+		}
 		if (ft_strlen(*res) > 1)
 		{
 			j++;
 			while (res[j])
 			{
-				var_content = ft_strjoin(var_content, my_getenv(*envlist, res[j], 3));
+				temp = var_content;
+				var_content = ft_strjoin(var_content, \
+				my_getenv(*envlist, res[j], 3));
+				free(temp);
 				j++;
 			}
 		}
@@ -137,6 +143,7 @@ int expandor(t_cmd *cmd, t_list **envlist)
 {
     int i;
 	char *expanded;
+
 	t_redir *tmp;
     i = 0;
     while (cmd)
@@ -145,7 +152,7 @@ int expandor(t_cmd *cmd, t_list **envlist)
         while (cmd->args && cmd->args[i])
         {
 			expanded = expand(cmd->args, i, envlist);
-            if (expanded)
+            if (expanded != NULL)
 				cmd->args[i] = expanded;
 			i++;
         }
