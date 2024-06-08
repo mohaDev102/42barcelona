@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:31:37 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/02 16:20:20 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/08 01:32:17 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,10 @@
 
 char	*handle_quote(char *str, int i)
 {
-	// int j = 0;
-	// int singleq;
-	// int doubleq;
 	char c;
 	char *res;
-	// char *aux;
-	// int k;
 
-	// k = 0;
-	// singleq = 0;
-	// doubleq = 0;
-	// j = i;
 	c = str[i];
-	// flag = j;
 	if (!str)
 		return (str);
 	if (!check_quote_number(str, c))
@@ -53,14 +43,11 @@ char *handle_dollar(char *str, int i, t_list **envlist, int quote)
 		return (str);
 	else if (quote != 1)
 	{
-		res = join_var_name(str, i);
+		res = join_var_name(str, envlist, i);
 		var_content = my_getenv(*envlist, res[j], 3);
-		if (!var_content)
-		{
-			free_split(res);
-			return (NULL);
-		}
-		if (ft_strlen(*res) > 1)
+		// int k = ft_maplen(res);
+		// printf("k = %d", k);
+		if (res[1])
 		{
 			j++;
 			while (res[j])
@@ -117,27 +104,44 @@ char *expand(char **str, int j, t_list **envlist)
 	{
 		if ((str[j][i] == '\'' || str[j][i] == '\"') && cleaned == 0)
 		{
+			if (str[j][i + 1] == '$' && str[j][i] == '\"')
 			cleaned = quote_found(str, j, i);
 			if (cleaned == 0 || str[j] == NULL || !str[j][i])  
 				return (NULL);
 			if (str[j][i] == '$')
 			{
-				str[j] = handle_dollar(str[j], i + 1, envlist, cleaned);
+				// write(1, "ici\n\n", 5);
+				str[j] = handle_dollar(str[j], i + 1, envlist, 2);
 				if (!str[j])
 					return (NULL);
+				// cleaned = quote_found(str, j, i);
+				// if (cleaned == 0 || str[j] == NULL || !str[j][i])  
+				// 	return (NULL);
+				return (str[j]);
 			}
+			else
+			{
+				cleaned = quote_found(str, j, i);
+				if (cleaned == 0 || str[j] == NULL || !str[j][i])  
+					return (NULL);
+			}
+			i++;
 		}
 		else if (str[j][i] == '$')
 		{
+			// write(1, "ic22\n", 5);
 			str[j] = handle_dollar(str[j], i + 1, envlist, cleaned);
 			if (!str[j])
 				return (NULL);
 			return (str[j]);
 		}
 		i++;
+	
 	}
 	return (str[j]);
+
 }
+
 
 int expandor(t_cmd *cmd, t_list **envlist)
 {
@@ -145,6 +149,7 @@ int expandor(t_cmd *cmd, t_list **envlist)
 	char *expanded;
 
 	t_redir *tmp;
+
     i = 0;
     while (cmd)
     {

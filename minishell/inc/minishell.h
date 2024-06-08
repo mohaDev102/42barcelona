@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:56:42 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/06/02 14:54:33 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/08 01:28:49 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,17 +149,23 @@ char *last_exit(void);
 int	exit_status(int value);
 char **copy_env(char **env);
 int    is_buildins(t_cmd **cmd, t_list **envlist, t_pipe *data);
-int    is_buildins2(t_cmd **tmp, t_list *envlist);
+int    is_echo(t_cmd **tmp, t_list *envlist);
 void ft_exit(char **args);
 void    print_export_error(char *str);
-void   print_exit_error(char *str);
+void   print_exit_error(char *str, int neg);
 char	*extract_env_content(char *str);
 char	*extract_env_name(char *str);
+// void   print_exit_error(char *str);
 void    print_export_error(char *str);
 char *clean_exit_space(char *str);
 // char *clean_space(char *str, int i);
 int check_quote_number(char *str, char c);
-char **join_var_name(char *str, int i);
+char **join_var_name(char *str, t_list *envlist, int i);
+int	quote_found(char **str, int j, int i);
+int exec_echo_n(int nindex, char **args, t_list *envlist);
+void exec_echo(int nindex, char **args, t_list *envlist);
+int ft_maplen(char **str);
+char	**ft_mapjoin(char **map, char *str);
 
 int					ft_count_lexer(t_lexer *lexer);
 t_cmd				*init_parser(void);

@@ -60,6 +60,7 @@ void	her_doc(t_cmd *cmd)
 	t_redir	*tmp;
 
 	i = 0;
+	receive_signal(1);
 	while (cmd != NULL)
 	{
 		tmp = cmd->redir;

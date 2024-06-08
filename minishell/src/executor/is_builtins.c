@@ -6,15 +6,11 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 20:15:13 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/02 13:11:32 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/07 20:18:16 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-// echo $?
-// cd ok
-// unset path
 
 int	echo_flag(char **args, int i)
 {
@@ -30,9 +26,12 @@ int	echo_flag(char **args, int i)
 					args[i - 1][ft_strlen(args[i - 1]) - 1]))
 		{
 			j = 1;
-			while (args[i][j] == 'n')
+			while (args[i][j])
 			{
-				j++;
+				if (args[i][j] == 'n')
+					j++;
+				else
+					return (ret);
 			}
 			ret++;
 		}
@@ -101,41 +100,29 @@ int	manage_redir(t_cmd *cmd, t_pipe *data)
 	return (0);
 }
 
-int	is_buildins2(t_cmd **tmp, t_list *envlist)
+int	is_echo(t_cmd **tmp, t_list *envlist)
 {
 	int	i;
 	int	ret;
 
 	ret = 0;
 	i = 0;
-	ret = 0;
-	while ((*tmp)->args[i])
-	{
+	// while ((*tmp)->args[i])
+	// {
 		if (ft_strcmp((*tmp)->args[i], "echo") == 0)
 		{
 			ret = echo_flag(&(*tmp)->args[i], i);
-			if (ret != 0)
-			{
-				ret++;
-				while ((*tmp)->args[ret])
-					ft_echo((*tmp)->args[ret++], 0, envlist);
+			if (exec_echo_n(ret, (*tmp)->args, envlist) == 1)
 				return (1);
-			}
 			else
 			{
 				i++;
-				while ((*tmp)->args[i])
-				{
-					if (i > 1)
-						write(1, " ", 1);
-					ft_echo((*tmp)->args[i++], 1, envlist);
-				}
-				write(1, "\n", 1);
+				exec_echo(i,(*tmp)->args, envlist);
 				return (1);
 			}
 		}
 		i++;
-	}
+	// }
 	return (0);
 }
 
@@ -158,8 +145,7 @@ int	is_buildins(t_cmd **cmd, t_list **envlist, t_pipe *data)
 	}
 	if (tmp && tmp->args && tmp->args[0])
 	{
-		if (ft_strcmp(tmp->args[0], "echo") == 0)
-			is_buildins2(&tmp, *envlist);
+		is_echo(&tmp, *envlist);
 		if (ft_strcmp(tmp->args[0], "cd") == 0)
 			ft_cd(tmp->args[1], envlist);
 		else if (ft_strcmp(tmp->args[0], "unset") == 0)

@@ -22,10 +22,12 @@ void	ft_env(t_list **envlist)
 	tmp = *envlist;
 	while (tmp)
 	{
-		// printf("%s", tmp->name);
-		if (tmp->content[0] == '=')
+		// printf("%s\n", tmp->name);
+					// printf("%s\n", tmp->content);
+		if (tmp->content[0])
 		{
 			printf("%s", tmp->name);
+			printf("=");
 			printf("%s\n", tmp->content);
 		}
 		tmp = tmp->next;

@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 22:28:48 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/31 21:01:47 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/07 20:23:38 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 void	print_env(char *echocmd, t_list *envlist)
 {
 	t_list	*tmp;
-	// char	*envname;
 	int		j;
 	// int		flag;
 
@@ -83,24 +82,16 @@ void	ft_echo(char *echocmd, int flag, t_list *envlist)
 	{
 		while (echocmd[i])
 		{
-				write(1, &echocmd[i], 1);
-				// while(echocmd[i])
-				// {
-					// write(1, "text", 4);
-					// write(1, echocmd[i], 1);
-					// printf("eef");
-					// i++;
-				// }
-			// }
+			write(1, &echocmd[i], 1);
 			i++;
 		}
 	}
 	// if (echocmd == NULL || echocmd[0] == '\0')// && flag == 1)
 	// {
 		// if (flag == 1)
-		// {
+		// // {
 		// 		write(1, "\n", 1);
-		// 		// write(1, "fin", 3);
+		// 		write(1, "fin", 3);
 		// }
 		// return ;
 	// }
