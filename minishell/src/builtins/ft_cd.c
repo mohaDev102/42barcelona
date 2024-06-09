@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 20:13:08 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/08 13:14:24 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/08 18:56:56 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,17 +97,8 @@ char	*clean_content(char *content)
 	char	*res;
 
 	len = ft_strlen(content);
-	if (len <= 1) 
-	{
-        res = malloc(sizeof(char));
-        if (res == NULL) {
-            return NULL;
-        }
-        res[0] = '\0';
-        return res;
-	}
 	res = malloc(sizeof(char) * (len + 1));
-	if (res == NULL)
+	if (!res)
 		return (NULL);
 	i = 0;
 	j = 0;

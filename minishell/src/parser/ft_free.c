@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:39:10 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/06 11:12:03 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/06/08 17:47:34 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,6 @@ void	parser_free(t_cmd **cmd)
 	while (temp)
 	{
 		temp1 = temp->next;
-		// da segfault y no poder liberar
-		// cuando son dos parametros por ejemplo ls
-		// -la !!!!
 		ft_free(temp->args, ft_len_array(temp->args));
 		ft_redir_clear(&temp->redir);
 		free(temp);

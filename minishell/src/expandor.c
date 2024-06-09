@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expandor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:31:37 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/08 13:53:03 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/08 17:45:33 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,11 @@ char *handle_dollar(char *str, int i, t_list **envlist, int quote)
 	{
 		res = join_var_name(str, i);
 		var_content = my_getenv(*envlist, res[j], 3);
+		if (!var_content)
+		{
+			free_split(res);
+			return (NULL);
+		}
 		// int k = ft_maplen(res);
 		// printf("k = %d", k);
 		if (res[1])
@@ -59,8 +64,9 @@ char *handle_dollar(char *str, int i, t_list **envlist, int quote)
 				j++;
 			}
 		}
-		if (res == NULL)
-			return (NULL);
+		// if (res == NULL)
+		// 	return (NULL);
+		free_split(res);
 	}
 	else
 		return (str);
@@ -74,18 +80,20 @@ int	quote_found(char **str, int j, int i)
 	cleaned = 0;
 		if (str[j][i] == '\'')
 		{
-			str[j] = handle_quote(str[j], i);
-			if (!str[j])
+			char *new_str = handle_quote(str[j], i);
+			if (!new_str)
 				return (0);
+			free(str[j]);
+			str[j] = new_str;
 			cleaned = 1;
 		}
 		else if (str[j][i] == '\"')
 		{
-			str[j] = handle_quote(str[j], i);
-			if (!str[j])
-			{
+			char *new_str = handle_quote(str[j], i);
+			if (!new_str)
 				return (0);
-			}
+			free(str[j]);
+			str[j] = new_str;
 			cleaned = 2;
 		}
 	return (cleaned);
@@ -107,10 +115,12 @@ char *expand(char **str, int j, t_list **envlist)
 			if (str[j][i + 1] == '$' && str[j][i] == '\"')
 			{
 				// write(1, "ici\n\n", 5);
-				str[j] = handle_dollar(str[j], i + 1, envlist, 2);
-				if (!str[j])
+				char *expanded = handle_dollar(str[j], i + 1, envlist, 2);
+				if (!expanded)
 					return (NULL);
-				printf("ici %s", str[j]);
+				free(str[j]);
+				str[j] = expanded;
+				// printf("ici %s", str[j]);
 				cleaned = quote_found(str, j, i);
 				if (cleaned == 0 || str[j] == NULL || !str[j][i])  
 					return (NULL);
@@ -127,9 +137,11 @@ char *expand(char **str, int j, t_list **envlist)
 		else if (str[j][i] == '$')
 		{
 			// write(1, "ic22\n", 5);
-			str[j] = handle_dollar(str[j], i + 1, envlist, cleaned);
-			if (!str[j])
+			char *expanded = handle_dollar(str[j], i + 1, envlist, cleaned);
+			if (!expanded)
 				return (NULL);
+			free(str[j]);
+			str[j] = expanded;
 			return (str[j]);
 		}
 		i++;
@@ -155,7 +167,10 @@ int expandor(t_cmd *cmd, t_list **envlist)
         {
 			expanded = expand(cmd->args, i, envlist);
             if (expanded != NULL)
+			{
+				// free(cmd->args[i]);
 				cmd->args[i] = expanded;
+			}
 			i++;
         }
 		tmp = cmd->redir;

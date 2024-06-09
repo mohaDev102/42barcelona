@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_executor.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:01:02 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/06/02 13:11:25 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/08 19:05:38 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,11 @@ void	exec_cmd(t_cmd **cmd, t_list **envlist, char *myenv[], t_pipe *data)
 	path = NULL;
 	path = ft_getenv("PATH", myenv);
 	if (!path)
+	{
+		if (access(*(*cmd)->args, X_OK) != -1)
+			execve((*cmd)->args[0], (*cmd)->args, myenv);
 		return (ft_error_cmd(cmd, ": command not found\n"));
+	}
 	paths = ft_split(path, ':');
 	free(path);
 	if (is_build(*cmd))

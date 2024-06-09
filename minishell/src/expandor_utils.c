@@ -103,7 +103,9 @@ char **join_var_name(char *str, int i)
     char *temp;
 
     var_name =  extract_var_name(str, i);
-    i++;
+    if (!var_name)
+        return (NULL);
+    // i++;
     while(str[i])
     {
         // i++;
@@ -125,6 +127,7 @@ char **join_var_name(char *str, int i)
         i++;
     }
     res = ft_split(var_name, '$');
+    free(var_name);
     // res = ft_mapjoin(res, left);
         
     // start = 0;
