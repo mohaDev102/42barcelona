@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 15:00:24 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/02 13:10:55 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/09 12:02:09 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,23 @@ void	ft_export(t_list **envlist, char *str)
 		return ;
 	}
 	envcontent = extract_env_content(str);
-	new = ft_lstnew(envname, envcontent);
-	if (!tmp)
+	if (!envcontent)
+	{
+		free(envname);
 		return ;
+	}
+	new = ft_lstnew(envname, envcontent);
+	if (!new)
+	{
+		free(envname);
+		free(envcontent);
+		return ;
+	}
+	if (!tmp)
+	{
+		*envlist = new;
+		return ;
+	}
 	while (tmp)
 	{
 		if (ft_strcmp(tmp->name, envname) == 0)
@@ -43,13 +57,14 @@ void	ft_export(t_list **envlist, char *str)
 			found = 1;
 			free(tmp->content);
 			tmp->content = envcontent;
+			free(envname);
+			free(new);
 			break ;
 		}
 		tmp = tmp->next;
 	}
 	if (found == 0)
 		ft_lstadd_back(envlist, new);
-	// free(new);
 }
 
 void 	ft_export_alone(t_list **envlist)

@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 20:13:08 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/08 14:10:34 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/10 11:57:17 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,17 +97,8 @@ char	*clean_content(char *content)
 	char	*res;
 
 	len = ft_strlen(content);
-	if (len <= 1) 
-	{
-        res = malloc(sizeof(char));
-        if (res == NULL) {
-            return NULL;
-        }
-        res[0] = '\0';
-        return res;
-	}
 	res = malloc(sizeof(char) * (len + 1));
-	if (res == NULL)
+	if (!res)
 		return (NULL);
 	i = 0;
 	j = 0;

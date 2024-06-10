@@ -19,6 +19,7 @@ void	ft_unset(t_list **envlist, char *unscmd)
 	t_list	*tmp2;
 
 	tmp = *envlist;
+	tmp2 = NULL;
 	while (tmp)
 	{
 		if (tmp->name && ft_strcmp(tmp->name, unscmd) == 0)
@@ -28,9 +29,9 @@ void	ft_unset(t_list **envlist, char *unscmd)
 			else
 			{
 				tmp2->next = tmp->next;
-				// free(tmp->name);
-				// free(tmp->content);
-				// free(tmp);
+				free(tmp->name);
+				free(tmp->content);
+				free(tmp);
 				tmp = tmp2->next;
 				break ;
 			}

@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:37:46 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/18 10:56:50 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/06/08 17:53:24 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,9 @@ int	ft_space_or_null(char *str, int i)
 
 int	ft_lexer(char *line, t_lexer **lexer)
 {
-	int	i;
+	int		i;
 	t_lexer	*new;
-	int		checker;
-	(void)new;
-	(void)checker;
-	(void)lexer;
+
 	i = 0;
 	if (ft_space_or_null(line, i) == -1)
 		return (1);
@@ -89,28 +86,11 @@ int	ft_lexer(char *line, t_lexer **lexer)
 				return (1);
 			ft_lexer_addback(lexer, new);
 			i = ft_convert(line, new, i);
-			// i = ft_convert(ft_substr(line, i, ft_strlen(line)), new);
 			if (i == -1)
 				return (1);
-			// i += checker;
-			// i++;
 		}
 		else
 			i++;
-		// else
-		// {
-		// 	new = init_lexer();
-		// 	if (!new)
-		// 		return (1);
-			// ft_lexer_addback(lexer, new);
-			// checker = ft_convert("ls -la|wc -l", new);
-			// checker = ft_convert(ft_substr(line, i, ft_strlen(line)), new);
-			// if (!checker)
-				// return (1);
-			// i += checker;
-			// i++;
-		// }
-		// i++;
 	}
 	return (0);
 }
