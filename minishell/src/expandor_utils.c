@@ -6,70 +6,79 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:10:01 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/08 13:51:50 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/10 11:20:50 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int ft_maplen(char **str)
-{
-    int i;
-    // int j;
+// int ft_maplen(char **str)
+// {
+//     int i;
 
-    i = 0;
-    if (str == NULL)
-        return (0);
-    while (str[i])
-    {
-        i++;
-    }
-    return (i);
-}
-char	**ft_mapjoin(char **map, char *str)
-{
-	char	**res;
-	int		i;
-	int		j;
-    int k = 2;
-    (void)j;
+//     i = 0;
+//     if (str == NULL)
+//         return (0);
+//     while (str[i])
+//     {
+//         i++;
+//     }
+//     return (i);
+// }
+// char	**ft_mapjoin(char **map, char *str)
+// {
+// 	char	**res;
+// 	int		i;
+// 	int		j;
+//     int k = 0;
+//     (void)j;
 
-	i = 0;
-	j = 0;
-	if (map == NULL || str == NULL)
-		return (NULL);
-    // printf("%s\n", map[0]);
-    // while (map[k])
-    //     k++;
-	res = malloc(sizeof(char *) * k);
-    // write(1, "ici", 3);
-	if (res == NULL)
-		return (NULL);
-	while (map[i])
-	{
-        res[i] = ft_strdup(map[i]);
-		i++;
-	}
-    // printf("%s", res[0]);
-    // exit(0);
-    // res[i] = malloc(sizeof(char) * (ft_strlen(str) + 1));
-    // if (res[i] == NULL) // Vérifier que l'allocation a réussi
-    // {
-    //     // Libérer la mémoire allouée jusqu'à présent en cas d'échec
-    //     while (i-- > 0)
-    //         free(res[i]);
-    //     free(res);
-    //     return (NULL);
-    // }
-	// while (str[j])
-	// {
-	// 	res[i][j] = str[j];
-    //     j++;
-	// }
-	// res[i] = '\0';
-//    res[i] = NULL;
-	return (res);
-}
+// 	i = 0;
+// 	j = 0;
+// 	if (map == NULL || str == NULL)
+// 		return (NULL);
+//     while (*map && map[k])
+//         k++;
+//     res = (char **)malloc((k + 2) * sizeof(char *));
+// 	if (res == NULL)
+// 	    return (NULL);
+// 	while (i < k)
+// 	{
+//         res[i] = ft_strdup(map[i]);
+// 		i++;
+// 	}
+//     res[i] = ft_strdup(str);
+//     i++;
+//     res[i] = NULL;
+// 	return (res);
+// }
+
+// char	**ft_joinmap(char **map, char *str)
+// {
+// 	char	**res;
+// 	int		i;
+// 	int		j;
+//     int k = 0;
+//     (void)j;
+
+// 	i = 0;
+// 	j = 0;
+// 	if (map == NULL || str == NULL)
+// 		return (NULL);
+//     while (*map && map[k])
+//         k++;
+//     res = (char **)malloc((k + 2) * sizeof(char *));
+//     res[0] = ft_strdup(str);
+// 	if (res == NULL)
+// 	    return (NULL);
+// 	while (i < k)
+// 	{
+//         res[i + 1] = ft_strdup(map[i]);
+// 		i++;
+// 	}
+//     res[k + 1] = NULL;
+// 	return (res);
+// }
 
 char *clean_str(char *str, char c, int quote)
 {
@@ -94,6 +103,50 @@ char *clean_str(char *str, char c, int quote)
     res[j] = '\0';
     return(res);
 }
+// size_t	ft_strlenecho(const char *c)
+// {
+// 	size_t	i;
+//     size_t len;
+
+//     len = 0;
+// 	i = 0;
+// 	while (c[i] != '\0')
+// 	{
+//         if (c[i] != '\"')
+// 		    len++;
+//         i++;
+// 	}
+// 	return (i);
+// }
+
+
+// char	*ft_substrecho(char const *s, unsigned int start, size_t len)
+// {
+// 	size_t	i;
+// 	char	*res;
+
+// 	if (start >= ft_strlenecho(s))
+// 		return (ft_strdup(""));
+// 	if (len > ft_strlenecho(s) - start)
+// 		len = ft_strlenecho(s) - start;
+// 	res = ft_calloc(sizeof(char), len + 1);
+// 	if (res == NULL || s == NULL)
+// 		return (NULL);
+// 	i = 0;
+// 	while (start < ft_strlenecho(s) && i < len && s[start] != '$')
+// 	{
+//         if (s[start] == '$')
+//         {
+//             res[i] = '\0';
+//             return (res);
+//         }
+//         if (s[start] != '\"' && s[start] != '$')
+//             res[i++] = s[start];
+// 		start++;
+// 	}
+//     res[i] = '\0';
+// 	return (res);
+// }
 
 char **join_var_name(char *str, int i)
 {
@@ -101,12 +154,27 @@ char **join_var_name(char *str, int i)
     char *var_name;
     char **res;
     char *temp;
+    char *left;
+    char *first;
+    int flag1 = 0;
+    int flag2 = 0;
 
-    var_name =  extract_var_name(str, i);
+    i = 0;
+    while (str[i] != '$' && str[i])
+        i++;
+    if (i > 1 && str[0] != '$')
+    {
+        flag1 = 1;
+        first = ft_substrecho(str, 0, i);
+    }
+    if (str[i] == '$')
+    {
+        var_name =  extract_var_name(str, i + 1);
+        i++;
+    }
     i++;
     while(str[i])
     {
-        // i++;
         if (str[i] == '$')
         {
             aux = extract_var_name(str, i);
@@ -117,22 +185,16 @@ char **join_var_name(char *str, int i)
         }
         else if (str[i] == '\"')
         {
-            // left = ft_substr(str, i + 1, ft_strlen(str) - i);
-            // printf("%s\n", left);
-            // res = ft_strjoin(var_name, left);
-            // return (res);
+            flag2 = 1;
+            left = ft_substrecho(str, i + 1, ft_strlen(str) - i - 1);
         }
         i++;
     }
     res = ft_split(var_name, '$');
-    // res = ft_mapjoin(res, left);
-        
-    // start = 0;
-    // while(res[start])
-    // {
-        // printf("%s\t%s\n", res[0], res[1]);
-    //     start++;
-    // }
+    if (first != NULL && flag1 == 1)
+        res = ft_joinmap(res, first);
+    if (left != NULL && flag2 == 1)
+        res = ft_mapjoin(res, left);
     return (res);
 }
 
@@ -144,13 +206,14 @@ char *extract_var_name(char *str, int i)
 
     j = i;
     k = 0;
+    // printf("var 1 %s\n", str);
     while (str[i] && ft_isprint(str[i]) && str[i + 1] != '$' && str[i + 1] != '\"')
         i++;
     var = malloc(sizeof(char) * i + 1);
     while (j <= i)
             var[k++] = str[j++];
     var[k] = '\0';
-    // printf("var%s\n", var);
+    // printf("var 2 %s\n", var);
     return (var);
 }
 
@@ -167,8 +230,8 @@ int check_quote_number(char *str, char c)
             even++;
         i++;
     }
-    if (even % 2 == 0)
-        return (even);
+    if (even % 2 == 0 || even == 0)
+        return (1);
     return (0);
 }
 

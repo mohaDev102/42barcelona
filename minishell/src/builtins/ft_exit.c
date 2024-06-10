@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 18:11:46 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/08 01:35:19 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/10 11:45:58 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,8 +189,12 @@ void ft_exit(char **args)
     }
     else if (args[1] && args[2])
     {
-        write(2, "exit: too many arguments", 24);
-        exit (1);
+        args[1] = clean_exit_space(args[1]);
+        args[1] = clean_zero(args[1]);
+        check_exit(args[1]);
+        check_limit(args[1]);
+        write(2, "exit: too many arguments\n", 25);
+        // exit (1);
     }
     else if (args[1])
     {
@@ -198,6 +202,7 @@ void ft_exit(char **args)
         args[1] = clean_zero(args[1]);
         check_exit(args[1]);
         check_limit(args[1]);
+            exit (ft_atoi(args[1]));
     }
-    exit (ft_atoi(args[1]));
+    // exit (ft_atoi(args[1]));
 }
