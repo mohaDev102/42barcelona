@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:10:01 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/10 11:54:46 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:42:38 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,9 +192,16 @@ char **join_var_name(char *str, int i)
     }
     res = ft_split(var_name, '$');
     if (first != NULL && flag1 == 1)
+    {
         res = ft_joinmap(res, first);
+    }
     if (left != NULL && flag2 == 1)
         res = ft_mapjoin(res, left);
+    // i = 0;
+    // while (res[i])
+    // {
+    //     printf("res %s\n", res[i++]);
+    // }
     return (res);
 }
 
@@ -238,7 +245,6 @@ int check_quote_number(char *str, char c)
 char *last_exit()
 {
     char *res;
-
     res = ft_itoa(exit_status(0));
     return (res);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 17:45:02 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/06/08 17:45:03 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:43:23 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	wait_children(t_pipe *info, int *exit)
 	{
 		if (WTERMSIG(status) == SIGQUIT)
 			status = 131;
-		else if (WTERMSIG(status) == SIGTERM)
+		else if (WTERMSIG(status) == SIGINT)
 			status = 130;
 	}
 	dup2(info->std_in, STDIN_FILENO);

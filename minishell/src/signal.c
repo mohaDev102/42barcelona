@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alounici <alounici@student.42barcel>       +#+  +:+       +#+        */
+/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 17:45:40 by alounici          #+#    #+#             */
-/*   Updated: 2024/04/27 17:45:43 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:20:52 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	parent_handler(int num)
 {
 	if (num == SIGINT)
 	{
+		exit_status(130);
 		write(1, "\n", 1);
 		rl_replace_line("", 1);
 		rl_on_new_line();
@@ -82,6 +83,7 @@ void	child_hand(int num)
 	write(1 ,"ici", 3);
 	 if (num == SIGINT)
 	{
+		exit_status(130);
 		write(1, "\n", 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();

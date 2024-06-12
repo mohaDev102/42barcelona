@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_executor.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 13:01:02 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/06/08 19:05:38 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/06/11 14:58:57 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ int	is_build(t_cmd *cmd)
 		else if (ft_strcmp(tmp->args[0], "export") == 0)
 			return (1);
 		else if (ft_strcmp(tmp->args[0], "pwd") == 0)
+			return (1);
+		else if (ft_strcmp(tmp->args[0], "~") == 0)
 			return (1);
 	}
 	return (0);

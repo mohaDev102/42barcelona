@@ -6,11 +6,12 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 20:13:08 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/10 11:57:17 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/11 15:16:48 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+#include <linux/limits.h>
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -34,14 +35,37 @@ char	*change_pwd(t_list **envlist)
 		perror("getcwd");
 		//exit(EXIT_FAILURE);
 	}
+	full_env = ft_strjoin("PWD=", buf);
+	ft_export(envlist, full_env);
+
+	return (buf);
+}
+
+char	*change_oldpwd(t_list **envlist)
+{
+	char	*buf;
+	char	*full_env;
+
+	buf = malloc(PATH_MAX + 1);
+	if (!buf)
+	{
+		perror("malloc");
+		//exit(EXIT_FAILURE);
+	}
+	if (!getcwd(buf, PATH_MAX))
+	{
+		perror("getcwd");
+		//exit(EXIT_FAILURE);
+	}
 	full_env = ft_strjoin("OLDPWD=", buf);
 	ft_export(envlist, full_env);
+
 	return (buf);
 }
 
 void	cd_action(char *cdcmd, t_list **envlist)
 {
-	change_pwd(envlist);
+	change_oldpwd(envlist);
 	if (chdir(cdcmd) != 0)
 	{
 		perror("chdir");

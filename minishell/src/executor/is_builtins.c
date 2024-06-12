@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 20:15:13 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/07 20:18:16 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/11 14:50:47 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int	echo_flag(char **args, int i)
 	j = 0;
 	while (args[i])
 	{
-		if (args[i][0] == '-' && args[i][1] == 'n' && (ft_strcmp(args[i - 1],
-				"echo") == 0 || ft_strcmp(args[i - 1], "-n") == 0 || \
-					args[i - 1][ft_strlen(args[i - 1]) - 1]))
+		// printf("args: %s\n", args[i - 1]);
+		// exit(1);
+		if ((args[i][0] == '-' && args[i][1] == 'n'))
 		{
 			j = 1;
 			while (args[i][j])
@@ -35,8 +35,11 @@ int	echo_flag(char **args, int i)
 			}
 			ret++;
 		}
+		else
+			return (ret);
 		i++;
 	}
+	// printf("%d", ret);
 	return (ret);
 }
 
@@ -111,7 +114,8 @@ int	is_echo(t_cmd **tmp, t_list *envlist)
 	// {
 		if (ft_strcmp((*tmp)->args[i], "echo") == 0)
 		{
-			ret = echo_flag(&(*tmp)->args[i], i);
+			// printf("%s", (*tmp)->args[i]);
+			ret = echo_flag(&(*tmp)->args[i], i + 1);
 			if (exec_echo_n(ret, (*tmp)->args, envlist) == 1)
 				return (1);
 			else
@@ -162,6 +166,10 @@ int	is_buildins(t_cmd **cmd, t_list **envlist, t_pipe *data)
 			ft_exit(tmp->args);
 		else if (ft_strcmp(tmp->args[0], "pwd") == 0)
 			ft_pwd();
+		else if (ft_strcmp(tmp->args[0], "~") == 0)
+		{
+			ft_tilde(*envlist);
+		}
 	}
 	dup2(std_in, STDIN_FILENO);
 	dup2(std_out, STDOUT_FILENO);

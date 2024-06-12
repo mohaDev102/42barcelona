@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 18:11:46 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/10 11:45:58 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/10 15:28:06 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,6 @@ void check_limit(char *str)
         str++;
         neg = 1;
     }
-    printf("%s\n", str);
     if (ft_strlen(str) > 19 && neg)
         print_exit_error(str, 1);
     else if (ft_strlen(str) > 19 && !neg)

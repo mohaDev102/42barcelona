@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 20:43:16 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/30 23:46:45 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/11 14:31:10 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*extract_env_name(char *str)
 	j = 0;
 	while (str[i] && str[i] != '=')
 	{
-		if (ft_isalpha(str[i]) == 0)
+		if ((ft_isalpha(str[i]) == 0 && i == 0) && str[0] != '_')
 			return (NULL);
 		i++;
 	}

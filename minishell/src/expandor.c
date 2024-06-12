@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:31:37 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/10 11:57:08 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/10 16:41:56 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ char	*handle_quote(char *str, int i)
 	char c;
 	char *res;
 
+	// printf("%s", str);
 	c = str[i];
 	if (!str)
 		return (str);
@@ -40,26 +41,25 @@ char *handle_dollar(char *str, int i, t_list **envlist, int quote)
 		return (NULL);
 	if (!str[i] || ft_strlen(str) == 1)
 		return (str);
+	// printf("%c", str[i]);
 	if (str[i] == '?' && quote != 1)
-		return (last_exit());
+	{
+			var_content = last_exit();
+			return (var_content);
+	}
 	else if (quote != 1)
 	{
 		res = join_var_name(str, 0);
 		aux = my_getenv(*envlist, res[j], 3);
 		if (aux != NULL)
-			var_content = aux;
-		else 
-			var_content = res[j];
-		j++;
-		res = join_var_name(str, i);
-		var_content = my_getenv(*envlist, res[j], 3);
+			var_content = ft_strdup(aux);
+		else
+			var_content = ft_strdup(res[j]);
 		if (!var_content)
 		{
 			free_split(res);
 			return (NULL);
 		}
-		// int k = ft_maplen(res);
-		// printf("k = %d", k);
 		if (res[1])
 		{
 			j++;
@@ -74,11 +74,8 @@ char *handle_dollar(char *str, int i, t_list **envlist, int quote)
 				free(temp);
 				j++;
 			}
-		if (res == NULL)
-			return (NULL);
+			   i = 0;
 		}
-		// if (res == NULL)
-		// 	return (NULL);
 		free_split(res);
 	}
 	else
@@ -86,11 +83,26 @@ char *handle_dollar(char *str, int i, t_list **envlist, int quote)
 	return (var_content);
 }
 
+int dollar_found(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == '$')
+			return(1);
+		i++;
+	}
+	return (0);
+}
+
 int	quote_found(char **str, int j, int i)
 {
 	int cleaned;
 
 	cleaned = 0;
+
 		if (str[j][i] == '\'')
 		{
 			char *new_str = handle_quote(str[j], i);
@@ -116,6 +128,7 @@ char *expand(char **str, int j, t_list **envlist)
 {
     int	i;
 	int cleaned;
+	char *expanded;
 
 	cleaned = 0;
 	i = 0;
@@ -125,18 +138,13 @@ char *expand(char **str, int j, t_list **envlist)
 	{
 		if ((str[j][i] == '\'' || str[j][i] == '\"') && cleaned == 0)
 		{
-			if (str[j][i] == '\"' && ft_strchr(str[j], '$') != NULL)
+			if (str[j][i] == '\"' && (ft_strchr(str[j], '$') != NULL))
 			{
-				// write(1, "ici\n\n", 5);
-				char *expanded = handle_dollar(str[j], i + 1, envlist, 2);
+				expanded = handle_dollar(str[j], i + 1, envlist, 2);
 				if (!expanded)
 					return (NULL);
 				free(str[j]);
 				str[j] = expanded;
-				// printf("ici %s", str[j]);
-				cleaned = quote_found(str, j, i);
-				if (cleaned == 0 || str[j] == NULL || !str[j][i])  
-					return (NULL);
 				return (str[j]);
 			}
 			else
@@ -149,16 +157,16 @@ char *expand(char **str, int j, t_list **envlist)
 		}
 		else if (str[j][i] == '$')
 		{
-			// write(1, "ic22\n", 5);
-			char *expanded = handle_dollar(str[j], i + 1, envlist, cleaned);
+			expanded = handle_dollar(str[j], i + 1, envlist, cleaned);
 			if (!expanded)
+			{
 				return (NULL);
+			}
 			free(str[j]);
 			str[j] = expanded;
 			return (str[j]);
 		}
 		i++;
-	
 	}
 	return (str[j]);
 
@@ -179,7 +187,8 @@ int expandor(t_cmd *cmd, t_list **envlist)
         while (cmd->args && cmd->args[i])
         {
 			expanded = expand(cmd->args, i, envlist);
-            if (expanded != NULL)
+			// printf(" expa%s\n", cmd->args[i]);
+            if (!expanded)
 			{
 				// free(cmd->args[i]);
 				cmd->args[i] = expanded;
