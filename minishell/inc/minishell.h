@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:56:42 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/06/11 15:17:43 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/13 16:24:09 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <stddef.h>
+#include <termios.h>
+#include <setjmp.h>
 
 # define PIPE_AS 124
 # define LESS_AS 60
@@ -86,6 +88,12 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
+// static struct 
+// {
+//     sigjmp_buf jmpbuf;
+//     struct termios saved_term_attr;
+// } global_context;
+
 int	ft_isalpha(int c);
 char *ft_realloc(char *str, int i);
 int					ft_isprint(int c);
@@ -117,7 +125,7 @@ int					ft_token(t_lexer *lexer, char *str, int i);
 int					is_signal(char c);
 int					init_word(char *str, int i, t_lexer *new);
 void				change_quotes(char c, int *quoted, int *quoted2);
-void				receive_signal(int id);
+int				receive_signal(int id, int fd);
 void				ft_cd(char *cdcmd, t_list **envlist);
 void				cd_action(char *cdcmd, t_list **envlist);
 char				*change_pwd(t_list **envlist);

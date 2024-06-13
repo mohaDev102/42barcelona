@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:37:57 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/06/08 13:58:20 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/13 15:41:36 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	main(int argc, char *argv[], char *env[])
 	if (argc > 1)
 		printf("Error\n");
 	envlist = ft_list(env);
-	receive_signal(1);
+	receive_signal(1, 0);
 	while (1)
 	{
 		if (ft_operation(&lexer, &cmd, env, &envlist))
