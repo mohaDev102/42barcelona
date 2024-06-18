@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:58:34 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/06/17 20:19:52 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/18 18:31:59 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void    do_herdoc(t_redir *tmp, int i)
 		}
 	}
 	free(tmp->file);
-    tmp->file = ft_strdup(path);
+	tmp->file = ft_strdup(path);
 	exit_status(status);
     free(path);
 }

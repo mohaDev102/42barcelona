@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:31:37 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/10 16:41:56 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/18 19:29:56 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,55 +28,54 @@ char	*handle_quote(char *str, int i)
 	return (res);
 }
 
-char *handle_dollar(char *str, int i, t_list **envlist, int quote)
+char **manage_first_dollar(char *str, t_list **envlist)
 {
-	char *var_content;
 	char **res;
-	int j;
-	char *temp;
 	char *aux;
 
-	j = 0;
-	if (!check_quote_number(str, '\"'))
+	res = assembl_var(str);
+	aux = my_getenv(*envlist, res[0], 3);
+	if (aux != NULL)
+		res[0] = ft_strdup(aux);
+	if (!res[0])
+	{
+		free_split(res);
 		return (NULL);
+	}
+	return (res);
+}
+
+char *handle_dollar(char *str, int i, t_list **envlist, int quote)
+{
+	char	*var_content;
+	char	**res;
+	int		j;
+	char	*aux;
+
+	j = 1;
 	if (!str[i] || ft_strlen(str) == 1)
 		return (str);
-	// printf("%c", str[i]);
 	if (str[i] == '?' && quote != 1)
 	{
-			var_content = last_exit();
-			return (var_content);
+		var_content = last_exit();
+		return (var_content);
 	}
 	else if (quote != 1)
 	{
-		res = join_var_name(str, 0);
-		aux = my_getenv(*envlist, res[j], 3);
-		if (aux != NULL)
-			var_content = ft_strdup(aux);
-		else
-			var_content = ft_strdup(res[j]);
-		if (!var_content)
-		{
-			free_split(res);
-			return (NULL);
-		}
+		res = manage_first_dollar(str, envlist);
+		var_content = res[0];
 		if (res[1])
 		{
-			j++;
 			while (res[j])
 			{
-				temp = var_content;
 				aux = my_getenv(*envlist, res[j], 3);
 				if (aux != NULL)
 					var_content = ft_strjoin(var_content, aux);
 				else
 					var_content = ft_strjoin(var_content, res[j]);
-				free(temp);
 				j++;
 			}
-			   i = 0;
 		}
-		free_split(res);
 	}
 	else
 		return (str);
@@ -124,11 +123,46 @@ int	quote_found(char **str, int j, int i)
 	return (cleaned);
 }
 
+char *dollar(char *str, int i, t_list **envlist, int quote)
+{
+	char *expanded;
+
+	if (!check_quote_number(str, '\"'))
+		return (NULL);
+	expanded = handle_dollar(str, i + 1, envlist, quote);
+	// printf("expanded %s", expanded);
+	if (!expanded)
+		return (NULL);
+	free(str);
+	str = expanded;
+	return (str);
+}
+
+char *quote(char **str, int j, int i, t_list **envlist)
+{
+	int cleaned;
+
+	cleaned = 0;
+	if (str[j][i] == '\"' && (ft_strchr(str[j], '$') != NULL))
+	{
+		str[j] = dollar(str[j], i, envlist, 2);
+		return (str[j]);
+	}
+	else
+	{
+		cleaned = quote_found(str, j, i);
+		if (cleaned == 0 || str[j] == NULL || !str[j][i])
+			return (NULL);
+		return (str[j]);
+		
+	}
+	return (NULL);
+}
+
 char *expand(char **str, int j, t_list **envlist)
 {
     int	i;
 	int cleaned;
-	char *expanded;
 
 	cleaned = 0;
 	i = 0;
@@ -138,32 +172,12 @@ char *expand(char **str, int j, t_list **envlist)
 	{
 		if ((str[j][i] == '\'' || str[j][i] == '\"') && cleaned == 0)
 		{
-			if (str[j][i] == '\"' && (ft_strchr(str[j], '$') != NULL))
-			{
-				expanded = handle_dollar(str[j], i + 1, envlist, 2);
-				if (!expanded)
-					return (NULL);
-				free(str[j]);
-				str[j] = expanded;
-				return (str[j]);
-			}
-			else
-			{
-				cleaned = quote_found(str, j, i);
-				if (cleaned == 0 || str[j] == NULL || !str[j][i])  
-					return (NULL);
-			}
-			i++;
+			str[j] = quote(str, j, i, envlist);
+			return (str[j]);
 		}
 		else if (str[j][i] == '$')
 		{
-			expanded = handle_dollar(str[j], i + 1, envlist, cleaned);
-			if (!expanded)
-			{
-				return (NULL);
-			}
-			free(str[j]);
-			str[j] = expanded;
+			str[j] = dollar(str[j], i, envlist, cleaned);
 			return (str[j]);
 		}
 		i++;
@@ -177,23 +191,16 @@ int expandor(t_cmd *cmd, t_list **envlist)
 {
     int i;
 	char *expanded;
-
 	t_redir *tmp;
 
-    i = 0;
     while (cmd)
     {
 		i = 0;
         while (cmd->args && cmd->args[i])
         {
-			expanded = expand(cmd->args, i, envlist);
-			// printf(" expa%s\n", cmd->args[i]);
+			expanded = expand(cmd->args, i++, envlist);
             if (!expanded)
-			{
-				// free(cmd->args[i]);
 				cmd->args[i] = expanded;
-			}
-			i++;
         }
 		tmp = cmd->redir;
 		while (tmp)

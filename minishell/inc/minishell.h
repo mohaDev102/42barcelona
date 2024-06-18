@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:56:42 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/06/13 16:24:09 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/18 18:21:11 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,6 +178,8 @@ char	**ft_mapjoin(char **map, char *str);
 char	*ft_substrecho(char const *s, unsigned int start, size_t len);
 char	**ft_joinmap(char **map, char *str);
 void ft_tilde(t_list *envlist);
+char **assembl_var(char *str);
+int after_var(char *str);
 
 int					ft_count_lexer(t_lexer *lexer);
 t_cmd				*init_parser(void);
