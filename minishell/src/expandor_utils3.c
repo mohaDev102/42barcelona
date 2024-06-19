@@ -6,21 +6,49 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:11:29 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/18 18:20:49 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/19 22:17:58 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
+size_t	ft_strlenexp(const char *c)
+{
+	size_t	i;
+    size_t len;
+
+    len = 0;
+	i = 0;
+	while (c[i] != '\0')
+	{
+        if (c[i] != '\"' && c[i] != '\'')
+		{
+            // printf("dans str%c", c[i]);
+            len++;
+            i++;
+        }
+        else
+            i++;
+	}
+    // printf("len str%ld", len);
+	return (len);
+}
+
 char *clean_str(char *str, char c, int quote)
 {
     int i;
     int j;
+    int len;
     char *res;
 
     j = 0;
     i = 0;
-    res = malloc(sizeof(char) * ((ft_strlen(str) + 1) - quote));
+    len = ft_strlenexp(str);
+    (void)quote;
+    if (len == 0)
+        return (NULL);
+    // printf("len = %d", len);
+    res = malloc(sizeof(char) * (len + 1)); // - (quote)));
    if (res == NULL)
         return (NULL);
     while (str[i])
@@ -66,7 +94,7 @@ int check_quote_number(char *str, char c)
         i++;
     }
     if (even % 2 == 0 || even == 0)
-        return (1);
+        return (even);
     return (0);
 }
 

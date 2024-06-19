@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 15:00:24 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/09 12:02:09 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/06/19 19:02:26 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,18 +94,18 @@ void 	ft_export_alone(t_list **envlist)
         {
             i = 0;
             write(1, "=\"", 2);
-			// if (tmp->content[1])
-			// {
             while (tmp->content[i])
             {
 				if (tmp->content[i] == '=')
 				 	i++;
                 write(1, &tmp->content[i++], 1);
             }
-			// }
-            //write(1, "\"", 1);
         }
 		write(1, "\"\n", 2);
 		tmp = tmp->next;
 	}
 }
+
+//export hola =algo
+//ls$ solo _
+//export 'algo nose'

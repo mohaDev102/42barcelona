@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:31:37 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/18 19:29:56 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/19 19:44:53 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ char **manage_first_dollar(char *str, t_list **envlist)
 	aux = my_getenv(*envlist, res[0], 3);
 	if (aux != NULL)
 		res[0] = ft_strdup(aux);
+	else
+		return (NULL);
 	if (!res[0])
 	{
 		free_split(res);
@@ -55,14 +57,16 @@ char *handle_dollar(char *str, int i, t_list **envlist, int quote)
 	j = 1;
 	if (!str[i] || ft_strlen(str) == 1)
 		return (str);
-	if (str[i] == '?' && quote != 1)
+	if (str[i] == '?' && (quote == 1 || quote == 2))
 	{
 		var_content = last_exit();
 		return (var_content);
 	}
-	else if (quote != 1)
+	else if (quote == 1 || quote == 2)
 	{
 		res = manage_first_dollar(str, envlist);
+		if (res == NULL)
+			return (NULL);
 		var_content = res[0];
 		if (res[1])
 		{
@@ -122,15 +126,62 @@ int	quote_found(char **str, int j, int i)
 		}
 	return (cleaned);
 }
+int	check_quote(char *str)
+{
+	int i;
+
+	// printf("quote%s", str);
+// write(1, "ici", 3);
+	while(str[i])
+	{
+		if (str[i] == '\'')
+			return (1);
+		if (str[i] == '\"')
+			return (2);
+		i++;
+	}
+	return (0);
+}
+
+int var_in_quote(char *str, int quote)
+{
+	int i;
+	// int dollar;
+	int in_quote;
+
+	// dollar = 0;
+	in_quote = 0;
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == quote)
+			in_quote = 1;
+		if (str[i] == '$' && in_quote == 0)
+			return(1);
+		i++;
+	}
+	return (0);
+}
 
 char *dollar(char *str, int i, t_list **envlist, int quote)
 {
 	char *expanded;
+	int quote1;
+	int even;
 
-	if (!check_quote_number(str, '\"'))
+	(void)quote;
+	quote1 = 1;
+	// printf("dollar%s", str);
+	// quote1 = check_quote(str);
+	if (quote1 == 1)
+		even = check_quote_number(str, '\'');
+	else if (quote1 == 2)
+		even = check_quote_number(str, '\"');
+	if (even == 0)
 		return (NULL);
-	expanded = handle_dollar(str, i + 1, envlist, quote);
-	// printf("expanded %s", expanded);
+	// if (!var_in_quote(str, quote1))
+		expanded = handle_dollar(str, i + 1, envlist, quote1);
+		// printf("expanded %s", expanded);
 	if (!expanded)
 		return (NULL);
 	free(str);
@@ -199,6 +250,7 @@ int expandor(t_cmd *cmd, t_list **envlist)
         while (cmd->args && cmd->args[i])
         {
 			expanded = expand(cmd->args, i++, envlist);
+			// printf("expanded%s\n", expanded);
             if (!expanded)
 				cmd->args[i] = expanded;
         }
@@ -213,3 +265,5 @@ int expandor(t_cmd *cmd, t_list **envlist)
     }
 	return (0);
 }
+
+//dfkhfjd$

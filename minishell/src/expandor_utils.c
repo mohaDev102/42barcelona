@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:10:01 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/18 18:36:37 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/19 18:55:44 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char *text_after_var(char *str)
     i = after_var(str);
     while(str[i])
     {
-         if (str[i] == '\"')
+         if (str[i] == '\"' || str[i] == '\'' || (ft_isalpha(str[i + 1]) == 0 || ft_isdigit(str[i + 1] == 1)))
         {
             left = ft_substrecho(str, i + 1, ft_strlen(str) - i - 1);
             return (left);
@@ -52,6 +52,7 @@ char **assembl_var(char *str)
     char *first;
     char *left;
     char **res;
+    // int i = 0;
 
     first = text_before_var(str);
     res = join_var_name(str, 0);
@@ -62,6 +63,10 @@ char **assembl_var(char *str)
     }
     if (left != NULL)
         res = ft_mapjoin(res, left);
+    // while (res[i])
+    // {
+    //         i++;
+    // }
     return (res);
 }
 
@@ -101,7 +106,8 @@ char *extract_var_name(char *str, int i)
 
     j = i;
     k = 0;
-    while (str[i] && ft_isprint(str[i]) && str[i + 1] != '$' && str[i + 1] != '\"')
+    while (str[i] && (ft_isalpha(str[i + 1]) || ft_isdigit(str[i + 1])) \
+    && str[i + 1] != '$' && str[i + 1] != '\"' && str[i + 1] != '\'')
         i++;
     var = malloc(sizeof(char) * i + 1);
     while (j <= i)

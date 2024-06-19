@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:19:06 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/10 11:23:37 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/19 18:12:28 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ size_t	ft_strlenecho(const char *c)
 	i = 0;
 	while (c[i] != '\0')
 	{
-        if (c[i] != '\"')
+        if (c[i] != '\"' || c[i] != '\'')
 		    len++;
         i++;
 	}
@@ -117,7 +117,7 @@ char	*ft_substrecho(char const *s, unsigned int start, size_t len)
             res[i] = '\0';
             return (res);
         }
-        if (s[start] != '\"' && s[start] != '$')
+        if (s[start] != '\"' && s[start] != '$' && s[start] != '\'')
             res[i++] = s[start];
 		start++;
 	}
