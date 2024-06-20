@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:56:42 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/06/19 22:08:24 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/20 20:20:26 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ char	*extract_env_name(char *str);
 void    print_export_error(char *str);
 char *clean_exit_space(char *str);
 // char *clean_space(char *str, int i);
-int check_quote_number(char *str, char c);
+int check_quote_number(char *str, char c, int i);
 char **join_var_name(char *str, int i);
 int	quote_found(char **str, int j, int i);
 int exec_echo_n(int nindex, char **args, t_list *envlist);
@@ -186,6 +186,7 @@ void check_limit_many(char *str);
 void check_limit(char *str);
 void free_args(char **args);
 size_t	ft_strlenecho(const char *c);
+int check_quote_number_dollar(char *str);
 
 int					ft_count_lexer(t_lexer *lexer);
 t_cmd				*init_parser(void);

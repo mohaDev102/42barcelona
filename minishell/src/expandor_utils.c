@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:10:01 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/19 18:55:44 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/20 21:55:33 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ char **assembl_var(char *str)
     char **res;
     // int i = 0;
 
+printf("%s", str);
+    write(1, "ici", 3);
     first = text_before_var(str);
     res = join_var_name(str, 0);
     left = text_after_var(str);
@@ -65,6 +67,7 @@ char **assembl_var(char *str)
         res = ft_mapjoin(res, left);
     // while (res[i])
     // {
+    //     printf("%s", res[i]);
     //         i++;
     // }
     return (res);
