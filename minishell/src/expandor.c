@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expandor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:31:37 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/19 19:44:53 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/20 13:31:15 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,11 @@ char	*handle_quote(char *str, int i)
 	c = str[i];
 	if (!str)
 		return (str);
-	if (!check_quote_number(str, c))
-		return (NULL);
+	printf("ff");
+	// if (!check_quote_number(str, c))
+	// 	return (str);
 	res = clean_str(str, c, check_quote_number(str, c));
+	// res = "";
 	return (res);
 }
 
@@ -108,20 +110,20 @@ int	quote_found(char **str, int j, int i)
 
 		if (str[j][i] == '\'')
 		{
-			char *new_str = handle_quote(str[j], i);
-			if (!new_str)
-				return (0);
-			free(str[j]);
-			str[j] = new_str;
+			str[j] = handle_quote(str[j], i);
+			// if (!new_str)
+			// 	return (0);
+			// free(str[j]);
+			// str[j] = new_str;
 			cleaned = 1;
 		}
 		else if (str[j][i] == '\"')
 		{
-			char *new_str = handle_quote(str[j], i);
-			if (!new_str)
-				return (0);
-			free(str[j]);
-			str[j] = new_str;
+			str[j] = handle_quote(str[j], i);
+			// if (!new_str)
+			// 	return (0);
+			// free(str[j]);
+			// str[j] = new_str;
 			cleaned = 2;
 		}
 	return (cleaned);

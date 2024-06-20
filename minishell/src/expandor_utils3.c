@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expandor_utils3.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:11:29 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/19 22:17:58 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/20 17:10:40 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,13 @@ char *clean_str(char *str, char c, int quote)
     len = ft_strlenexp(str);
     (void)quote;
     if (len == 0)
-        return (NULL);
-    // printf("len = %d", len);
+        return (str);
+    // printf("%d", len);
+    // exit(1);
     res = malloc(sizeof(char) * (len + 1)); // - (quote)));
-   if (res == NULL)
+   if (!res)
         return (NULL);
+    printf("%c", c);
     while (str[i])
     {
         if (str[i] != c)
@@ -61,6 +63,8 @@ char *clean_str(char *str, char c, int quote)
         i++;
     }
     res[j] = '\0';
+    free(str);
+    // printf("res: %s", res);
     return(res);
 }
 

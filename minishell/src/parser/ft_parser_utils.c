@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:36:55 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/08 10:36:12 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/06/20 11:57:07 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,10 @@ int	create_cmd(t_lexer **lexer, t_cmd **cmd, int i)
 		(*cmd)->args[i] = NULL;
 	}
 	if (add_cmd(lexer, cmd, &redir) == -1)
-		return (-1);
+	{
+		if (i > 0)
+			ft_free((*cmd)->args, i);
+		return (-1);	
+	}
 	return (0);
 }

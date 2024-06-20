@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:37:06 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/23 16:39:42 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/06/20 11:50:42 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	add_cmd(t_lexer **lexer, t_cmd **cmd, t_redir **redir)
 		if ((*lexer)->type != NOTH)
 		{
 			if (is_redirect(lexer, redir) == -1)
-				return (-1);
+				return (ft_free((*cmd)->args, i), -1);
 		}
 		else
 		{
