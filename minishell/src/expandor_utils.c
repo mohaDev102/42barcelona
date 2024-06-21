@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:10:01 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/20 21:55:33 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/22 01:18:02 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ char **assembl_var(char *str)
     char **res;
     // int i = 0;
 
-printf("%s", str);
-    write(1, "ici", 3);
+// printf("%s", str);
+//     write(1, "ici", 3);
     first = text_before_var(str);
     res = join_var_name(str, 0);
     left = text_after_var(str);
@@ -98,6 +98,7 @@ char **join_var_name(char *str, int i)
         i++;
     }
     res = ft_split(var_name, '$');
+    free(var_name);
     return (res);
 }
 
@@ -112,9 +113,12 @@ char *extract_var_name(char *str, int i)
     while (str[i] && (ft_isalpha(str[i + 1]) || ft_isdigit(str[i + 1])) \
     && str[i + 1] != '$' && str[i + 1] != '\"' && str[i + 1] != '\'')
         i++;
-    var = malloc(sizeof(char) * i + 1);
+    var = malloc(sizeof(char) * (i - j) + 2);
+    if (var == NULL)
+        return(NULL);
     while (j <= i)
             var[k++] = str[j++];
     var[k] = '\0';
+    // free(str);
     return (var);
 }

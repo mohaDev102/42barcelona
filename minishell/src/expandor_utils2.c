@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:19:06 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/19 18:12:28 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/21 22:40:21 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ char	*ft_substrecho(char const *s, unsigned int start, size_t len)
 	char	*res;
 
 	if (start >= ft_strlenecho(s))
-		return (ft_strdup(""));
+		return (NULL);
 	if (len > ft_strlenecho(s) - start)
 		len = ft_strlenecho(s) - start;
 	res = ft_calloc(sizeof(char), len + 1);

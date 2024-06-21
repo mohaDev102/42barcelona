@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 20:13:08 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/11 15:16:48 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/21 21:27:55 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ char	*my_getenv(t_list *envlist, char *name, int flag)
 				write(2, "cd: OLDPWD not set\n", 20);
 			return (NULL);
 		}
-		content = clean_content(content);
+		// content = clean_content(content);
 		// printf("content%s\n", content);
 	}
 		return (content);
