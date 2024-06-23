@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 21:11:48 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/19 22:00:56 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/23 18:07:25 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void check_limit_many(char *str)
         print_exit_error(str, neg);
     else
         return ;
+    free(str);
     exit (255);
 }
 

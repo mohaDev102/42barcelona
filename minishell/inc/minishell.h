@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:56:42 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/06/23 16:43:29 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/23 18:21:43 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,9 +128,9 @@ void				change_quotes(char c, int *quoted, int *quoted2);
 int				receive_signal(int id, int fd);
 void				ft_cd(char *cdcmd, t_list **envlist);
 void				cd_action(char *cdcmd, t_list **envlist);
-char				*change_pwd(t_list **envlist);
-char	*change_oldpwd(t_list **envlist);
-char				*my_getenv(t_list *envlist, char *name, int flag);
+void change_pwd(t_list **envlist);
+void 		change_oldpwd(t_list **envlist);
+char				*my_getenv(t_list *envlist, char *name, int flag, int ifree);
 char				*clean_content(char *content);
 int					ft_strstr(char **env, char *find_to);
 char				*ft_strjoin(char const *s1, char const *s2);
@@ -169,7 +169,7 @@ void    print_export_error(char *str);
 char *clean_exit_space(char *str);
 // char *clean_space(char *str, int i);
 int check_quote_number(char *str, char c, int i);
-char **join_var_name(char *str, int i);
+char **join_var_name(char *str, unsigned int i);
 int	quote_found(char **str, int j, int i);
 int exec_echo_n(int nindex, char **args, t_list *envlist);
 void exec_echo(int nindex, char **args, t_list *envlist);

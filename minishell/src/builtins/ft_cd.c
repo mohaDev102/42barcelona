@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 20:13:08 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/23 16:45:32 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/23 18:01:28 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,29 +19,37 @@
 #include <limits.h>
 #include <errno.h>
 
-char	*change_pwd(t_list **envlist)
+void change_pwd(t_list **envlist)
 {
-	char	*buf;
-	char	*full_env;
+	char *buf;
+	char *full_env;
 
 	buf = malloc(PATH_MAX + 1);
 	if (!buf)
 	{
-		perror("malloc");
-		//exit(EXIT_FAILURE);
+	perror("malloc");
+	//exit(EXIT_FAILURE);
 	}
 	if (!getcwd(buf, PATH_MAX))
 	{
-		perror("getcwd");
-		//exit(EXIT_FAILURE);
+	perror("getcwd");
+	free(buf);
+	// return (NULL);
+	//exit(EXIT_FAILURE);
 	}
 	full_env = ft_strjoin("PWD=", buf);
+	if (!full_env)
+	{
+	free(buf);
+	// return (NULL);
+	}
 	ft_export(envlist, full_env);
-
-	return (buf);
+	free(full_env);
+	free(buf);
+	// return (buf);
 }
 
-char	*change_oldpwd(t_list **envlist)
+void change_oldpwd(t_list **envlist)
 {
 	char	*buf;
 	char	*full_env;
@@ -55,12 +63,13 @@ char	*change_oldpwd(t_list **envlist)
 	if (!getcwd(buf, PATH_MAX))
 	{
 		perror("getcwd");
+		free(buf);
 		//exit(EXIT_FAILURE);
 	}
 	full_env = ft_strjoin("OLDPWD=", buf);
 	ft_export(envlist, full_env);
-
-	return (buf);
+	free(full_env);
+	free(buf);
 }
 
 void	cd_action(char *cdcmd, t_list **envlist)
@@ -74,7 +83,7 @@ void	cd_action(char *cdcmd, t_list **envlist)
 	change_pwd(envlist);
 }
 
-char	*my_getenv(t_list *envlist, char *name, int flag)
+char	*my_getenv(t_list *envlist, char *name, int flag, int ifree)
 {
 	char	*content;
 	t_list	*tmp;
@@ -108,7 +117,8 @@ char	*my_getenv(t_list *envlist, char *name, int flag)
 		}
 		// content = clean_content(content);
 		// printf("content%s\n", content);
-		free(name);
+		if (ifree == 1)
+			free(name);
 	}
 		return (content);
 	// }
@@ -140,7 +150,7 @@ void	ft_cd(char *cdcmd, t_list **envlist)
 
 	if ((cdcmd == NULL) || ft_strcmp(cdcmd, "~") == 0)
 	{
-		envcontent = my_getenv(*envlist, "HOME", 1);
+		envcontent = my_getenv(*envlist, "HOME", 1, 0);
 		cd_action(envcontent, envlist);
 	}
 	else if (!strcmp(cdcmd, "-"))

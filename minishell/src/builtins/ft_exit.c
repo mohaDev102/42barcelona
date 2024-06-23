@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 18:11:46 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/23 16:39:53 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/23 18:12:12 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void   print_exit_error(char *str, int neg)
             i++;
     }
     write(2, ": numeric argument required", 28);
+    free(str);
                 exit(255);
 }
 
@@ -151,6 +152,7 @@ char *clean_zero(char *str)
         i++;
     }
     res[j] = '\0';
+    free(str);
     return (res);
 }
 
@@ -171,8 +173,6 @@ void ft_exit(char **args)
         check_exit_many(args[1]);
         check_limit_many(args[1]);
         write(2, "exit: too many arguments\n", 25);
-        // free(args[0]);
-        // free_args(args);
         args = NULL;
         return;
     }
