@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:36:41 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/06/20 11:54:50 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/06/22 22:32:43 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	ft_parse(t_cmd **commands, t_lexer *lexer)
 	{
 		return (ft_error(&lexer), -1);
 	}
-	while (aux != NULL)
+	while (aux)
 	{
 		count_args = ft_count_args(aux);
 		new = init_parser();

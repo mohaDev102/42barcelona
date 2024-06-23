@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:56:42 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/06/20 20:20:26 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/23 16:43:29 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,7 +175,7 @@ int exec_echo_n(int nindex, char **args, t_list *envlist);
 void exec_echo(int nindex, char **args, t_list *envlist);
 int ft_maplen(char **str);
 char	**ft_mapjoin(char **map, char *str);
-char	*ft_substrecho(char const *s, unsigned int start, size_t len);
+char	*ft_substrecho(char *s, unsigned int start, size_t len);
 char	**ft_joinmap(char **map, char *str);
 void ft_tilde(t_list *envlist);
 char **assembl_var(char *str);
@@ -184,7 +184,6 @@ void    check_exit(char *str);
 void    check_exit_many(char *str);
 void check_limit_many(char *str);
 void check_limit(char *str);
-void free_args(char **args);
 size_t	ft_strlenecho(const char *c);
 int check_quote_number_dollar(char *str);
 
@@ -234,4 +233,5 @@ void free_split(char **split);
 char	*ft_getenv(char *name, char *env[]);
 void	free_split(char **split);
 void	wait_children(t_pipe *info, int *exit);
+void	ft_putnbr(int nb);
 #endif

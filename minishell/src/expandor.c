@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:31:37 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/21 23:11:24 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/23 15:56:33 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,29 @@ char **manage_first_dollar(char *str, t_list **envlist)
 {
 	char **res;
 	char *aux;
+	// char *new_value;
 
 	res = assembl_var(str);
-	aux = my_getenv(*envlist, res[0], 3);
-	if (aux != NULL)
-		res[0] = ft_strdup(aux);
-	// else
-	// 	return (NULL);
-	if (!res[0])
+	if (res == NULL)
 	{
-		free_split(res);
+		free(str);
 		return (NULL);
 	}
+	aux = my_getenv(*envlist, res[0], 3);
+	if (aux != NULL)
+	{
+		// free(res[0]);
+		// res[0] = malloc(sizeof(char) * (ft_strlen(aux) + 1));
+		res[0] = ft_strdup(aux);
+		// free(aux);
+	}
+	if (!res)
+	{
+		free_split(res);
+		free(aux);
+		return (NULL);
+	}
+	// free(str);
 	return (res);
 }
 
@@ -60,6 +71,7 @@ char *handle_dollar(char *str, int i, t_list **envlist, int quote)
 	if (!str || ft_strlen(str) == 1)
 		return (NULL);
 	// write(1, "ici", 3);
+	printf("%d", quote);
 	if (str[i] == '?' && (quote == 1 || quote == 2))
 	{
 		var_content = last_exit();
@@ -83,10 +95,22 @@ char *handle_dollar(char *str, int i, t_list **envlist, int quote)
 				j++;
 			}
 		}
+		if (quote == 2)
+			free_split(res);
+		else
+			free(res);
 	}
 	else
+	{
+		// free(str);
+	// free(res);
 		return (str);
-	// free_split(res);
+	}
+	// else
+	// free(str);
+	// free(res);
+	// res = NULL;
+	// free_env(res);
 	return (var_content);
 }
 
@@ -170,26 +194,28 @@ int var_in_quote(char *str, int quote)
 char *dollar(char *str, int i, t_list **envlist, int quote)
 {
 	char *expanded;
-	int quote1;
+	// int quote1;
 	int even;
 
 	(void)quote;
-	quote1 = 1;
+	// quote1 = 1;
 	// printf("dollar%s", str);
 	// quote1 = check_quote(str);
-	if (quote1 == 1)
+	// if (quote == 1)
 		even = check_quote_number_dollar(str);
-	else if (quote1 == 2)
-		even = check_quote_number_dollar(str);
+	// else if (quote == 2)
+		// even = check_quote_number_dollar(str);
+	// printf("%d", even);
 	if (even == 0)
 		return (NULL);
 	// if (!var_in_quote(str, quote1))
-		expanded = handle_dollar(str, i + 1, envlist, quote1);
+		expanded = handle_dollar(str, i + 1, envlist, quote);
 		// printf("expanded %s", expanded);
 	if (!expanded)
 		return (NULL);
-	free(str);
+	// free(str);
 	str = expanded;
+	// free(expanded);
 	return (str);
 }
 
@@ -232,6 +258,7 @@ char *expand(char **str, int j, t_list **envlist)
 		}
 		else if (str[j][i] == '$')
 		{
+			write(1, "ici", 3);
 			str[j] = dollar(str[j], i, envlist, cleaned);
 			return (str[j]);
 		}

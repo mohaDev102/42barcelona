@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 20:13:08 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/21 21:27:55 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/23 16:45:32 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ char	*my_getenv(t_list *envlist, char *name, int flag)
 		}
 		// content = clean_content(content);
 		// printf("content%s\n", content);
+		free(name);
 	}
 		return (content);
 	// }

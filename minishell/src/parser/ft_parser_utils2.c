@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parser_utils2.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:37:06 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/06/20 11:50:42 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/06/22 22:41:16 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,13 +82,16 @@ int	add_cmd(t_lexer **lexer, t_cmd **cmd, t_redir **redir)
 		if ((*lexer)->type != NOTH)
 		{
 			if (is_redirect(lexer, redir) == -1)
-				return (ft_free((*cmd)->args, i), -1);
+				return (-1);
 		}
 		else
 		{
 			(*cmd)->args[i] = ft_strdup((*lexer)->value);
 			if (!(*cmd)->args[i])
-				return (ft_free((*cmd)->args, i), -1);
+			{
+				(*cmd)->args = ft_free((*cmd)->args, i);
+				return (-1);
+			}
 			i++;
 		}
 		(*lexer) = (*lexer)->next;

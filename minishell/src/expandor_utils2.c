@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/10 11:19:06 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/21 22:40:21 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/23 16:29:02 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,27 +30,36 @@ char	**ft_mapjoin(char **map, char *str)
 {
 	char	**res;
 	int		i;
-	int		j;
+	// int		j;
     int k = 0;
-    (void)j;
 
 	i = 0;
-	j = 0;
+	// j = 0;
 	if (map == NULL || str == NULL)
 		return (NULL);
     while (*map && map[k])
         k++;
     res = (char **)malloc((k + 2) * sizeof(char *));
+	// printf("k = %d", k);
 	if (res == NULL)
 	    return (NULL);
 	while (i < k)
 	{
-        res[i] = ft_strdup(map[i]);
+        res[i] = map[i]; //strdup(map[i]);
 		i++;
 	}
-    res[i] = ft_strdup(str);
+    res[i] = str;
+	// i = 0;
+	// // while (res[i])
+	// {
+		// printf("res%s\n", res[0]);
+		// printf("res%s\n", res[1]);
+		// i++;
+	// }
+	free(map);
     i++;
     res[i] = NULL;
+		// free(str);
 	return (res);
 }
 
@@ -61,23 +70,41 @@ char	**ft_joinmap(char **map, char *str)
 	int		j;
     int k = 0;
     (void)j;
-
+	write(2, "1", 1);
 	i = 0;
-	j = 0;
+	j = 1;
 	if (map == NULL || str == NULL)
 		return (NULL);
-    while (*map && map[k])
-        k++;
+	write(2, "1", 1);
+	while (*map && map[k])
+		k++;
+	write(2, "2", 1);
     res = (char **)malloc((k + 2) * sizeof(char *));
-    res[0] = ft_strdup(str);
-	if (res == NULL)
-	    return (NULL);
+	if (!res)
+		return (NULL);
+	write(2, "3", 1);
+    res[0] = str;
+	// if (res == NULL)
+	//     return (NULL);
+	write(2, "4", 1);
 	while (i < k)
 	{
-        res[i + 1] = ft_strdup(map[i]);
+        res[j] = map[i];
+		write(2, "5", 1);
+		// free(map[i]);
 		i++;
+		j++;
 	}
+	write(2, "6\n", 2);
+	ft_putnbr(i);
+	write(2, "\n", 1);
+	ft_putnbr(k);
+	// printf("i: %d", i);
+	// printf("k: %d", k);
+
+	free(map);
     res[k + 1] = NULL;
+	// free(str);
 	return (res);
 }
 
@@ -97,7 +124,7 @@ size_t	ft_strlenecho(const char *c)
 	return (i);
 }
 
-char	*ft_substrecho(char const *s, unsigned int start, size_t len)
+char	*ft_substrecho(char *s, unsigned int start, size_t len)
 {
 	size_t	i;
 	char	*res;
@@ -106,7 +133,7 @@ char	*ft_substrecho(char const *s, unsigned int start, size_t len)
 		return (NULL);
 	if (len > ft_strlenecho(s) - start)
 		len = ft_strlenecho(s) - start;
-	res = ft_calloc(sizeof(char), len + 1);
+	res = ft_calloc(len + 1, sizeof(char)); //, len + 1);
 	if (res == NULL || s == NULL)
 		return (NULL);
 	i = 0;
@@ -122,5 +149,7 @@ char	*ft_substrecho(char const *s, unsigned int start, size_t len)
 		start++;
 	}
     res[i] = '\0';
+	// free(s);
 	return (res);
 }
+
