@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:10:01 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/23 18:59:59 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/24 21:45:10 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ char **assembl_var(char *str)
     char **res;
 
     res = join_var_name(str, 0);
+		// printf("res%s\n", res[0]);
+
     left = text_after_var(str);
     if (left != NULL)
        res = ft_mapjoin(res, left);
@@ -80,7 +82,7 @@ char **join_var_name(char *str, unsigned int i)
     char *var_name;
     char **res;
 
-    var_name = ft_strdup(str);
+    var_name = str;
     while (str[i] != '$' && str[i])
         i++;
     if (str[i] == '$' && str[i + 1])
@@ -125,7 +127,7 @@ char *extract_var_name(char *str, int i)
     while (str[i] && (ft_isalpha(str[i + 1]) || ft_isdigit(str[i + 1])) \
     && str[i + 1] != '$' && str[i + 1] != '\"' && str[i + 1] != '\'')
         i++;
-    var = malloc(sizeof(char) * (i - j) + 2);
+    var = malloc(sizeof(char) * (i - j + 2));
     if (var == NULL)
         return(NULL);
     while (j <= i)

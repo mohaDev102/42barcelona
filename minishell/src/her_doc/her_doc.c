@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:58:34 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/06/18 18:31:59 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/24 19:21:50 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void handle_sigint_heredoc(int sig)
 				tcsetattr(STDIN_FILENO, TCSANOW, &term_attr);
 			}
 		}
-		write(1, "ici", 3);
+		// write(1, "ici", 3);
 		exit(130);
 	}
 }

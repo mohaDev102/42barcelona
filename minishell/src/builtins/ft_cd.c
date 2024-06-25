@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 20:13:08 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/23 18:01:28 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/24 21:03:30 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,14 +91,19 @@ char	*my_getenv(t_list *envlist, char *name, int flag, int ifree)
 	// init_list();
 	tmp = envlist;
 	content = NULL;
+		// printf("name %s\n", name);
+	(void)ifree;
 	while (tmp)
 	{
-		// printf("%s\n%s\n", tmp->name, name);
 		if (!name)
+		{
 			return (NULL);
+		}
 		while (tmp != NULL)
 		{
+		// printf("var name%s\n", tmp->name);
 			// da seg fault al poner $$
+	// write(1, "ici", 3);
 			if (tmp->name && ft_strcmp(name, tmp->name) == 0)
 			{
 				// printf("ici %s\n%s\n", tmp->content, name);
@@ -116,10 +121,10 @@ char	*my_getenv(t_list *envlist, char *name, int flag, int ifree)
 			return (NULL);
 		}
 		// content = clean_content(content);
-		// printf("content%s\n", content);
-		if (ifree == 1)
-			free(name);
+		// if (ifree == 1)
+		// 	free(name);
 	}
+		// printf("content%s\n", content);
 		return (content);
 	// }
 }

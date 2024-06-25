@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:56:42 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/06/23 18:21:43 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/25 18:54:10 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,6 +186,7 @@ void check_limit_many(char *str);
 void check_limit(char *str);
 size_t	ft_strlenecho(const char *c);
 int check_quote_number_dollar(char *str);
+unsigned int strchrint(char *str, char c);
 
 int					ft_count_lexer(t_lexer *lexer);
 t_cmd				*init_parser(void);

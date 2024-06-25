@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:31:37 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/23 18:58:31 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/25 19:09:23 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,79 @@ char **manage_first_dollar(char *str, t_list **envlist)
 {
 	char **res;
 	char *aux;
+	char *var;
 
 	res = assembl_var(str);
+	var = res[0];
 	if (res == NULL)
 	{
-		free(str);
+		free(str); 
 		return (NULL);
 	}
-	aux = my_getenv(*envlist, res[0], 3, 1);
+	aux = my_getenv(*envlist, var, 3, 1);
+		free(var);
+		// printf("res %s\n", aux);
 	if (aux != NULL)
-		res[0] = ft_strdup(aux);
+	{
+		res[0] = aux;
+		// free(aux);
+		// return (res);
+	}
+	// int i = 0;
+	// while (res[i])
+	// {
+		// printf("res %s\n", res[1]);
+	// 	i++;
+	// }
 	if (!res)
 	{
 		free_split(res);
 		free(aux);
 		return (NULL);
 	}
+	// if (aux)
+	// 	free(aux);
+	// free(str);
 	return (res);
 }
+// char *handle_dollar(char *str, int i, t_list **envlist, int quote)
+// {
+// 	char **splited;
+// 	char *res;
+// 	char *aux;
+// 	char *auxbis;
+// 	// int i;
+
+// 	i = 0;
+// 	// splited = ft_split(str, '$');
+// 	(void)quote;
+// 	if (strchrint(str, '$') != (ft_strlen(str) - 1))
+//     	splited = ft_split(str, '$');
+// 	if (splited == NULL)
+// 	{
+// 		aux = extract_var_name(str, 0);
+// 		auxbis = my_getenv(*envlist, aux, 3, 0);
+// 		if (auxbis == NULL)
+// 			return(str);
+// 	}
+// 	else
+// 	{
+// 		while (splited[i])
+// 		{
+// 			// free(aux);
+// 			// free(auxbis);
+// 			aux = extract_var_name(splited[i], 0);
+// 			free(splited[i]);
+// 			auxbis = my_getenv(*envlist, aux, 3, 0);
+// 			res = ft_strjoin(res, auxbis);
+// 			i++;
+// 		}
+// 	}
+// 	free(aux);
+// 			free(auxbis);
+// 	// free_split(splited);
+// 	return (res);
+// }
 
 char *handle_dollar(char *str, int i, t_list **envlist, int quote)
 {
@@ -54,6 +109,7 @@ char *handle_dollar(char *str, int i, t_list **envlist, int quote)
 	char	**res;
 	int		j;
 	char	*aux;
+	char *var;
 
 	j = 1;
 	if (!str || ft_strlen(str) == 1)
@@ -66,16 +122,22 @@ char *handle_dollar(char *str, int i, t_list **envlist, int quote)
 	}
 	else if (quote == 1 || quote == 2 || quote == 0)
 	{
+
 		res = manage_first_dollar(str, envlist);
 		if (!res[0] || !res)
 			return (NULL);
-		var_content = res[0];
+		// var = res[0];
+	// var_content = malloc(sizeof(char) * (ft_strlen(res[0]) + 1));
+		var_content = ft_strdup(res[0]);
 		// exit(1);
 		if (res[1])
 		{
+		// free(res[0]);
 			while (res[j])
 			{
-				aux = my_getenv(*envlist, res[j], 3, 1);
+				// free(var);
+				var = res[j];
+				aux = my_getenv(*envlist, var, 3, 1);
 				if (aux != NULL)
 					var_content = ft_strjoin(var_content, aux);
 				else
@@ -83,13 +145,21 @@ char *handle_dollar(char *str, int i, t_list **envlist, int quote)
 				j++;
 			}
 		}
+	// i = 0;
+	// while (res[i])
+	// {
+	// 	printf("res%s\n", res[i]);
+	// 	i++;
+	// }
+		// free(str);
+	}
 		if (quote == 2)
 			free_split(res);
 		else
 			free(res);
-	}
-	else
-		return (str);
+	// else
+	// 	return (str);
+		// free(var);
 	return (var_content);
 }
 
@@ -161,15 +231,17 @@ int var_in_quote(char *str, int quote)
 char *dollar(char *str, int i, t_list **envlist, int quote)
 {
 	int even;
+	char *res;
 
 	(void)quote;
 	even = check_quote_number_dollar(str);
 	if (even == 0)
 		return (NULL);
-	str = handle_dollar(str, i + 1, envlist, quote);
-	if (!str)
+	res = handle_dollar(str, i + 1, envlist, quote);
+	// free(str);
+	if (!res)
 		return (NULL);
-	return (str);
+	return (res);
 }
 
 char *quote(char **str, int j, int i, t_list **envlist)
