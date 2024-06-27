@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:56:42 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/06/25 18:54:10 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/26 22:02:55 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,7 @@ int	quote_found(char **str, int j, int i);
 int exec_echo_n(int nindex, char **args, t_list *envlist);
 void exec_echo(int nindex, char **args, t_list *envlist);
 int ft_maplen(char **str);
+char	*ft_strjoinexp(char *s1, char *s2);
 char	**ft_mapjoin(char **map, char *str);
 char	*ft_substrecho(char *s, unsigned int start, size_t len);
 char	**ft_joinmap(char **map, char *str);

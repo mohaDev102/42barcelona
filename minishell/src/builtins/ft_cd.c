@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 20:13:08 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/24 21:03:30 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/27 20:17:50 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,8 @@ char	*my_getenv(t_list *envlist, char *name, int flag, int ifree)
 			if (tmp->name && ft_strcmp(name, tmp->name) == 0)
 			{
 				// printf("ici %s\n%s\n", tmp->content, name);
-				content = tmp->content;
+				content = ft_strdup(tmp->content);
+				return(content);
 				// printf("conte %s", content);
 			}
 			tmp = tmp->next;
