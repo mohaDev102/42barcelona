@@ -6,14 +6,14 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:31:37 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/27 20:16:05 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/27 20:47:11 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
 
-char	*handle_quote(char *str, int i)
+char	*handle_quote(char *str, int i, int flag)
 {
 	char c;
 	char *res;
@@ -21,7 +21,7 @@ char	*handle_quote(char *str, int i)
 	c = str[i];
 	if (!str)
 		return (str);
-	res = clean_str(str, c, check_quote_number(str, c, i));
+	res = clean_str(str, c, check_quote_number(str, c, i), flag);
 	return (res);
 }
 
@@ -74,7 +74,8 @@ char *handle_dollar(char *str, int i, t_list **envlist, int quote)
 
 	i = 0;
 	// splited = ft_split(str, '$');
-	(void)quote;
+	// if (quote != 0)
+	// 	str = handle_quote(str, i);
 	res = NULL;
 	if (strchrint(str, '$') == (ft_strlen(str) - 1))
 		return(ft_strdup(str));
@@ -99,7 +100,7 @@ char *handle_dollar(char *str, int i, t_list **envlist, int quote)
 		while (splited[i])
 		{
 		write(1, "ici", 3);
-		// printf("split %s\n", splited[i]);
+		printf("split %s\n", splited[i]);
 			aux = extract_var_name(splited[i], 0);
 			auxbis = my_getenv(*envlist, aux, 3, 0);
 			if (auxbis == NULL)
@@ -235,12 +236,12 @@ int	quote_found(char **str, int j, int i)
 
 		if (str[j][i] == '\'')
 		{
-			str[j] = handle_quote(str[j], i);
+			str[j] = handle_quote(str[j], i, 0);
 			cleaned = 1;
 		}
 		else if (str[j][i] == '\"')
 		{
-			str[j] = handle_quote(str[j], i);
+			str[j] = handle_quote(str[j], i, 0);
 			cleaned = 2;
 		}
 	return (cleaned);
@@ -299,13 +300,16 @@ char *quote(char **str, int j, int i, t_list **envlist)
 {
 	int cleaned;
 	char *tmp;
+	char *res;
 
 	cleaned = 0;
 	if (str[j][i] == '\"' && (ft_strchr(str[j], '$') != NULL))
 	{
 		tmp = str[j];
-		str[j] = dollar(str[j], i, envlist, 2);
+		res = handle_quote(str[j], i, 1);
+		str[j] = dollar(res, i, envlist, 2);
 		free(tmp);
+		free(res);
 		return (str[j]);
 	}
 	else

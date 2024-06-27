@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:56:42 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/06/26 22:02:55 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/27 20:40:33 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,8 +151,8 @@ char				*add_env_content(char **env, int i, int j);
 void				ft_echo(char *echocmd, int flag, t_list *envlist);
 int 				expandor(t_cmd *cmd, t_list **envlist);
 char *expand(char **str, int j, t_list **envlist);
-char	*handle_quote(char *str, int i);
-char *clean_str(char *str, char c, int quote);
+char	*handle_quote(char *str, int i, int flag);
+char *clean_str(char *str, char c, int quote, int flag);
 char *extract_var_name(char *str, int i);
 char *last_exit(void);
 int	exit_status(int value);

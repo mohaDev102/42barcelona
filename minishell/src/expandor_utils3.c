@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:11:29 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/23 15:05:53 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/27 20:43:53 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char *quit_quote(char *str, int i, int last)
 }
 
 
-char *clean_str(char *str, char c, int quote)
+char *clean_str(char *str, char c, int quote, int flag)
 {
     int i;
     int j;
@@ -80,7 +80,8 @@ char *clean_str(char *str, char c, int quote)
         i++;
     }
     res[j] = '\0';
-    free(str);
+    if (flag == 0)
+        free(str);
     // printf("res: %s", res);
     return(res);
 }
