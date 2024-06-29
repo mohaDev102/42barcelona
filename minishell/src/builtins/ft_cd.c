@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 20:13:08 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/27 20:17:50 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/29 02:30:26 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,40 +93,37 @@ char	*my_getenv(t_list *envlist, char *name, int flag, int ifree)
 	content = NULL;
 		// printf("name %s\n", name);
 	(void)ifree;
-	while (tmp)
+	if (!name)
+		return (NULL);
+
+	while (tmp != NULL)
 	{
-		if (!name)
+	// printf("var name%s\n", tmp->name);
+		// da seg fault al poner $$
+// write(1, "ici", 3);
+		if (tmp->name && ft_strcmp(name, tmp->name) == 0)
 		{
-			return (NULL);
+			// printf("ici %s\n%s\n", tmp->content, name);
+			content = ft_strdup(tmp->content);
+			break;
+			// return(content);
+			// printf("conte %s", content);
 		}
-		while (tmp != NULL)
-		{
-		// printf("var name%s\n", tmp->name);
-			// da seg fault al poner $$
-	// write(1, "ici", 3);
-			if (tmp->name && ft_strcmp(name, tmp->name) == 0)
-			{
-				// printf("ici %s\n%s\n", tmp->content, name);
-				content = ft_strdup(tmp->content);
-				return(content);
-				// printf("conte %s", content);
-			}
-			tmp = tmp->next;
-		}
-		if (content == NULL)
-		{
-			if (flag == 1)
-				write(2, "cd: HOME not set\n", 18);
-			else if (flag == 2)
-				write(2, "cd: OLDPWD not set\n", 20);
-			return (NULL);
-		}
-		// content = clean_content(content);
-		// if (ifree == 1)
-		// 	free(name);
+		tmp = tmp->next;
 	}
-		// printf("content%s\n", content);
-		return (content);
+	if (content == NULL)
+	{
+		if (flag == 1)
+			write(2, "cd: HOME not set\n", 18);
+		else if (flag == 2)
+			write(2, "cd: OLDPWD not set\n", 20);
+		return (NULL);
+	}
+	// content = clean_content(content);
+	// if (ifree == 1)
+	// 	free(name);
+	// printf("content%s\n", content);
+	return (content);
 	// }
 }
 

@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:58:34 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/06/24 19:21:50 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/29 02:40:40 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void handle_sigint_heredoc(int sig)
 				tcsetattr(STDIN_FILENO, TCSANOW, &term_attr);
 			}
 		}
-		// write(1, "ici", 3);
 		exit(130);
 	}
 }
@@ -46,6 +45,7 @@ void    create_herdoc(char *limiter, char *path)
 {
     int     fd;
     char    *str;
+	char	*temp;
 
     signal(SIGINT, handle_sigint_heredoc);
     fd = open(path, O_CREAT | O_WRONLY | O_TRUNC, 0666);
@@ -54,9 +54,10 @@ void    create_herdoc(char *limiter, char *path)
     str = readline(" ");
     while (str && ft_strcmp(limiter, str) != 0)
     {
-        str = ft_strjoin(str, "\n");
-        ft_putstr_fd(str, fd);
-        free(str);
+        temp = ft_strjoin(str, "\n");
+        ft_putstr_fd(temp, fd);
+        free(temp);
+		free(str);
         str = readline(" ");
     }
     close(fd);
@@ -76,10 +77,8 @@ void    do_herdoc(t_redir *tmp, int i)
     path = ft_strjoin("minishell", num);
     pid = fork();
     free(num);
-    if (pid == 0)
-	{
-    	create_herdoc(tmp->file, path);
-	}
+	if (pid == 0)
+		create_herdoc(tmp->file, path);
 	waitpid(pid, &status, 0);
 	if (WIFEXITED(status))
 		status = WEXITSTATUS(status);
@@ -88,9 +87,7 @@ void    do_herdoc(t_redir *tmp, int i)
 		if (WTERMSIG(status) == SIGQUIT)
 			status = 131;
 		else if (WTERMSIG(status) == SIGINT)
-		{
 			status = 130;
-		}
 	}
 	free(tmp->file);
 	tmp->file = ft_strdup(path);

@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:31:37 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/27 20:47:11 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/29 02:31:57 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,118 +25,120 @@ char	*handle_quote(char *str, int i, int flag)
 	return (res);
 }
 
-// char **manage_first_dollar(char *str, t_list **envlist)
-// {
-// 	char **res;
-// 	char *aux;
-// 	char *var;
-
-// 	res = assembl_var(str);
-// 	var = res[0];
-// 	if (res == NULL)
-// 	{
-// 		free(str); 
-// 		return (NULL);
-// 	}
-// 	aux = my_getenv(*envlist, var, 3, 1);
-// 		free(var);
-// 		// printf("res %s\n", aux);
-// 	if (aux != NULL)
-// 	{
-// 		res[0] = aux;
-// 		// free(aux);
-// 		// return (res);
-// 	}
-// 	// int i = 0;
-// 	// while (res[i])
-// 	// {
-// 		// printf("res %s\n", res[1]);
-// 	// 	i++;
-// 	// }
-// 	if (!res)
-// 	{
-// 		free_split(res);
-// 		free(aux);
-// 		return (NULL);
-// 	}
-// 	// if (aux)
-// 	// 	free(aux);
-// 	// free(str);
-// 	return (res);
-// }
 char *handle_dollar(char *str, int i, t_list **envlist, int quote)
 {
 	char **splited;
 	char *res;
 	char *aux;
 	char *auxbis;
+	char *left;
+	char *first;
 	// int i;
 
 	i = 0;
-	// splited = ft_split(str, '$');
-	// if (quote != 0)
-	// 	str = handle_quote(str, i);
+	(void)quote;
 	res = NULL;
 	if (strchrint(str, '$') == (ft_strlen(str) - 1))
 		return(ft_strdup(str));
     splited = ft_split(str, '$');
-	if (splited == NULL)
-	{
-		free(splited);
-		aux = extract_var_name(str, 0);
-		// printf("aux %s", aux);
-		auxbis = my_getenv(*envlist, aux, 3, 0);
-		free(aux);
-		if (auxbis == NULL)
-		{
-			free(aux);
-			return(str);
-		}
-		return(auxbis);
-		// free(auxbis);
-	}
-	else
-	{
+	// if (splited == NULL)
+	// {
+	// 	free(splited);
+	// 	aux = extract_var_name(str, 0);
+	// 	// printf("aux %s", aux);
+	// 	auxbis = my_getenv(*envlist, aux, 3, 0);
+	// 	free(aux);
+	// 	if (auxbis == NULL)
+	// 	{
+	// 		free(aux);
+	// 		return(ft_strdup(""));
+	// 	}
+	// 	return(auxbis);
+	// 	// free(auxbis);
+	// }
+	// else
+	// {
 		while (splited[i])
 		{
 		write(1, "ici", 3);
-		printf("split %s\n", splited[i]);
+		// printf("split %s\n", splited[i]);
 			aux = extract_var_name(splited[i], 0);
-			auxbis = my_getenv(*envlist, aux, 3, 0);
-			if (auxbis == NULL)
-				auxbis = ft_strdup(splited[i]);
+		// printf("aux %s\n", aux);
+			auxbis = my_getenv(*envlist, aux, 3, 1);
+			// if (auxbis == NULL)
+			// 	auxbis = NULL;
 			free(splited[i]);
-		// printf("aux bis %s\n", auxbis);
 			free(aux);
-			if (res)
-				res = ft_strjoinexp(res, auxbis);
-			else
-				res = ft_strdup(auxbis);
-			if (quote != 0)
+			if (res != NULL)
+			{
+				char *temp = ft_strjoinexp(res, auxbis);
+				free(res);
+				res = temp;
 				free(auxbis);
-		// printf("RES %s", res);
+			}
+			else if (auxbis)
+			{
+				
+				char *temp = ft_strdup(auxbis);
+				res = temp;
+				free(auxbis);
+			}
+			// if (quote != 0)
 			// free(splited[i]);
 			i++;
 		}
+	// }
+	first = text_before_var(str);
+	left = text_after_var(str);
+	if (left != NULL)
+	{
+		char *temp = ft_strjoin(res, left);
+		free(res);
+		res = temp;
 	}
-	if (quote == 0)
-		free(auxbis);
+	if (first != NULL)
+	{
+		// printf("first %s", first);
+		char *temp = ft_strjoin(first, res);
+		free(res);
+		res = temp;
+	}
+	free(left);
+	free(first);
+	// if (quote == 0)
+	// 	free(auxbis);
 	// if (quote != 0)
 	free(splited);
 	return (res);
 }
+
+int	ft_strlenexp2(char *str)
+{
+	int i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != '\"')
+			i++;
+	}
+	return(i);
+}
+
 
 char	*ft_strjoinexp(char *s1, char *s2)
 {
 	char	*res;
 	int		i;
 	int		j;
+	int		len;
 
 	i = 0;
+	len = ft_strlenexp2(s1) + ft_strlenexp2(s2);
 	j = 0;
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
-	res = (char *)malloc(sizeof(char) * ft_strlen(s1) + ft_strlen(s2) + 1);
+	res = (char *)malloc(sizeof(char) * (len + 1));
 	if (res == NULL)
 		return (NULL);
 	while (s1[i] != '\0')
@@ -300,16 +302,18 @@ char *quote(char **str, int j, int i, t_list **envlist)
 {
 	int cleaned;
 	char *tmp;
-	char *res;
+	// char *res;
 
 	cleaned = 0;
 	if (str[j][i] == '\"' && (ft_strchr(str[j], '$') != NULL))
 	{
 		tmp = str[j];
-		res = handle_quote(str[j], i, 1);
-		str[j] = dollar(res, i, envlist, 2);
-		free(tmp);
-		free(res);
+		// free(str[j]);
+		str[j] = dollar(tmp, i, envlist, 2);
+		// printf("res %s", res);
+		// str[j] = handle_quote(res, i, 1
+		// free(tmp);
+		// free(res);
 		return (str[j]);
 	}
 	else
@@ -337,7 +341,9 @@ char *expand(char **str, int j, t_list **envlist)
 	{
 		if ((str[j][i] == '\'' || str[j][i] == '\"') && cleaned == 0)
 		{
+			tmp = str[j];
 			str[j] = quote(str, j, i, envlist);
+			free(tmp);
 			return (str[j]);
 		}
 		else if (str[j][i] == '$')
