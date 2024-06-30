@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 18:11:29 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/27 20:43:53 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/29 22:17:14 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@ size_t	ft_strlenexp(const char *str, char c)
 
     len = 0;
 	i = 0;
+    (void)c;
 	while (str[i] != '\0')
 	{
-        if (str[i] != c) //&& c[i] != '\'')
+        if (str[i] != '\"' && str[i] != '\'')
 		{
             // printf("dans str%c", c[i]);
             len++;
@@ -50,41 +51,171 @@ char *quit_quote(char *str, int i, int last)
     return(res);
 }
 
+// char *clean(char *str, int first, int last)
+// {
+//     char *res;
+//     int i;
+//     int j;
+
+//     i = 0;
+//     j = 0;
+    
+//     res = malloc(sizeof(char *) * ft_strlen(str));
+//     while (str[i])
+//     {
+//         if (i != first && i != last)
+//         {
+//             res[j] = str[i];
+//             j++;
+//         }
+//         i++;
+//     }
+//     free(str);
+//     res[j] = '\0';
+//     return (res);
+// }
+
+//char	*remove_char_at(char *str, int i)
+
+char	*ft_join_n_destroy(char *s1, char *s2, int to_free)
+{
+	char	*new;
+
+	if (!s1 || !s2)
+		return (NULL);
+	else if (!s1)
+		new = ft_strdup(s2);
+	else if (!s2)
+		new = ft_strdup(s1);
+	else
+		new = ft_strjoin(s1, s2);
+	if (to_free == 1 && s1)
+		free(s1);
+	else if (to_free == 2 && s2)
+		free(s2);
+	else if (to_free == 3 && s1 && s2)
+	{
+		free(s1);
+		free(s2);
+	}
+	return (new);
+}
+
+char *clean(char *str, int i) //, int last)
+{
+	char	*tmp;
+    // char    *tmp1;
+    char *substr;
+    char *substr1;
+    // char    *tmp2;
+
+    tmp = str;
+    printf("stri %c", str[i]);
+	if (!str || ft_strlen(str) - 1 == 0)
+		return (NULL);
+	substr = ft_substr(tmp, 0, i);
+	substr1 = ft_substr(tmp, i + 1, ft_strlen(str));
+    tmp = ft_join_n_destroy(substr, substr1, 2);
+	// free(substr);
+	// free(substr1);
+    printf("tmp %s", tmp);
+	return (tmp);
+}
 
 char *clean_str(char *str, char c, int quote, int flag)
 {
     int i;
-    int j;
-    int len;
+    int first;
+    int last;
+    // char c;
+    // int len;
     char *res;
+    // char *tmp;
 
-    j = 0;
     i = 0;
-    len = ft_strlenexp(str, c);
+    first = 0;
+    last = 0;
+    res = NULL;
+//     printf("%d", len);
+    quote = 0;
+    (void)flag;
+    (void)c;
+    (void)last;
+    (void)first;
     (void)quote;
-    if (len == 0)
-        return (str);
-    // printf("%d", len);
-    // exit(1);
-    res = malloc(sizeof(char) * (ft_strlen(str) + 1)); // - (quote)));
-   if (!res)
-        return (NULL);
-    // printf("%c", c);
+    res = str;
     while (str[i])
     {
-        if (str[i] != c)
+        if ((str[i] == c ) && quote == 0)
         {
-            res[j] = str[i];
-            j++;
+            // c = str[i];
+            quote = 1;
+            first = i;
+            i++;
+        }
+        while (str[i] && str[i] != c)
+        {
+            i++;
+        }
+        if ((str[i] == c) && quote == 1)
+        {
+            quote = 0;
+            // len = ft_strlenexp(str, str[i]);
+            // if (len == 0)
+            //     return (str);
+            // last = i;
+            // free(res);
+            res = clean(res, first);
+            res = clean(res, i + 1);
+            // free(tmp);
+            printf("res%s\n", res);
+            if (res == NULL)
+                return (res);
+            // i = -1;
         }
         i++;
     }
-    res[j] = '\0';
-    if (flag == 0)
+    if (!res)
         free(str);
-    // printf("res: %s", res);
     return(res);
 }
+
+// char *clean_str(char *str, char c, int quote, int flag)
+// {
+//     int i;
+//     int j;
+//     int len;
+//     char *res;
+
+//     j = 0;
+//     i = 0;
+//     len = ft_strlenexp(str, c);
+//     printf("%d", len);
+//     (void)quote;
+//     if (len == 0)
+//         return (str);
+//     // printf("%d", len);
+//     // exit(1);
+//     res = malloc(sizeof(char) * (ft_strlen(str) + 1)); //= - (quote)));
+//    if (!res)
+//         return (NULL);
+//     // printf("%c", c);
+//     while (str[i])
+//     {
+//         if (str[i] != c)
+//         {
+//             res[j] = str[i];
+//             j++;
+//         }
+//         i++;
+//     }
+//     res[j] = '\0';
+//     (void)flag;
+//     // if (flag == 0)
+//     //     free(str);
+//     // printf("res: %s", res);
+//     return(res);
+// }
 
 // char *clean_str(char *str, char c, int quote)
 // {
@@ -177,7 +308,7 @@ int after_var(char *str)
 }
 int check_quote_number(char *str, char c, int i)
 {
-    i++;
+    // i++;
     int j = 0;
 
     while (str[i])

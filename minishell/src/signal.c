@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/27 17:45:40 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/13 15:45:08 by alounici         ###   ########.fr       */
+/*   Updated: 2024/06/30 14:46:09 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void	parent_handler(int num)
 
 void	child_hand(int num)
 {
-	write(1 ,"ici", 3);
+	// write(1 ,"ici", 3);
 	(void)num;
 	//  if (num == SIGINT)
 	// {
