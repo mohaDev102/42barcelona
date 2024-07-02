@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:31:37 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/30 17:34:00 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/02 20:46:19 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,34 +52,70 @@ int closed_quote(char *str)
 
 void quote_clean(char **str, int j, char *substr, int i)
 {
-	// int i;
+	int l;
 	int k;
 	char c;
 	int flag = 0;
 
+	l = 0;
 	c = str[j][i];
+		// printf("c = %c\n", c);
 	k = 0;
-	i += 1;
-	while (str[j][i]) // && str[j][i] != c)
+	// i += 1;
+	while (str[j][l]) 
 	{
-		if (str[j][i] == c && flag == 0)
+
+		if ((str[j][i] == c && flag == 0) || l == i)
 			flag = 1;
 		else if (str[j][i] != c || (str[j][i] == c && flag == 1))
 		{
-			substr[k] = str[j][i];
+			substr[k] = str[j][l];
 			k++;
 		}
 		// if (flag == 1)
-		// printf("st %s\n", str);
-		i++;
+		l++;
 	}
 	substr[k] = '\0';
-	free(str[j]);
+		// printf("subst %s\n", substr);
+	// if (strchr(str[j], '$') != 0)
+	// 	free(str[j]);
 	str[j] = ft_strdup(substr);
 	// free(substr);
 		// printf("sust %s\n", substr);
 
 }
+
+
+// void quote_clean(char **str, int j, char *substr, int i)
+// {
+// 	// int i;
+// 	int k;
+// 	char c;
+// 	int flag = 0;
+
+// 	c = str[j][i];
+// 	k = 0;
+// 	i += 1;
+// 	while (str[j][i]) // && str[j][i] != c)
+// 	{
+// 		if (str[j][i] == c && flag == 0)
+// 			flag = 1;
+// 		else if (str[j][i] != c || (str[j][i] == c && flag == 1))
+// 		{
+// 			substr[k] = str[j][i];
+// 			k++;
+// 		}
+// 		// if (flag == 1)
+// 		// printf("st %s\n", str);
+// 		i++;
+// 	}
+// 	substr[k] = '\0';
+// 	free(str[j]);
+// 	str[j] = ft_strdup(substr);
+// 	// free(substr);
+// 		// printf("sust %s\n", substr);
+
+// }
 
 int quote_erase(char **str, int j, int i)
 {
@@ -91,19 +127,11 @@ int quote_erase(char **str, int j, int i)
 	// i++;
 	quote = str[j][i];
 	// i += 1;
-	substr = malloc(sizeof(char) * (ft_strlen(str[j]) + 1));
+	substr = malloc(sizeof(char) * (ft_strlen(str[j])));
 	if (substr == NULL)
 		return (-1);
 	quote_clean(str, j, substr, i);
-	// free(str[j]);
-	// str[j] = ft_strdup(substr);
 	free(substr);
-	// if (str[j][i + k] && str[j][i + k] == quote)
-	// {
-	// 	while (str[j][i + k++] && str[j][i + k] != quote)
-	// 		continue;
-	// 	k++;
-	// }
 	while (str[j][i + k] && str[j][i + k] != quote)
     {
         k++;
@@ -112,17 +140,11 @@ int quote_erase(char **str, int j, int i)
     {
         k++;
     }
-	// k++;
-	printf("i %d\n", i);
-	// printf("k %d\n", k);
 	return(k);
 }
 
 void 	handle_quote(char **str, int j, int flag)
 {
-	// char c;
-	// char *res;
-	// char *tmp;
 	int i;
 	int k;
 	char *new_str;
@@ -130,30 +152,31 @@ void 	handle_quote(char **str, int j, int flag)
     (void)flag;
     i = 0;
     k = 0;
-	 if (closed_quote(str[j]) == 0)
+	if (closed_quote(str[j]) == 0)
     {
+		// write(1, "ici", 3);
     	new_str = ft_strdup("");
         if (!new_str)
         {
             free(str[j]);
             return ;
         }
-        free(str[j]);
+		// free(str[j]);
         str[j] = ft_strdup(new_str);
 		free(new_str);
     }
-	while (str[j][i])
+	while (str[j][k])
 	{
-		if (str[j][i] == '\'' || str[j][i] == '\"')
+		if (str[j][k] == '\'' || str[j][k] == '\"')
 		{		
-			// write(2, "ici\n", 4);	
+			// write(2, "ici\n", 4);
 			k = quote_erase(str, j, i);
-			printf("k %d\n", k);
-			printf("str %s\n", str[j]);
-			i += k;
+			// printf("char  %c\n", str[j][i + k]);
+			// printf("str %s\n", str[j]);
+			// i = i + k;
 		}
 		else
-			i++;
+			k++;
 	}
 }
 
@@ -163,8 +186,8 @@ char *handle_dollar(char *str, int i, t_list **envlist, int quote)
 	char *res;
 	char *aux;
 	char *auxbis;
-	char *left;
-	char *first;
+	// char *left;
+	// char *first;
 	// int i;
 
 	i = 0;
@@ -203,23 +226,23 @@ char *handle_dollar(char *str, int i, t_list **envlist, int quote)
 			i++;
 		}
 	// }
-	first = text_before_var(str);
-	left = text_after_var(str);
-	if (left != NULL)
-	{
-		char *temp = ft_strjoin(res, left);
-		free(res);
-		res = temp;
-	}
-	if (first != NULL)
-	{
-		// printf("first %s", first);
-		char *temp = ft_strjoin(first, res);
-		free(res);
-		res = temp;
-	}
-	free(left);
-	free(first);
+	// first = text_before_var(str);
+	// left = text_after_var(str);
+	// if (left != NULL)
+	// {
+	// 	char *temp = ft_strjoin(res, left);
+	// 	free(res);
+	// 	res = temp;
+	// }
+	// if (first != NULL)
+	// {
+	// 	// printf("first %s", first);
+	// 	char *temp = ft_strjoin(first, res);
+	// 	free(res);
+	// 	res = temp;
+	// }
+	// free(left);
+	// free(first);
 	// if (quote == 0)
 	// 	free(auxbis);
 	// if (quote != 0)
@@ -363,13 +386,17 @@ char *quote(char **str, int j, int i, t_list **envlist)
 	// char *res;
 
 	cleaned = 0;
-	if (str[j][i] == '\"' && (ft_strchr(str[j], '$') != NULL))
+	if (str[j][i] == '\"' && (ft_strchr(str[j], '$') != 0))
 	{
 		tmp = str[j];
 		// free(str[j]);
 		str[j] = dollar(tmp, i, envlist, 2);
-		// printf("res %s", res);
-		// str[j] = handle_quote(res, i, 1
+		if (str[j] == NULL)
+			return (ft_strdup(""));
+		// printf("quote%s\n", str[j]);
+		// write(1, "ici", 3);
+		// printf("res av quoyte%s", str[j]);
+		handle_quote(str, j, 1);
 		// free(tmp);
 		// free(res);
 		return (str[j]);
