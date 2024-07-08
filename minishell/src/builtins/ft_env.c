@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 15:02:51 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/31 20:28:37 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/08 21:24:17 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_env(t_list **envlist)
 	{
 		// printf("%s\n", tmp->name);
 					// printf("%s\n", tmp->content);
-		if (tmp->content[0])
+		if (tmp->content[0] || strchrint(tmp->name, '=') != 0)
 		{
 			printf("%s", tmp->name);
 			printf("=");
