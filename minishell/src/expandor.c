@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:31:37 by alounici          #+#    #+#             */
-/*   Updated: 2024/07/08 21:34:51 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/09 21:54:06 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ int closed_quote(char *str)
 	int single;
 	int doble;
 
-	i = -1;
+	i = 0;
 	single = 0;
 	doble = 0;
-	while (str[++i])
+	while (str[i])
 	{
 		if (str[i] == '\'')
 			i += check_quote(str, i, &single);
@@ -44,6 +44,7 @@ int closed_quote(char *str)
 			i += check_quote(str, i, &doble);
 		if (str[i] == '\0')
 			break;
+		i++;
 	}
 	if (((single > 0) && (single % 2 != 0)) || ((doble > 0) && (doble % 2 != 0)))
 		return (0);
@@ -177,12 +178,9 @@ void 	handle_quote(char **str, int j, int flag)
 				// write(2, "ici\n", 4);
 				// printf("char clean%c\n", str[j][i]);
 				k = quote_erase(str, j, i);
-				printf("k = %d\n", k);
+				// printf("k = %d\n", k);
 				if (k == 0 || (unsigned int)k + i >= ft_strlen(str[j]))
-				{
-					write(1, "ici", 3);
 					return ;
-				}
 				// if (str[j][k] == str[j][i])
 				// 	k++;
 				// else
@@ -208,29 +206,23 @@ char *handle_dollar(char *str, int i, t_list **envlist, int quote)
 	i = 0;
 	(void)quote;
 	res = NULL;
-	if (strchrint(str, '$') == (ft_strlen(str) - 1))
+	auxbis = NULL;
+	if (strchrint(str, '$') == ((int)ft_strlen(str) - 1))
 		return(ft_strdup(str));
-    splited = ft_split(str, '$');
+    splited = ft_splitexp(str, '$');
+	free(str);
 		while (splited[i])
 		{
-		// write(1, "ici", 3);
-		printf("split %s\n", splited[i]);
-		if (strchrint(splited[i], '$') != 0)
-		{
-			aux = extract_var_name(splited[i], 0);
-			// printf("aux dn if%s\n", aux);
-			auxbis = my_getenv(*envlist, aux, 3, 1);
-		}
-		else
-		{
-			aux = splited[i];
-
-		}
-			printf("auxbis %s\n", auxbis);
-			printf("aux %s\n", aux);
-			// if (auxbis == NULL)
-			// 	auxbis = NULL;
-			if (res != NULL)
+			if (strchrint(splited[i], '$') != -1)
+			{
+				aux = extract_var_name(splited[i], 0);
+				auxbis = my_getenv(*envlist, aux, 3, 1);
+				free(aux);
+			}
+			else
+				auxbis = ft_strdup(splited[i]);
+			// free(splited[i]);
+			if (res != NULL && auxbis)
 			{
 				char *temp = ft_strjoinexp(res, auxbis);
 				free(res);
@@ -239,14 +231,18 @@ char *handle_dollar(char *str, int i, t_list **envlist, int quote)
 			}
 			else if (auxbis)
 			{
-				
-				char *temp = ft_strdup(auxbis);
-				res = temp;
-				// free(auxbis);
+				// if (auxbis)
+				// {
+					char *temp = ft_strdup(auxbis);
+					res = temp;
+					free(auxbis);
+
+				// }
+				// else
+				// 	res = splited[]
 			}
 			// if (quote != 0)
 			// free(splited[i]);
-			free(splited[i]);
 			i++;
 		}
 		// free(aux);
@@ -279,7 +275,7 @@ char	*ft_strjoinexp(char *s1, char *s2)
 	int		len;
 
 	i = 0;
-	len = ft_strlenexp2(s1) + ft_strlenexp2(s2);
+	len = ft_strlen(s1) + ft_strlen(s2);
 	j = 0;
 	if (s1 == NULL || s2 == NULL)
 		return (NULL);
@@ -393,6 +389,7 @@ char *quote(char **str, int j, int i, t_list **envlist)
 	// char *res;
 
 	cleaned = 0;
+	(void)envlist;
 	if (str[j][i] == '\"' && (ft_strchr(str[j], '$') != 0))
 	{
 		tmp = str[j];

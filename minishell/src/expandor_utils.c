@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:10:01 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/24 21:45:10 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/09 21:34:09 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char **assembl_var(char *str)
     return (res);
 }
 
-unsigned int strchrint(char *str, char c)
+int strchrint(char *str, char c)
 {
     unsigned int i;
 
@@ -73,7 +73,7 @@ unsigned int strchrint(char *str, char c)
             return (i);
         i++;
     }
-    return (0);
+    return (-1);
 }
 
 char **join_var_name(char *str, unsigned int i)
@@ -104,7 +104,7 @@ char **join_var_name(char *str, unsigned int i)
             i++;
         }
     }
-    if (strchrint(str, '$') != (ft_strlen(str) - 1))
+    if (strchrint(str, '$') != ((int)ft_strlen(str) - 1))
         res = ft_split(var_name, '$');
     else
     {
@@ -124,6 +124,8 @@ char *extract_var_name(char *str, int i)
 
     j = i;
     k = 0;
+    if (str[i] == '$')
+        j++;
     while (str[i] && (ft_isalpha(str[i + 1]) || ft_isdigit(str[i + 1])) \
     && str[i + 1] != '$' && str[i + 1] != '\"' && str[i + 1] != '\'')
         i++;
@@ -133,5 +135,7 @@ char *extract_var_name(char *str, int i)
     while (j <= i)
             var[k++] = str[j++];
     var[k] = '\0';
+    free(str);
+    printf("var name %s\n", var);
     return (var);
 }
