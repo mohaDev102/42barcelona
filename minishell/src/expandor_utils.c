@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 17:10:01 by alounici          #+#    #+#             */
-/*   Updated: 2024/07/09 21:34:09 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/10 20:40:36 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ char *extract_var_name(char *str, int i)
     while (j <= i)
             var[k++] = str[j++];
     var[k] = '\0';
-    free(str);
-    printf("var name %s\n", var);
+    // free(str);
+    // printf("var name %s\n", var);
     return (var);
 }

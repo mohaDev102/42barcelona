@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:31:37 by alounici          #+#    #+#             */
-/*   Updated: 2024/07/09 21:54:06 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/10 21:44:45 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,37 +62,26 @@ int quote_clean(char **str, int j, char *substr, int i)
 
 	l = 0;
 	c = str[j][i];
-	// printf("%c\n", str[j][i]);
-	// 	printf("i = %d\n", i);
 	k = 0;
-	// i++;
 	if (ft_strlen(str[j]) == (unsigned int)i)
-	{
-		// write(1, "ici", 3);
 		return (0);
-	}
-	while (l <= i - 1)
+	while (l < i)
 	{
 		substr[k] = str[j][l];
 		k++;
 		l++;
-		// printf("copy 1%c, l %d\n", str[j][l], l);
 	}
-	// if (i > 0)
-		l++; // += 1;
+	l++;
 	while (str[j][l]) 
 	{
 
-		if (str[j][l] == c && (flag == 0))// || flag == 1))// || l == i)
+		if (str[j][l] == c && (flag == 0))
 		{
 
-		// printf("perd %c, l %d\n", str[j][i], l);
-			// if (l != i)
 				flag++;
 				next = l;
-		// printf("flg %d", flag);
 		}
-		else //if (str[j][l] != c || (str[j][l] == c && flag  0))
+		else if (str[j][l] != c || (str[j][l] == c && flag == 1))
 		{
 			substr[k] = str[j][l];
 		// printf("copy 2%c, l %d\n", str[j][l], l);
@@ -104,6 +93,8 @@ int quote_clean(char **str, int j, char *substr, int i)
 	}
 	substr[k] = '\0';
 		// printf("subst %s\n", substr);
+		// printf("next %d\n", next);
+
 	// if (strchr(str[j], '$') != 0)
 		free(str[j]);
 	str[j] = ft_strdup(substr);
@@ -144,6 +135,7 @@ int quote_erase(char **str, int j, int i)
     //     k++;
     // }
 	// // }
+	// printf("k = %d\n", k);
 	return(k);
 }
 
@@ -156,6 +148,7 @@ void 	handle_quote(char **str, int j, int flag)
     (void)flag;
     i = 0;
     k = 0;
+	// printf("str%s\n", str[j]);
 	if (closed_quote(str[j]) == 0)
     {
 		// write(1, "ici", 3);
@@ -193,7 +186,7 @@ void 	handle_quote(char **str, int j, int flag)
 	}
 }
 
-char *handle_dollar(char *str, int i, t_list **envlist, int quote)
+char *handle_dollar(char *str, t_list **envlist, int quote)
 {
 	char **splited;
 	char *res;
@@ -201,16 +194,18 @@ char *handle_dollar(char *str, int i, t_list **envlist, int quote)
 	char *auxbis;
 	// char *left;
 	// char *first;
-	// int i;
+	int i;
 
 	i = 0;
 	(void)quote;
 	res = NULL;
 	auxbis = NULL;
+	// write(1, "ici", 3);
 	if (strchrint(str, '$') == ((int)ft_strlen(str) - 1))
 		return(ft_strdup(str));
     splited = ft_splitexp(str, '$');
-	free(str);
+	// free(str);
+	// printf("splited %s", splited[0]);
 		while (splited[i])
 		{
 			if (strchrint(splited[i], '$') != -1)
@@ -242,7 +237,7 @@ char *handle_dollar(char *str, int i, t_list **envlist, int quote)
 				// 	res = splited[]
 			}
 			// if (quote != 0)
-			// free(splited[i]);
+			free(splited[i]);
 			i++;
 		}
 		// free(aux);
@@ -365,16 +360,31 @@ int var_in_quote(char *str, int quote)
 	return (0);
 }
 
+// int text_after_dollar(char *str, int i)
+// {
+// 	i++;
+// 	while(str[i])
+// 	{
+// 		if ()
+// 	}
+// }
+
 char *dollar(char *str, int i, t_list **envlist, int quote)
 {
 	int even;
 	char *res;
 
-	(void)quote;
+	// (void)quote;
+	(void)i;
+	// (void)envlist;
+
 	even = check_quote_number_dollar(str);
 	if (even == 0)
 		return (NULL);
-	res = handle_dollar(str, i + 1, envlist, quote);
+	// if (str[i + 1] && str[i + 1] == '?')
+	// 	res = last_exit();
+	// else
+		res = handle_dollar(str, envlist, quote);
 	// printf("dolar res = %s", res);
 	// free(str);
 	// if (!res)
@@ -390,23 +400,23 @@ char *quote(char **str, int j, int i, t_list **envlist)
 
 	cleaned = 0;
 	(void)envlist;
-	if (str[j][i] == '\"' && (ft_strchr(str[j], '$') != 0))
+	if (ft_strchr(str[j], '$') != NULL) // && $ est pas dans quotes
 	{
 		tmp = str[j];
 		// free(str[j]);
 		str[j] = dollar(tmp, i, envlist, 2);
 		if (str[j] == NULL)
 			return (ft_strdup(""));
-		// printf("quote%s\n", str[j]);
-		// write(1, "ici", 3);
-		// printf("res av quoyte%s", str[j]);
 		handle_quote(str, j, 1);
-		// free(tmp);
+		// printf("quote%s\n", str[j]);
+		// printf("res av quoyte%s", str[j]);
+		free(tmp);
 		// free(res);
 		return (str[j]);
 	}
 	else
 	{
+		// write(1, "ici", 3);
 		cleaned = quote_found(str, j, i);
 		if (cleaned == 0 || str[j] == NULL) // || !str[j][i])
 			return (NULL);
@@ -433,40 +443,54 @@ int all_quote(char *str)
 char *expand(char **str, int j, t_list **envlist)
 {
     int	i;
-	int cleaned;
-	char *tmp;
+	// int cleaned;
+	// char *tmp;
 	// int flag;
 
 	// flag = 0;
-	cleaned = 0;
+	// cleaned = 0;
 	i = 0;
 	// controlar comillas
 	if (!str[j] || ft_strcmp(str[j], "\"\"") == 0)
 		return (NULL);
-	while (str[j][i])
+	if (ft_strchr(str[j], '\'') != NULL || ft_strchr(str[j], '\"') != NULL)
 	{
-		if ((str[j][i] == '\'' || str[j][i] == '\"') && cleaned == 0)
+		if (all_quote(str[j]) == 1)
 		{
-			if (all_quote(str[j]) == 1)
-			{
-				// return(NULL);
-				tmp = str[j];
-				// flag = 1;
-			}
-			str[j] = quote(str, j, i, envlist);
-			// if (flag == 1)
-				// free(tmp);
-			return (str[j]);
+			// return(NULL);
+			// tmp = str[j];
+			// flag = 1;
 		}
-		else if (str[j][i] == '$')
-		{
-			tmp = str[j];
-			str[j] = dollar(str[j], i, envlist, cleaned);
-			free(tmp);
-			return (str[j]);
-		}
-		i++;
+		// write(1, "ici", 3);
+		str[j] = quote(str, j, i, envlist);
+		// if (flag == 1)
+		// 	free(tmp);
+		return (str[j]);
 	}
+	// while (str[j][i])
+	// {
+	// 	// if ((str[j][i] == '\'' || str[j][i] == '\"') && cleaned == 0)
+	// 	// {
+	// 	// 	if (all_quote(str[j]) == 1)
+	// 	// 	{
+	// 	// 		// return(NULL);
+	// 	// 		tmp = str[j];
+	// 	// 		// flag = 1;
+	// 	// 	}
+	// 	// 	str[j] = quote(str, j, i, envlist);
+	// 	// 	// if (flag == 1)
+	// 	// 		// free(tmp);
+	// 	// 	return (str[j]);
+	// 	// }
+	// 	if (str[j][i] == '$')
+	// 	{
+	// 		tmp = str[j];
+	// 		str[j] = dollar(str[j], i, envlist, cleaned);
+	// 		free(tmp);
+	// 		return (str[j]);
+	// 	}
+	// 	i++;
+	// }
 	return (str[j]);
 
 }

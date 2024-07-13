@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 21:08:48 by alounici          #+#    #+#             */
-/*   Updated: 2024/07/09 21:18:27 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/10 19:52:30 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static int	is_separator(char c, char sep) {
 	return (c == sep || c == ' ' || c == '\'' || c == '\"');
 }
 
-char	**ft_splitexp(char const *s, char c)
+char	**ft_splitexp(char *s, char c)
 {
 	char	**res;
 	int		i;
@@ -83,19 +83,20 @@ char	**ft_splitexp(char const *s, char c)
 				res[j] = ft_substr(s, i, 1);
 				if (res[j] == NULL)
 					return (ft_free_malloc(res, j));
-				printf("res 1%s\n", res[j]);
+				i++;
 				j++;
-				// printf("len%d\n", len);
 				if (j == len)
 				{
-					// j++;
 					res[j] = NULL;
 					return(res);
 				}
 			}
 			i++;
 		}
-		start = i - 1;
+		if (i != 0)
+			start = i - 1;
+		else
+			start = i;
 		while (s[i] && !is_separator(s[i], c))
 			i++;
 		if (i > start)
@@ -103,11 +104,10 @@ char	**ft_splitexp(char const *s, char c)
 			res[j] = ft_substr(s, start, (i - start));
 			if (res[j] == NULL)
 				return (ft_free_malloc(res, j));
-			printf("res 2%s\n", res[j]);
 			j++;
 		}
-		// i++;
 	}
+	// free(s);
 	res[j] = NULL;
 	return (res);
 }

@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:56:42 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/07/09 21:29:01 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/10 19:52:10 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,7 @@ char *text_before_var(char *str);
 int	ft_strlenexp2(char *str);
 size_t	ft_strlenexp(const char *str, char c);
 char *clean(char *str, int i);
-char	**ft_splitexp(char const *s, char c);
+char	**ft_splitexp(char *s, char c);
 
 int					ft_count_lexer(t_lexer *lexer);
 t_cmd				*init_parser(void);
