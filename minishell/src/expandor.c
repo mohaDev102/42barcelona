@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:31:37 by alounici          #+#    #+#             */
-/*   Updated: 2024/07/10 21:44:45 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/16 21:41:21 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int quote_clean(char **str, int j, char *substr, int i)
 		// printf("subst %s\n", substr);
 		// printf("next %d\n", next);
 
-	// if (strchr(str[j], '$') != 0)
+	// if (strchrint(str[j], '\'') > 0)
 		free(str[j]);
 	str[j] = ft_strdup(substr);
 	free(substr);
@@ -143,7 +143,7 @@ void 	handle_quote(char **str, int j, int flag)
 {
 	int i;
 	int k;
-	char *new_str;
+	// char *new_str;
 
     (void)flag;
     i = 0;
@@ -151,16 +151,18 @@ void 	handle_quote(char **str, int j, int flag)
 	// printf("str%s\n", str[j]);
 	if (closed_quote(str[j]) == 0)
     {
-		// write(1, "ici", 3);
-    	new_str = ft_strdup("");
-        if (!new_str)
-        {
-            free(str[j]);
-            return ;
-        }
+		// // write(1, "ici", 3);
 		free(str[j]);
-        str[j] = ft_strdup(new_str);
-		free(new_str);
+    	str[j] = ft_strdup("");
+        // if (!new_str)
+        // {
+        //     free(str[j]);
+        //     return ;
+        // }
+		// free(str[j]);
+        // str[j] = ft_strdup(new_str);
+		// free(new_str);
+		// return (ft_strdup(""));
     }
 	else
 	{
@@ -186,7 +188,7 @@ void 	handle_quote(char **str, int j, int flag)
 	}
 }
 
-char *handle_dollar(char *str, t_list **envlist, int quote)
+char *handle_dollar(char *str, t_list **envlist)
 {
 	char **splited;
 	char *res;
@@ -197,7 +199,6 @@ char *handle_dollar(char *str, t_list **envlist, int quote)
 	int i;
 
 	i = 0;
-	(void)quote;
 	res = NULL;
 	auxbis = NULL;
 	// write(1, "ici", 3);
@@ -236,6 +237,10 @@ char *handle_dollar(char *str, t_list **envlist, int quote)
 				// else
 				// 	res = splited[]
 			}
+			// else if (res && auxbis == NULL)
+			// 	ft_strjoin(res, auxbis);
+			// else
+			// 	res = ft_strdup("");
 			// if (quote != 0)
 			free(splited[i]);
 			i++;
@@ -311,8 +316,6 @@ int	quote_found(char **str, int j, int i)
 {
 	int cleaned;
 
-	cleaned = 0;
-
 		if (str[j][i] == '\'')
 		{
 			handle_quote(str, j, 0);
@@ -342,18 +345,21 @@ int	quote_found(char **str, int j, int i)
 // 	return (0);
 // }
 
-int var_in_quote(char *str, int quote)
+int var_in_quote(char *str, char quote)
 {
 	int i;
 	int in_quote;
 
+	quote = '\'';
 	in_quote = 0;
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] == quote)
+		if (str[i] == quote && in_quote == 0)
 			in_quote = 1;
-		if (str[i] == '$' && in_quote == 0)
+		else if (str[i] == quote && in_quote == 1)
+			in_quote = 0;
+		if (str[i] == '$' && in_quote == 1)
 			return(1);
 		i++;
 	}
@@ -369,7 +375,7 @@ int var_in_quote(char *str, int quote)
 // 	}
 // }
 
-char *dollar(char *str, int i, t_list **envlist, int quote)
+char *dollar(char *str, int i, t_list **envlist)
 {
 	int even;
 	char *res;
@@ -384,7 +390,8 @@ char *dollar(char *str, int i, t_list **envlist, int quote)
 	// if (str[i + 1] && str[i + 1] == '?')
 	// 	res = last_exit();
 	// else
-		res = handle_dollar(str, envlist, quote);
+	// if (var_in_quote(str, '\'') == 0)
+	res = handle_dollar(str, envlist);
 	// printf("dolar res = %s", res);
 	// free(str);
 	// if (!res)
@@ -400,17 +407,18 @@ char *quote(char **str, int j, int i, t_list **envlist)
 
 	cleaned = 0;
 	(void)envlist;
-	if (ft_strchr(str[j], '$') != NULL) // && $ est pas dans quotes
+	if (ft_strchr(str[j], '$') != NULL && var_in_quote(str[j], '\'') == 0) // && $ est pas dans quotes
 	{
 		tmp = str[j];
 		// free(str[j]);
-		str[j] = dollar(tmp, i, envlist, 2);
+		str[j] = dollar(tmp, i, envlist);
 		if (str[j] == NULL)
 			return (ft_strdup(""));
 		handle_quote(str, j, 1);
 		// printf("quote%s\n", str[j]);
 		// printf("res av quoyte%s", str[j]);
-		free(tmp);
+		// if (strchrint(str[j], '\"') > 0)
+			free(tmp);
 		// free(res);
 		return (str[j]);
 	}
@@ -444,7 +452,7 @@ char *expand(char **str, int j, t_list **envlist)
 {
     int	i;
 	// int cleaned;
-	// char *tmp;
+	char *tmp;
 	// int flag;
 
 	// flag = 0;
@@ -482,13 +490,13 @@ char *expand(char **str, int j, t_list **envlist)
 	// 	// 		// free(tmp);
 	// 	// 	return (str[j]);
 	// 	// }
-	// 	if (str[j][i] == '$')
-	// 	{
-	// 		tmp = str[j];
-	// 		str[j] = dollar(str[j], i, envlist, cleaned);
-	// 		free(tmp);
-	// 		return (str[j]);
-	// 	}
+		if (ft_strchr(str[j], '$') != NULL)
+		{
+			tmp = str[j];
+			str[j] = dollar(str[j], i, envlist);
+			free(tmp);
+			return (str[j]);
+		}
 	// 	i++;
 	// }
 	return (str[j]);
