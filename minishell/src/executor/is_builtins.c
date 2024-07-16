@@ -61,6 +61,7 @@ int	dup_redir(t_pipe *data, t_redir *temp)
 		if (data->std_in < 0)
 		{
 			write(2, "Permission denied\n", 18);
+			free_pipes(data);
 			return (-1);
 		}
 		dup2(data->std_in, STDIN_FILENO);
@@ -77,6 +78,7 @@ int	dup_redir(t_pipe *data, t_redir *temp)
 		if (data->std_out < 0)
 		{
 			write(2, "Permission denied\n", 18);
+			free_pipes(data);
 			return (-1);
 		}
 		dup2(data->std_out, STDOUT_FILENO);
