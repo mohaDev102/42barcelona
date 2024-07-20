@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 21:08:48 by alounici          #+#    #+#             */
-/*   Updated: 2024/07/10 19:52:30 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/17 20:02:04 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ char	**ft_splitexp(char *s, char c)
 	int		start;
 	int len = ft_count_word(s, c);
 
+	// printf("%d\n", len);
+
 	res = (char **)malloc(sizeof(char *) * (ft_count_word(s, c) + 1));
 	if (res == NULL)
 		return (NULL);
@@ -83,7 +85,7 @@ char	**ft_splitexp(char *s, char c)
 				res[j] = ft_substr(s, i, 1);
 				if (res[j] == NULL)
 					return (ft_free_malloc(res, j));
-				i++;
+				// i++;
 				j++;
 				if (j == len)
 				{
@@ -93,7 +95,8 @@ char	**ft_splitexp(char *s, char c)
 			}
 			i++;
 		}
-		if (i != 0)
+		// if (i > 0 && (ft_strcmp(res[j - 1], "\"") == 0 || ft_strcmp(res[j - 1], "\'") == 0))
+		if (i > 0) // && s[i - 1] == '$')
 			start = i - 1;
 		else
 			start = i;

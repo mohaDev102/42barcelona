@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 20:13:08 by alounici          #+#    #+#             */
-/*   Updated: 2024/07/20 13:21:00 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/07/20 13:56:53 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,6 +151,52 @@ int change_oldpwd(t_list **envlist) {
     free(full_env);
     free(buf);
     return 0;
+	buf = malloc(PATH_MAX + 1);
+	write(1, "ici", 3);
+	if (!buf)
+	{
+	perror("malloc");
+	//exit(EXIT_FAILURE);
+	}
+	getcwd(buf, PATH_MAX);
+	// {
+	// perror("getcwd");
+	// free(buf);
+	// // return (NULL);
+	// //exit(EXIT_FAILURE);
+	// }
+	// printf("buf %s\n", buf);
+	full_env = ft_strjoin("PWD=", buf);
+	if (!full_env)
+	{
+	free(buf);
+	// return (NULL);
+	}
+	ft_export(envlist, full_env);
+	free(full_env);
+	free(buf);
+}
+
+void change_oldpwd(t_list **envlist)
+{
+	char	*buf;
+	char	*full_env;
+	t_list	*tmp;
+
+	tmp = *envlist;
+	buf = NULL;
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->name, "PWD") == 0)
+			buf = ft_strdup(tmp->content);
+		tmp = tmp->next;
+	}
+	if (buf == NULL)
+		return ;
+	full_env = ft_strjoin("OLDPWD=", buf);
+	ft_export(envlist, full_env);
+	free(full_env);
+	free(buf);
 }
 
 void	cd_action(char *cdcmd, t_list **envlist)
@@ -161,7 +207,6 @@ void	cd_action(char *cdcmd, t_list **envlist)
 		return ;
 	}
 	if (chdir(cdcmd) != 0)
-	{
 		perror("chdir");
 		return ;
 		// exit (EXIT_FAILURE);
@@ -172,6 +217,7 @@ void	cd_action(char *cdcmd, t_list **envlist)
 		return ;
 	}
 	// change_pwd(envlist);
+	change_pwd(envlist);
 }
 
 char	*my_getenv(t_list *envlist, char *name, int flag, int ifree)
@@ -179,26 +225,18 @@ char	*my_getenv(t_list *envlist, char *name, int flag, int ifree)
 	char	*content;
 	t_list	*tmp;
 
-	// init_list();
 	tmp = envlist;
 	content = NULL;
-		// printf("name %s\n", name);
 	(void)ifree;
 	if (!name)
 		return (NULL);
 
 	while (tmp != NULL)
 	{
-	// printf("var name%s\n", tmp->name);
-		// da seg fault al poner $$
-// write(1, "ici", 3);
 		if (tmp->name && ft_strcmp(name, tmp->name) == 0)
 		{
-			// printf("ici %s\n%s\n", tmp->content, name);
 			content = ft_strdup(tmp->content);
 			break;
-			// return(content);
-			// printf("conte %s", content);
 		}
 		tmp = tmp->next;
 	}
@@ -237,11 +275,26 @@ char	*clean_content(char *content)
 	return (res);
 }
 
+int all_spacescd(char *cmd)
+{
+	int i;
+
+	i = 0;
+	while (cmd[i])
+	{
+		if (cmd[i] != '\"' && cmd[i] != ' ')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 // cd ~
 void	ft_cd(char *cdcmd, t_list **envlist)
 {
 	char	*envcontent;
 
+	// printf("cmd %s\n", cdcmd);
 	if ((cdcmd == NULL) || ft_strcmp(cdcmd, "~") == 0)
 	{
 		envcontent = my_getenv(*envlist, "HOME", 1, 0);
@@ -250,6 +303,8 @@ void	ft_cd(char *cdcmd, t_list **envlist)
 	}
 	else if (!strcmp(cdcmd, "-"))
 		ft_pwd();
+	else if (all_spacescd(cdcmd) != 0)
+		return ;
 	else
 	{
 		cd_action(cdcmd, envlist);
