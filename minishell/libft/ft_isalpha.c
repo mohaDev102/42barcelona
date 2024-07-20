@@ -6,16 +6,15 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/31 22:14:10 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/31 22:14:13 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/20 20:02:25 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-int     ft_isalpha(int c)
+int	ft_isalpha(int c)
 {
-        if ((c >= 'a' && c <= 'z') || \
-                (c >= 'A' && c <= 'Z'))
-                return (1);
-        return (0);
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z'))
+		return (1);
+	return (0);
 }

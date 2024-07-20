@@ -6,16 +6,15 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 14:14:04 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/02 14:32:59 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/20 20:05:11 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "../inc/minishell.h"
 
-int ft_isspace(int c)
+int	ft_isspace(int c)
 {
-    if (c == ' ' || c == '\t' || c == '\v' || c == '\n')
-        return (0);
-    return (1);
+	if (c == ' ' || c == '\t' || c == '\v' || c == '\n')
+		return (0);
+	return (1);
 }

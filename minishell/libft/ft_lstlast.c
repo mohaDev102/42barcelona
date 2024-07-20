@@ -6,17 +6,11 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 14:28:48 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/25 14:30:22 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/20 20:07:59 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-typedef struct s_list
-{
-	char			*name;
-	char			*content;
-	struct s_list	*next;
-}					t_list;
-
+#include "../../inc/minishell.h"
 
 t_list	*ft_lstlast(t_list *lst)
 {

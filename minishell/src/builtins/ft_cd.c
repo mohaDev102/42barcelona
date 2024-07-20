@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 20:13:08 by alounici          #+#    #+#             */
-/*   Updated: 2024/07/20 13:56:53 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/07/20 14:06:06 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,27 +177,27 @@ int change_oldpwd(t_list **envlist) {
 	free(buf);
 }
 
-void change_oldpwd(t_list **envlist)
-{
-	char	*buf;
-	char	*full_env;
-	t_list	*tmp;
+// void change_oldpwd(t_list **envlist)
+// {
+// 	char	*buf;
+// 	char	*full_env;
+// 	t_list	*tmp;
 
-	tmp = *envlist;
-	buf = NULL;
-	while (tmp)
-	{
-		if (ft_strcmp(tmp->name, "PWD") == 0)
-			buf = ft_strdup(tmp->content);
-		tmp = tmp->next;
-	}
-	if (buf == NULL)
-		return ;
-	full_env = ft_strjoin("OLDPWD=", buf);
-	ft_export(envlist, full_env);
-	free(full_env);
-	free(buf);
-}
+// 	tmp = *envlist;
+// 	buf = NULL;
+// 	while (tmp)
+// 	{
+// 		if (ft_strcmp(tmp->name, "PWD") == 0)
+// 			buf = ft_strdup(tmp->content);
+// 		tmp = tmp->next;
+// 	}
+// 	if (buf == NULL)
+// 		return ;
+// 	full_env = ft_strjoin("OLDPWD=", buf);
+// 	ft_export(envlist, full_env);
+// 	free(full_env);
+// 	free(buf);
+// }
 
 void	cd_action(char *cdcmd, t_list **envlist)
 {
@@ -207,6 +207,7 @@ void	cd_action(char *cdcmd, t_list **envlist)
 		return ;
 	}
 	if (chdir(cdcmd) != 0)
+	{
 		perror("chdir");
 		return ;
 		// exit (EXIT_FAILURE);

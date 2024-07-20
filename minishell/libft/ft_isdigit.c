@@ -6,11 +6,11 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:07:30 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/24 19:07:31 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/20 20:02:44 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
+#include "../inc/minishell.h"
 
 int	ft_isdigit(int c)
 {

@@ -6,10 +6,11 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 19:06:11 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/24 19:06:14 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/20 20:03:06 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../inc/minishell.h"
 #include <stdlib.h>
 #include <stdio.h>
 
