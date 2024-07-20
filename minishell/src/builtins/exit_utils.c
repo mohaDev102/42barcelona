@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 21:11:48 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/23 18:07:25 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/19 23:31:52 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,18 @@ void    check_exit(char *str)
 {
     int i = 0;
 
+    //  printf("str %s\n", str);
     if ((str[i] == '-' || str[i] == '+') && str[i + 1])
         i++;
     while (str[i])
     {
-        if (ft_isdigit(str[i]) == 0)
+        if (ft_isdigit(str[i]) == 0 && str[i] != '\'' && str[i] != '\"')
         {
+    // write(1, "ok\n", 3);
             print_exit_error(str, 0);
             free(str);
-            exit_status(255);
-            exit(255);
+            exit_status(2);
+            exit(2);
         }
         i++;
     }
@@ -82,6 +84,22 @@ void check_limit_many(char *str)
     exit (255);
 }
 
+void    handle_exit(char *str)
+{
+    int num;
+    int ex;
+
+// write(1, "ici", 3);
+    num = ft_atoi(str);
+    num = num % 256;
+    ex = num + 256;
+    // printf("%d\n", ex);
+    if (num < 0)
+        exit(ex);
+    else
+        exit(num);
+}
+
 void check_limit(char *str)
 {
     int neg;
@@ -89,9 +107,10 @@ void check_limit(char *str)
     neg = 0;
     if (*str == '-')
     {
-        str++;
+        // str++;
         neg = 1;
     }
+    // printf("str %s", str);
     if (ft_strlen(str) > 19 && neg)
         print_exit_error(str, 1);
     else if (ft_strlen(str) > 19 && !neg)
@@ -99,9 +118,16 @@ void check_limit(char *str)
     else if (ft_strlen(str) == 19 && ft_strcmp(str, "9223372036854775807") > 0 && !neg)
         print_exit_error(str, neg);
     else if (ft_strlen(str) == 19 && ft_strcmp(str, "9223372036854775808") > 0 && neg)
+    {
+        // write(1, "ici", 3);
         print_exit_error(str, neg);
+    }
     else
-        exit(ft_atoi(str));
+    {
+        // printf("str %s\n", str);
+        handle_exit(str);
+    }
+        // exit(ft_atoi(str));
     exit (255);
 }
 

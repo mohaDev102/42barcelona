@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 15:31:37 by alounici          #+#    #+#             */
-/*   Updated: 2024/07/17 20:16:46 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/19 23:46:49 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -346,6 +346,7 @@ int expandor(t_cmd *cmd, t_list **envlist)
         while (cmd->args && cmd->args[i])
         {
 			expanded = expand(cmd->args, i++, envlist);
+			// printf("exp %s", expanded);
             if (!expanded)
 			{
 				free(cmd->args[i]);

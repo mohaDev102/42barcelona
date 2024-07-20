@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/08 17:45:02 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/06/10 16:43:23 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/17 19:23:14 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,5 +91,6 @@ void	wait_children(t_pipe *info, int *exit)
 	}
 	dup2(info->std_in, STDIN_FILENO);
 	dup2(info->std_out, STDOUT_FILENO);
+	// printf("status %d\n", status);
 	exit_status(status);
 }

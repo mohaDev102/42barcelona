@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/23 18:11:46 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/23 18:12:12 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/19 23:03:45 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void   print_exit_error(char *str, int neg)
 
     i = 0;
     (void)str;
+    (void)neg;
     // write(1, "ici", 3);
     write(2, "exit: ", 6);
     if (neg)
@@ -49,23 +50,9 @@ void   print_exit_error(char *str, int neg)
             i++;
     }
     write(2, ": numeric argument required", 28);
-    free(str);
-                exit(255);
+    // free(str);
+                exit(2);
 }
-
-// void print_limit_exit(char *str)
-// {
-//     int i;
-
-//     i = 0;
-//     (void)str;
-//     write(2, "exit: ", 6);
-//     while(str[i])
-//             write(2, &str[i++], 1);
-//     write(2, ": numeric argument required", 27);
-// }
-
-// char *clean_exit_space(char *str)
 
 void print_limit_exit(char *str)
 {
@@ -81,17 +68,6 @@ void print_limit_exit(char *str)
             write(2, &str[i++], 1);
     write(2, ": numeric argument required", 27);
 }
-// void print_limit_exit(char *str)
-// {
-//     int i;
-
-//     i = 0;
-//     (void)str;
-//     write(2, "exit: ", 6);
-//     while(str[i])
-//             write(2, &str[i++], 1);
-//     write(2, ": numeric argument required", 27);
-// }
 
 char *clean_exit_space(char *str)
 {
@@ -103,21 +79,30 @@ char *clean_exit_space(char *str)
     i = 0;
     j = 0;
     len = 0;
-    while (str[i] && ft_isspace(str[i]))
+    while (str[i])
+    {
+        if (ft_isspace(str[i]) == 0)
+            len++;
         i++;
+    }
     if (i == len)
         return (str);
-    res = malloc(sizeof(char) * ((ft_strlen(str) - 1) + 1));
+    i = 0;
+    res = malloc(sizeof(char) * (len + 1));
      if (res == NULL)
     {
         free(str);
         print_exit_error("Memory allocation failed", 0);
         exit(255);
     }
-    while (str[i] && !ft_isspace(str[i]))
+    while (str[i]) // && !ft_isspace(str[i]))
     {
-        res[j] = str[i];
-        j++;
+        if (!ft_isspace(str[i]))
+        {
+            res[j] = str[i];
+            j++;
+
+        }
         i++;
     }
     res[j] = '\0';
@@ -156,18 +141,42 @@ char *clean_zero(char *str)
     return (res);
 }
 
+int ft_allspaces(char *str)
+{
+    int i;
+
+    i = 0;
+    while (str[i])
+    {
+        if (str[i] != ' ')
+            return (0);
+        i++;
+    }
+    return (1);
+}
+
 void ft_exit(char **args)
 {
 
+        // printf("args %s", args[1]);
     if (args[1] == NULL || ft_strcmp(args[1], "--") == 0)
         exit(0);
     else if (!args[1][0])
     {
+        // write(2, "ic1", 3);
+        // write(2, "exit: : numeric argument required", 33);
+        print_exit_error(args[1], 0);
+        exit (2);
+    }
+    else if (ft_strcmp(args[1], "\"\"") == 0 || ft_allspaces(args[1]) == 1)
+    {
+        // print_exit_error(args[1], 0);
         write(2, "exit: : numeric argument required", 33);
-        exit (255);
+        exit (2);
     }
     else if (args[1] && args[2])
     {
+        // write(2, "ic2", 3);
         args[1] = clean_exit_space(args[1]);
         args[1] = clean_zero(args[1]);
         check_exit_many(args[1]);
@@ -178,9 +187,12 @@ void ft_exit(char **args)
     }
     else if (args[1])
     {
+        // write(2, "ic3", 3);
         args[1] = clean_exit_space(args[1]);
+    // write(1, "ok2\n", 4);
         args[1] = clean_zero(args[1]);
         check_exit(args[1]);
+        // printf("args%s", args[1]);
         check_limit(args[1]);
     }
 }

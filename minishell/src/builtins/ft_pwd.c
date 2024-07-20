@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 15:14:33 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/20 11:32:18 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/07/20 13:41:24 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	ft_pwd(void)
 	if (!buf)
 	{
 		perror("getcwd");
+		free(buf);
+		return ;
 		// exit(EXIT_FAILURE);
 	}
 	if (buf != NULL)
