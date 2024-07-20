@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:37:57 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/07/10 19:55:01 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/13 12:13:00 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	ft_operation(t_lexer **lexer, t_cmd **cmd, char *env[], t_list **envlist)
 	lexer = NULL;
 	cmd = NULL;
 	my_env = NULL;
+	// clear_history(); poner esto??? no se si quita el leak de readline
 	free(line);
 	return (0);
 }

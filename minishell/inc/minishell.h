@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:56:42 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/07/10 19:52:10 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/13 21:41:02 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,8 @@ void				change_quotes(char c, int *quoted, int *quoted2);
 int				receive_signal(int id, int fd);
 void				ft_cd(char *cdcmd, t_list **envlist);
 void				cd_action(char *cdcmd, t_list **envlist);
-void change_pwd(t_list **envlist);
-void 		change_oldpwd(t_list **envlist);
+int change_pwd(t_list **envlist);
+int 		change_oldpwd(t_list **envlist);
 char				*my_getenv(t_list *envlist, char *name, int flag, int ifree);
 char				*clean_content(char *content);
 int					ft_strstr(char **env, char *find_to);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:36:41 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/06/22 22:32:43 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/13 12:20:20 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	ft_error(t_lexer **lexer)
 		write(2, "bash: syntax error near unexpected token |\n", 44);
 	else if (ft_last_lexer(lexer)->type == 2 || ft_last_lexer(lexer)->type == 3
 		|| ft_last_lexer(lexer)->type == 4 || ft_last_lexer(lexer)->type == 5)
-		write(2, "bash: syntax error near unexpected token 'newline'\n", 52);
+		write(2, "bash: syntax error near unexpected token 'newline' \n", 52);
 	exit_status(2);
 }
 

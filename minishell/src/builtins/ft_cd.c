@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 20:13:08 by alounici          #+#    #+#             */
-/*   Updated: 2024/07/09 18:43:30 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/20 13:21:00 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,68 +19,159 @@
 #include <limits.h>
 #include <errno.h>
 
-void change_pwd(t_list **envlist)
-{
-	char *buf;
-	char *full_env;
+// void change_pwd(t_list **envlist)
+// {
+// 	char *buf;
+// 	char *full_env;
 
-	buf = malloc(PATH_MAX + 1);
-	if (!buf)
-	{
-	perror("malloc");
-	//exit(EXIT_FAILURE);
-	}
-	if (!getcwd(buf, PATH_MAX))
-	{
-	perror("getcwd");
-	free(buf);
-	// return (NULL);
-	//exit(EXIT_FAILURE);
-	}
-	full_env = ft_strjoin("PWD=", buf);
-	if (!full_env)
-	{
-	free(buf);
-	// return (NULL);
-	}
-	ft_export(envlist, full_env);
-	free(full_env);
-	free(buf);
-	// return (buf);
+// 	buf = malloc(PATH_MAX + 1);
+// 	if (!buf)
+// 	{
+// 	perror("malloc");
+// 	//exit(EXIT_FAILURE);
+// 	}
+// 	if (!getcwd(buf, PATH_MAX))
+// 	{
+// 	perror("getcwd");
+// 	// free(buf);
+// 	// return (NULL);
+// 	//exit(EXIT_FAILURE);
+// 	}
+// 	full_env = ft_strjoin("PWD=", buf);
+// 	if (!full_env)
+// 	{
+// 	free(buf);
+// 	// return (NULL);
+// 	}
+// 	ft_export(envlist, full_env);
+// 	free(full_env);
+// 	free(buf);
+// 	// return (buf);
+// }
+
+// void change_oldpwd(t_list **envlist)
+// {
+// 	char	*buf;
+// 	char	*full_env;
+
+// 	buf = malloc(PATH_MAX + 1);
+// 	if (!buf)
+// 	{
+// 		perror("malloc");
+// 		//exit(EXIT_FAILURE);
+// 	}
+// 	if (!getcwd(buf, PATH_MAX))
+// 	{
+// 		perror("getcwd");
+// 		free(buf);
+// 		//exit(EXIT_FAILURE);
+// 	}
+// 	full_env = ft_strjoin("OLDPWD=", buf);
+// 	ft_export(envlist, full_env);
+// 	free(full_env);
+// 	// free(buf);
+// }
+
+int change_pwd(t_list **envlist) {
+    char *buf = malloc(PATH_MAX + 1);
+    if (!buf) {
+        perror("malloc");
+        return -1;
+    }
+
+    if (!getcwd(buf, PATH_MAX)) {
+        perror("getcwd");
+        free(buf);
+        return -1;
+    }
+
+    char *full_env = ft_strjoin("PWD=", buf);
+    if (!full_env) {
+        free(buf);
+        return -1;
+    }
+
+    ft_export(envlist, full_env);
+    free(full_env);
+    free(buf);
+    return 0;
 }
 
-void change_oldpwd(t_list **envlist)
-{
-	char	*buf;
-	char	*full_env;
 
-	buf = malloc(PATH_MAX + 1);
-	if (!buf)
-	{
-		perror("malloc");
-		//exit(EXIT_FAILURE);
-	}
-	if (!getcwd(buf, PATH_MAX))
-	{
-		perror("getcwd");
-		free(buf);
-		//exit(EXIT_FAILURE);
-	}
-	full_env = ft_strjoin("OLDPWD=", buf);
-	ft_export(envlist, full_env);
-	free(full_env);
-	free(buf);
+// int change_oldpwd(t_list **envlist)
+// {
+//     char    *buf;
+//     char    *full_env;
+//     t_list  *tmp;
+
+//     tmp = *envlist;
+//     while (tmp)
+//     {
+//         if (ft_strcmp(tmp->name, "PWD") == 0)
+//             buf = ft_strdup(tmp->content);
+//         tmp = tmp->next;
+//     }
+// 	if (!buf)
+// 	{
+// 		perror("malloc");
+// 		return (-1);
+// 	}
+
+//     full_env = ft_strjoin("OLDPWD=", buf);
+// 	if (!full_env)
+// 	{
+// 		free(buf);
+// 		return (-1);
+// 	}
+//     ft_export(envlist, full_env);
+//     free(full_env);
+//     free(buf);
+// 	return (0);
+// }
+
+int change_oldpwd(t_list **envlist) {
+    char *buf = malloc(PATH_MAX + 1); 
+    if (!buf) {
+        perror("malloc");
+        return -1;
+    }
+    if (!getcwd(buf, PATH_MAX)) {
+        perror("getcwd");
+        free(buf);
+        return -1;
+    }
+
+    char *full_env = ft_strjoin("OLDPWD=", buf);
+    if (!full_env) {
+        free(buf);
+        return -1;
+    }
+
+    ft_export(envlist, full_env);
+    free(full_env);
+    free(buf);
+    return 0;
 }
 
 void	cd_action(char *cdcmd, t_list **envlist)
 {
-	change_oldpwd(envlist);
+	if (change_oldpwd(envlist) == -1)
+	{
+		write(2, "Errorss\n", 8);
+		return ;
+	}
 	if (chdir(cdcmd) != 0)
 	{
 		perror("chdir");
+		return ;
 		// exit (EXIT_FAILURE);
 	}
-	change_pwd(envlist);
+	if (change_pwd(envlist) == -1)
+	{
+		write(2, "Errorss\n", 8);
+		return ;
+	}
+	// change_pwd(envlist);
 }
 
 char	*my_getenv(t_list *envlist, char *name, int flag, int ifree)
@@ -155,6 +246,7 @@ void	ft_cd(char *cdcmd, t_list **envlist)
 	{
 		envcontent = my_getenv(*envlist, "HOME", 1, 0);
 		cd_action(envcontent, envlist);
+		free(envcontent);
 	}
 	else if (!strcmp(cdcmd, "-"))
 		ft_pwd();

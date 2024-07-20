@@ -6,7 +6,7 @@
 /*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:52:50 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/06/08 17:48:01 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/07/13 12:24:55 by mel-atta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ int	check_error(t_lexer *lexer)
 			(lexer->type == GREAT && lexer->next->type == LESS) || \
 			(lexer->type == PIPE && lexer->next->type == PIPE))
 		{
-			write(2, "bash: syntax error near \
-				unexpected token 'newline'\n", 52);
+			write(2, "bash: syntax error near ", 24);
+			write(2, "unexpected token 'newline' \n", 28);
 			return (-1);
 		}
 		lexer = lexer->next;
