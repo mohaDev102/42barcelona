@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:56:42 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/07/21 13:18:02 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/21 13:48:40 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,14 +200,14 @@ void				empty_exit(char *res, char *str);
 void				exit_malloc(char *str);
 int					copy_res(char *str, char **res, int j);
 void				set_value_exit(int *i, int *j, int *len);
-void    			exit_many(char **args);
+void				exit_many(char **args);
 char				*clean_zero(char *str);
 void				write_content(char *content);
-void				add_env_node(t_list **envlist, t_list *new_node, t_list **lst);
+void				add_env_node(t_list **envlist, t_list *new_node,
+						t_list **lst);
 int					all_spacescd(char *cmd);
 int					manage_redir(t_cmd *cmd, t_pipe *data);
 int					echo_flag(char **args, int i);
-
 int					ft_count_lexer(t_lexer *lexer);
 t_cmd				*init_parser(void);
 void				ft_add_cmd_back(t_cmd **command, t_cmd *new);
