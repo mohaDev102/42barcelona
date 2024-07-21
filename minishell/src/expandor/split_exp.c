@@ -6,13 +6,13 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/27 21:08:48 by alounici          #+#    #+#             */
-/*   Updated: 2024/07/20 20:00:22 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/21 13:15:26 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	ft_count_word(char const *s, char c)
+int	ft_count_word_exp(char const *s, char c)
 {
 	int	i;
 	int	cont;
@@ -43,12 +43,18 @@ int	ft_count_word(char const *s, char c)
 
 int	splitexp3(char *s, char **res, int *i, int *j)
 {
-	while (s[*i] && is_separator(s[*i], '$'))
+	int	k;
+
+	k = *i;
+	while (s[*i] && is_separator(s[*i], '$') && res[*j])
 	{
 		if (s[*i] == '\'' || s[*i] == '\"')
+		{
 			if (splitexp2(s, res, i, j) == 1)
 				return (0);
-		(*i)++;
+		}
+		k++;
+		*i = k;
 	}
 	return (1);
 }

@@ -6,14 +6,14 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 11:17:04 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/05/17 22:14:52 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/20 20:32:30 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 #include <stdio.h>
 
-static int	ft_count_word(char const *s, char c)
+int	ft_count_word(char const *s, char c)
 {
 	int	i;
 	int	cont;
@@ -38,7 +38,7 @@ static int	ft_count_word(char const *s, char c)
 	return (cont);
 }
 
-static char	**ft_free_malloc(char **str, size_t j)
+char	**ft_free_malloc(char **str, size_t j)
 {
 	size_t	i;
 

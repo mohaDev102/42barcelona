@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 16:37:30 by alounici          #+#    #+#             */
-/*   Updated: 2024/07/20 17:18:56 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/21 11:45:23 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,25 @@
 
 int	quote_found(char **str, int j, int i)
 {
-	int cleaned;
+	int	cleaned;
 
-		if (str[j][i] == '\'')
-		{
-			handle_quote(str, j);
-			cleaned = 1;
-		}
-		else if (str[j][i] == '\"')
-		{
-			handle_quote(str, j);
-			cleaned = 2;
-		}
+	if (str[j][i] == '\'')
+	{
+		handle_quote(str, j);
+		cleaned = 1;
+	}
+	else if (str[j][i] == '\"')
+	{
+		handle_quote(str, j);
+		cleaned = 2;
+	}
 	return (cleaned);
 }
 
-char *quote(char **str, int j, int i, t_list **envlist)
+char	*quote(char **str, int j, int i, t_list **envlist)
 {
-	int cleaned;
-	char *tmp;
+	int		cleaned;
+	char	*tmp;
 
 	cleaned = 0;
 	if (ft_strchr(str[j], '$') != NULL && var_in_quote(str[j], '\'') == 0)
@@ -51,15 +51,14 @@ char *quote(char **str, int j, int i, t_list **envlist)
 		if (cleaned == 0 || str[j] == NULL)
 			return (NULL);
 		return (str[j]);
-		
 	}
 	return (NULL);
 }
 
-int var_in_quote(char *str, char quote)
+int	var_in_quote(char *str, char quote)
 {
-	int i;
-	int in_quote;
+	int	i;
+	int	in_quote;
 
 	quote = '\'';
 	in_quote = 0;
@@ -71,27 +70,27 @@ int var_in_quote(char *str, char quote)
 		else if (str[i] == quote && in_quote == 1)
 			in_quote = 0;
 		if (str[i] == '$' && in_quote == 1)
-			return(1);
+			return (1);
 		i++;
 	}
 	return (0);
 }
 
-int quote_clean2(int flag, int *next, int l)
+int	quote_clean2(int flag, int *next, int l)
 {
 	flag++;
 	*next = l;
 	return (flag);
 }
 
-int quote_clean(char **str, int j, char *substr, int i)
+int	quote_clean(char **str, int j, char *substr, int i)
 {
-	int l;
-	int k;
-	int next;
-	char c;
-	int flag;
-	
+	int		l;
+	int		k;
+	int		next;
+	char	c;
+	int		flag;
+
 	c = str[j][i];
 	value_set(&flag, &l, &k);
 	if (ft_strlen(str[j]) == (unsigned int)i)
@@ -99,7 +98,7 @@ int quote_clean(char **str, int j, char *substr, int i)
 	while (l < i)
 		substr[k++] = str[j][l++];
 	l++;
-	while (str[j][l]) 
+	while (str[j][l])
 	{
 		if (str[j][l] == c && (flag == 0))
 			flag = quote_clean2(flag, &next, l);

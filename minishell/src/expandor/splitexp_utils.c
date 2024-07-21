@@ -6,25 +6,11 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 19:24:30 by alounici          #+#    #+#             */
-/*   Updated: 2024/07/20 20:00:34 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/21 13:14:49 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-char	**ft_free_malloc(char **str, size_t j)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < j)
-	{
-		free(str[i]);
-		i++;
-	}
-	free(str);
-	return (NULL);
-}
 
 int	is_separator(char c, char sep)
 {
@@ -33,7 +19,7 @@ int	is_separator(char c, char sep)
 
 char	**set_value_split(char **res, int *i, int *j, char *s)
 {
-	res = (char **)malloc(sizeof(char *) * (ft_count_word(s, '$') + 1));
+	res = (char **)malloc(sizeof(char *) * (ft_count_word_exp(s, '$') + 1));
 	if (res == NULL)
 		return (NULL);
 	*i = 0;
@@ -51,9 +37,9 @@ void	set_start(int *i, int *start)
 
 int	splitexp2(char *s, char **res, int *i, int *j)
 {
-	int len;
+	int	len;
 
-	len = ft_count_word(s, '$');
+	len = ft_count_word_exp(s, '$');
 	res[*j] = ft_substr(s, *i, 1);
 	if (res[*j] == NULL)
 	{

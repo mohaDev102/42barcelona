@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 19:02:15 by alounici          #+#    #+#             */
-/*   Updated: 2024/05/21 19:02:46 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/21 11:34:49 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,17 @@ char	*add_env_content(char **env, int i, int j)
 	aux[k] = '\0';
 	k = 0;
 	return (aux);
+}
+
+void	add_env_node(t_list **envlist, t_list *new_node, t_list **lst)
+{
+	if (!*envlist)
+		*envlist = new_node;
+	else
+	{
+		*lst = *envlist;
+		while ((*lst)->next)
+			*lst = (*lst)->next;
+		(*lst)->next = new_node;
+	}
 }

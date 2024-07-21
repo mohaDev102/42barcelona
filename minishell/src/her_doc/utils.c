@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 12:43:05 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/06/01 16:59:25 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/21 11:44:53 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	infile_herdoc(t_redir *aux, int fd)
 			else
 			{
 				write(2, "Permission denied\n", 19);
-				// exit_status(1);
 				exit(1);
 			}
 		}

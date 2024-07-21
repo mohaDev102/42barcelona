@@ -6,35 +6,34 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 22:22:46 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/08 01:35:40 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/21 11:35:12 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 #include "../../inc/minishell.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-void free_envlist(t_list *envlist)
+void	free_envlist(t_list *envlist)
 {
-    t_list *tmp;
+	t_list	*tmp;
 
-    while (envlist)
-    {
-        tmp = envlist->next;
+	while (envlist)
+	{
+		tmp = envlist->next;
 		free(envlist->name);
-        free(envlist->content);
-        free(envlist);
-        envlist = tmp;
-    }
+		free(envlist->content);
+		free(envlist);
+		envlist = tmp;
+	}
 }
 
 void	generate_env_list(char **env, t_list **envlist)
 {
 	int		i;
-	// int		j;
 	t_list	*lst;
-	t_list *new_node;
+	t_list	*new_node;
 
 	i = 0;
 	if (!envlist)
@@ -46,48 +45,33 @@ void	generate_env_list(char **env, t_list **envlist)
 		if (!new_node)
 			return ;
 		new_node->name = ft_substr(env[i], 0, ft_strchr(env[i], '=') - env[i]);
-		new_node->content = ft_substr(env[i], ft_strchr(env[i], '=') - env[i] + 1, ft_strlen(env[i]));
-		// new_node->content = getenv(new_node->name);
+		new_node->content = ft_substr(env[i], ft_strchr(env[i], '=') - env[i]
+				+ 1, ft_strlen(env[i]));
 		if (!new_node->content)
 		{
 			free(new_node->name);
 			free(new_node);
 		}
 		new_node->next = NULL;
-		if (!*envlist)
-		{
-			*envlist = new_node;
-		}
-		else
-		{
-			lst = *envlist;
-			while (lst->next)
-				lst = lst->next;
-			lst->next = new_node;
-		}
+		add_env_node(envlist, new_node, &lst);
 		i++;
 	}
 }
 
 t_list	*ft_list(char **env)
 {
-	// int		i;
 	t_list	*envlist;
-	
+
 	envlist = NULL;
-	// i = 0;
-	// envlist = init_list();
-	// if (!envlist)
-	// 	return (NULL);
 	generate_env_list(env, &envlist);
-	return (envlist); 
+	return (envlist);
 }
 
-char **copy_env(char **env)
+char	**copy_env(char **env)
 {
-	int len;
-	int i;
-	char **my_env;
+	int		len;
+	int		i;
+	char	**my_env;
 
 	len = 0;
 	i = 0;
@@ -107,11 +91,13 @@ char **copy_env(char **env)
 	return (my_env);
 }
 
-void free_env(char **env)
+void	free_env(char **env)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	if (!env)
-		return;
+		return ;
 	while (env[i])
 	{
 		free(env[i]);
@@ -119,14 +105,3 @@ void free_env(char **env)
 	}
 	free(env);
 }
-
-// int main(int argc, char **argv, char **env)
-// {
-// 	t_list *envlist;
-
-// 	envlist = ft_list(env);
-// 	// ft_export_alone(&envlist);
-// 	// ft_cd(NULL, &envlist);
-// 	// ft_pwd();
-	
-// }

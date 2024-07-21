@@ -6,140 +6,112 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 21:11:48 by alounici          #+#    #+#             */
-/*   Updated: 2024/07/19 23:31:52 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/20 20:56:03 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void    check_exit(char *str)
+void	check_exit(char *str)
 {
-    int i = 0;
+	int	i;
 
-    //  printf("str %s\n", str);
-    if ((str[i] == '-' || str[i] == '+') && str[i + 1])
-        i++;
-    while (str[i])
-    {
-        if (ft_isdigit(str[i]) == 0 && str[i] != '\'' && str[i] != '\"')
-        {
-    // write(1, "ok\n", 3);
-            print_exit_error(str, 0);
-            free(str);
-            exit_status(2);
-            exit(2);
-        }
-        i++;
-    }
-}
-void    check_exit_many(char *str)
-{
-    int i = 0;
-
-        if ((str[i] == '-' || str[i] == '+') && str[i + 1])
-            i++;
-    while (str[i])
-    {
-        if (ft_isdigit(str[i]) == 0)
-        {
-            // write(1, "dans check", 10);
-            print_exit_error(str, 0);
-            // print_exit_error(str);
-            i = 0;
-            // while(str[i] != NULL)
-            // {
-            //     free(str[i]);
-            //     i++;
-            // }
-            free(str);
-            str = NULL;
-            exit_status(255);
-            exit(255);
-        }
-        i++;
-    }
+	i = 0;
+	if ((str[i] == '-' || str[i] == '+') && str[i + 1])
+		i++;
+	while (str[i])
+	{
+		if (ft_isdigit(str[i]) == 0 && str[i] != '\'' && str[i] != '\"')
+		{
+			print_exit_error(str, 0);
+			free(str);
+			exit_status(2);
+			exit(2);
+		}
+		i++;
+	}
 }
 
-void check_limit_many(char *str)
+void	check_exit_many(char *str)
 {
-    int neg;
+	int	i;
 
-    neg = 0;
-    if (*str == '-')
-    {
-        str++;
-        neg = 1;
-    }
-    if (ft_strlen(str) > 19 && neg)
-        print_exit_error(str, 1);
-    else if (ft_strlen(str) > 19 && !neg)
-        print_exit_error(str, 0);
-    else if (ft_strlen(str) == 19 && ft_strcmp(str, "9223372036854775807") > 0 && !neg)
-        print_exit_error(str, neg);
-    else if (ft_strlen(str) == 19 && ft_strcmp(str, "9223372036854775808") > 0 && neg)
-        print_exit_error(str, neg);
-    else
-        return ;
-    free(str);
-    exit (255);
+	i = 0;
+	if ((str[i] == '-' || str[i] == '+') && str[i + 1])
+		i++;
+	while (str[i])
+	{
+		if (ft_isdigit(str[i]) == 0)
+		{
+			print_exit_error(str, 0);
+			i = 0;
+			free(str);
+			str = NULL;
+			exit_status(255);
+			exit(255);
+		}
+		i++;
+	}
 }
 
-void    handle_exit(char *str)
+void	check_limit_many(char *str)
 {
-    int num;
-    int ex;
+	int	neg;
 
-// write(1, "ici", 3);
-    num = ft_atoi(str);
-    num = num % 256;
-    ex = num + 256;
-    // printf("%d\n", ex);
-    if (num < 0)
-        exit(ex);
-    else
-        exit(num);
+	neg = 0;
+	if (*str == '-')
+	{
+		str++;
+		neg = 1;
+	}
+	if (ft_strlen(str) > 19 && neg)
+		print_exit_error(str, 1);
+	else if (ft_strlen(str) > 19 && !neg)
+		print_exit_error(str, 0);
+	else if (ft_strlen(str) == 19 && ft_strcmp(str, "9223372036854775807") > 0
+		&& !neg)
+		print_exit_error(str, neg);
+	else if (ft_strlen(str) == 19 && ft_strcmp(str, "9223372036854775808") > 0
+		&& neg)
+		print_exit_error(str, neg);
+	else
+		return ;
+	free(str);
+	exit(255);
 }
 
-void check_limit(char *str)
+void	handle_exit(char *str)
 {
-    int neg;
+	int	num;
+	int	ex;
 
-    neg = 0;
-    if (*str == '-')
-    {
-        // str++;
-        neg = 1;
-    }
-    // printf("str %s", str);
-    if (ft_strlen(str) > 19 && neg)
-        print_exit_error(str, 1);
-    else if (ft_strlen(str) > 19 && !neg)
-        print_exit_error(str, 0);
-    else if (ft_strlen(str) == 19 && ft_strcmp(str, "9223372036854775807") > 0 && !neg)
-        print_exit_error(str, neg);
-    else if (ft_strlen(str) == 19 && ft_strcmp(str, "9223372036854775808") > 0 && neg)
-    {
-        // write(1, "ici", 3);
-        print_exit_error(str, neg);
-    }
-    else
-    {
-        // printf("str %s\n", str);
-        handle_exit(str);
-    }
-        // exit(ft_atoi(str));
-    exit (255);
+	num = ft_atoi(str);
+	num = num % 256;
+	ex = num + 256;
+	if (num < 0)
+		exit(ex);
+	else
+		exit(num);
 }
 
-// void free_args(char **args)
-// {
-//     int i;
+void	check_limit(char *str)
+{
+	int	neg;
 
-//     i = 0;
-//     while(args[i])
-//     {
-//         free(args[i]);
-//         i++;
-//     }
-//     free(args);
-// }
+	neg = 0;
+	if (*str == '-')
+		neg = 1;
+	if (ft_strlen(str) > 19 && neg)
+		print_exit_error(str, 1);
+	else if (ft_strlen(str) > 19 && !neg)
+		print_exit_error(str, 0);
+	else if (ft_strlen(str) == 19 && ft_strcmp(str, "9223372036854775807") > 0
+		&& !neg)
+		print_exit_error(str, neg);
+	else if (ft_strlen(str) == 19 && ft_strcmp(str, "9223372036854775808") > 0
+		&& neg)
+		print_exit_error(str, neg);
+	else
+		handle_exit(str);
+	exit(255);
+}

@@ -6,23 +6,23 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 19:47:10 by alounici          #+#    #+#             */
-/*   Updated: 2024/07/20 19:50:18 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/21 11:52:35 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void 	handle_quote(char **str, int j)
+void	handle_quote(char **str, int j)
 {
-	int i;
-	int k;
+	int	i;
+	int	k;
 
 	set_value(&i, &k);
 	if (closed_quote(str[j]) == 0)
-    {
+	{
 		free(str[j]);
-    	str[j] = ft_strdup("");
-    }
+		str[j] = ft_strdup("");
+	}
 	else
 	{
 		while (str[j][i])
@@ -37,7 +37,6 @@ void 	handle_quote(char **str, int j)
 			else
 				i++;
 		}
-
 	}
 }
 

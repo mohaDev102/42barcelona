@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 20:43:16 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/19 19:34:46 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/21 11:35:31 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ char	*extract_env_name(char *str)
 	j = 0;
 	while (str[i] && str[i] != '=')
 	{
-		if ((i == 0 && ft_isdigit(str[i]) != 0) || (ft_isalpha(str[i]) == 0 \
-		&& ft_isdigit(str[i]) == 0 && str[i] != '_'))
+		if ((i == 0 && ft_isdigit(str[i]) != 0) || (ft_isalpha(str[i]) == 0
+				&& ft_isdigit(str[i]) == 0 && str[i] != '_'))
 			return (NULL);
 		if (str[i] == '$')
 			return (NULL);
@@ -63,15 +63,11 @@ char	*extract_env_content(char *str)
 	return (res);
 }
 
-
-
 void	ft_add_node(char *name, char *content, t_list **envlist)
 {
 	t_list	*tmp;
-	t_list *last;
+	t_list	*last;
 
-	(void)name;
-	(void)content;
 	tmp = *envlist;
 	tmp = ft_lstlast(tmp);
 	last = malloc(sizeof(t_list));
@@ -87,12 +83,26 @@ int	check_format(char *str)
 	int	i;
 
 	i = 0;
-	while(str[i])
+	while (str[i])
 	{
 		if (str[i] == '=')
-			return(1);
+			return (1);
 		i++;
 	}
 	return (0);
 }
 
+void	write_content(char *content)
+{
+	int	i;
+
+	i = 0;
+	write(1, "=\"", 2);
+	while (content[i])
+	{
+		if (content[i] == '=')
+			i++;
+		write(1, &content[i], 1);
+		i++;
+	}
+}

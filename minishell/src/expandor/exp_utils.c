@@ -6,46 +6,46 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/20 16:59:49 by alounici          #+#    #+#             */
-/*   Updated: 2024/07/20 19:49:18 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/21 11:55:25 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int strchrint(char *str, char c)
+int	strchrint(char *str, char c)
 {
-    unsigned int i;
+	unsigned int	i;
 
-    i = 0;
-    while (str[i])
-    {
-        if (str[i] == c)
-            return (i);
-        i++;
-    }
-    return (-1);
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == c)
+			return (i);
+		i++;
+	}
+	return (-1);
 }
 
-char *extract_var_name(char *str, int i)
+char	*extract_var_name(char *str, int i)
 {
-	int j;
-	int k;
-    char *var;
+	int		j;
+	int		k;
+	char	*var;
 
-    j = i;
-    k = 0;
-    if (str[i] == '$')
-        j++;
-    while (str[i] && (ft_isalpha(str[i + 1]) || ft_isdigit(str[i + 1])) \
-    && str[i + 1] != '$' && str[i + 1] != '\"' && str[i + 1] != '\'')
-        i++;
-    var = malloc(sizeof(char) * (i - j + 2));
-    if (var == NULL)
-        return(NULL);
-    while (j <= i)
-            var[k++] = str[j++];
-    var[k] = '\0';
-    return (var);
+	j = i;
+	k = 0;
+	if (str[i] == '$')
+		j++;
+	while (str[i] && (ft_isalpha(str[i + 1]) || ft_isdigit(str[i + 1])) && \
+		str[i + 1] != '$' && str[i + 1] != '\"' && str[i + 1] != '\'')
+		i++;
+	var = malloc(sizeof(char) * (i - j + 2));
+	if (var == NULL)
+		return (NULL);
+	while (j <= i)
+		var[k++] = str[j++];
+	var[k] = '\0';
+	return (var);
 }
 
 char	*ft_strjoinexp(char *s1, char *s2)
@@ -76,11 +76,12 @@ char	*ft_strjoinexp(char *s1, char *s2)
 	return (res);
 }
 
-char *last_exit()
+char	*last_exit(void)
 {
-    char *res;
-    res = ft_itoa(exit_status(0));
-    return (res);
+	char	*res;
+
+	res = ft_itoa(exit_status(0));
+	return (res);
 }
 
 // int	exit_status(int value)

@@ -6,31 +6,26 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/04 22:28:48 by alounici          #+#    #+#             */
-/*   Updated: 2024/06/07 20:23:38 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/20 20:52:48 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "../../inc/minishell.h"
-
-//flag 1 = -n
+#include <stdio.h>
 
 void	print_env(char *echocmd, t_list *envlist)
 {
 	t_list	*tmp;
 	int		j;
-	// int		flag;
 
 	j = 0;
-	// flag = 0;
 	tmp = envlist;
 	while (tmp->next)
 	{
 		if (ft_strcmp(tmp->name, echocmd) == 0 && tmp)
 		{
 			j = 1;
-			// flag = 1;
-			while(tmp->content[j])
+			while (tmp->content[j])
 				write(1, &tmp->content[j++], 1);
 			return ;
 		}
@@ -38,12 +33,6 @@ void	print_env(char *echocmd, t_list *envlist)
 			tmp = tmp->next;
 	}
 	j = 0;
-	// if (flag == 0)
-	// {
-	// 	write(1, "$", 1);
-	// 	while (echocmd[j])
-	// 		write(1, &echocmd[j++], 1);
-	// }
 }
 
 void	ft_putchar(char c)
@@ -65,17 +54,14 @@ void	ft_putnbr(int nb)
 
 void	ft_echo(char *echocmd, int flag, t_list *envlist)
 {
-	int		i;
-	// int j = 0;
-	// char *envname;
+	int	i;
+
 	(void)envlist;
 	i = 0;
-	// ft_putnbr(flag);
 	if (echocmd == NULL)
 	{
 		if (flag == 1)
 			write(1, "\n", 1);
-		// write(1, "ici", 3);
 		return ;
 	}
 	else
@@ -86,14 +72,4 @@ void	ft_echo(char *echocmd, int flag, t_list *envlist)
 			i++;
 		}
 	}
-	// if (echocmd == NULL || echocmd[0] == '\0')// && flag == 1)
-	// {
-		// if (flag == 1)
-		// // {
-		// 		write(1, "\n", 1);
-		// 		write(1, "fin", 3);
-		// }
-		// return ;
-	// }
 }
- 

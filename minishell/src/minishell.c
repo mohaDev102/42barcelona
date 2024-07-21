@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:37:57 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/07/20 13:56:08 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/07/21 13:27:42 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+void	set_null(t_lexer **lexer, t_cmd **cmd, char **my_env)
+{
+	(void)cmd;
+	(void)my_env;
+	(void)lexer;
+	lexer = NULL;
+	cmd = NULL;
+	my_env = NULL;
+}
 
 int	ft_operation(t_lexer **lexer, t_cmd **cmd, char *env[], t_list **envlist)
 {
@@ -35,19 +45,16 @@ int	ft_operation(t_lexer **lexer, t_cmd **cmd, char *env[], t_list **envlist)
 	}
 	lexer_clear(cmd, lexer);
 	free_env(my_env);
-	lexer = NULL;
-	cmd = NULL;
-	my_env = NULL;
-	// clear_history(); poner esto??? no se si quita el leak de readline
+	set_null(lexer, cmd, my_env);
 	free(line);
 	return (0);
 }
 
 int	main(int argc, char *argv[], char *env[])
 {
-	t_lexer *lexer;
-	t_cmd *cmd;
-	t_list *envlist;
+	t_lexer	*lexer;
+	t_cmd	*cmd;
+	t_list	*envlist;
 
 	lexer = NULL;
 	cmd = NULL;

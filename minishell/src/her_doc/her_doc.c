@@ -6,14 +6,14 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 11:58:34 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/06/29 02:40:40 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/21 13:18:53 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-#include <termios.h>
 #include <signal.h>
 #include <stdio.h>
+#include <termios.h>
 
 void	ft_putstr_fd(char *s, int fd)
 {
@@ -23,9 +23,9 @@ void	ft_putstr_fd(char *s, int fd)
 	write(fd, s++, len);
 }
 
-void handle_sigint_heredoc(int sig)
+void	handle_sigint_heredoc(int sig)
 {
-    struct termios  term_attr;
+	struct termios	term_attr;
 
 	if (sig == SIGINT)
 	{
@@ -41,42 +41,41 @@ void handle_sigint_heredoc(int sig)
 	}
 }
 
-void    create_herdoc(char *limiter, char *path)
+void	create_herdoc(char *limiter, char *path)
 {
-    int     fd;
-    char    *str;
+	int		fd;
+	char	*str;
 	char	*temp;
 
-    signal(SIGINT, handle_sigint_heredoc);
-    fd = open(path, O_CREAT | O_WRONLY | O_TRUNC, 0666);
-    if (fd < 0)
-        return ;
-    str = readline(" ");
-    while (str && ft_strcmp(limiter, str) != 0)
-    {
-        temp = ft_strjoin(str, "\n");
-        ft_putstr_fd(temp, fd);
-        free(temp);
+	signal(SIGINT, handle_sigint_heredoc);
+	fd = open(path, O_CREAT | O_WRONLY | O_TRUNC, 0666);
+	if (fd < 0)
+		return ;
+	str = readline(" ");
+	while (str && ft_strcmp(limiter, str) != 0)
+	{
+		temp = ft_strjoin(str, "\n");
+		ft_putstr_fd(temp, fd);
+		free(temp);
 		free(str);
-        str = readline(" ");
-    }
-    close(fd);
-    free(str);
-    exit(0);
+		str = readline(" ");
+	}
+	close(fd);
+	free(str);
+	exit(0);
 }
 
-void    do_herdoc(t_redir *tmp, int i)
+void	do_herdoc(t_redir *tmp, int i)
 {
-    char    *num;
-    char    *path;
-    pid_t   pid;
-	int status;
+	char	*num;
+	char	*path;
+	pid_t	pid;
+	int		status;
 
-	status = 0;
-    num = ft_itoa(i);
-    path = ft_strjoin("minishell", num);
-    pid = fork();
-    free(num);
+	num = ft_itoa(i);
+	path = ft_strjoin("minishell", num);
+	pid = fork();
+	free(num);
 	if (pid == 0)
 		create_herdoc(tmp->file, path);
 	waitpid(pid, &status, 0);
@@ -92,7 +91,7 @@ void    do_herdoc(t_redir *tmp, int i)
 	free(tmp->file);
 	tmp->file = ft_strdup(path);
 	exit_status(status);
-    free(path);
+	free(path);
 }
 
 void	her_doc(t_cmd *cmd)

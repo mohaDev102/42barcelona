@@ -6,7 +6,7 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:56:42 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/07/20 20:17:45 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/21 13:18:02 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 # ifndef READLINE_LIBRARY
 #  define READLINE_LIBRARY
 # endif
-# include "../readline/history.h"
+# include <stdio.h>
 # include "../readline/readline.h"
+# include "../readline/history.h"
 # include <fcntl.h>
 # include <limits.h>
 # include <setjmp.h>
 # include <stddef.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <sys/types.h>
 # include <sys/wait.h>
@@ -88,12 +88,12 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
-typedef struct s_list
-{
-	char			*name;
-	char			*content;
-	struct s_list	*next;
-}					t_list;
+// typedef struct s_list
+// {
+// 	char			*name;
+// 	char			*content;
+// 	struct s_list	*next;
+// }					t_list;
 
 int					ft_isalpha(int c);
 int					ft_isprint(int c);
@@ -131,8 +131,7 @@ void				ft_cd(char *cdcmd, t_list **envlist);
 void				cd_action(char *cdcmd, t_list **envlist);
 int					change_pwd(t_list **envlist);
 int					change_oldpwd(t_list **envlist);
-char				*my_getenv(t_list *envlist, char *name, int flag,
-						int ifree);
+char				*my_getenv(t_list *envlist, char *name, int flag);
 char				*clean_content(char *content);
 char				*ft_strjoin(char const *s1, char const *s2);
 void				ft_export(t_list **envlist, char *str);
@@ -189,7 +188,7 @@ char				*handle_dollar3(char *res, char *auxbis);
 char				*handle_dollar2(char *splited, t_list **envlist,
 						char *auxbis);
 void				handle_quote(char **str, int j);
-int					ft_count_word(char const *s, char c);
+int					ft_count_word_exp(char const *s, char c);
 int					is_separator(char c, char sep);
 int					splitexp2(char *s, char **res, int *i, int *j);
 char				**set_value_split(char **res, int *i, int *j, char *s);
@@ -197,6 +196,17 @@ void				set_start(int *i, int *start);
 char				**ft_free_malloc(char **str, size_t j);
 int					exit_status(int value);
 void				set_value(int *i, int *k);
+void				empty_exit(char *res, char *str);
+void				exit_malloc(char *str);
+int					copy_res(char *str, char **res, int j);
+void				set_value_exit(int *i, int *j, int *len);
+void    			exit_many(char **args);
+char				*clean_zero(char *str);
+void				write_content(char *content);
+void				add_env_node(t_list **envlist, t_list *new_node, t_list **lst);
+int					all_spacescd(char *cmd);
+int					manage_redir(t_cmd *cmd, t_pipe *data);
+int					echo_flag(char **args, int i);
 
 int					ft_count_lexer(t_lexer *lexer);
 t_cmd				*init_parser(void);

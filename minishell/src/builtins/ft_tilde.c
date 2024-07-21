@@ -6,16 +6,16 @@
 /*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 14:37:03 by alounici          #+#    #+#             */
-/*   Updated: 2024/07/19 23:46:56 by alounici         ###   ########.fr       */
+/*   Updated: 2024/07/21 11:36:41 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "../../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-void ft_tilde(t_list *envlist)
+void	ft_tilde(t_list *envlist)
 {
-    char *home;
+	char	*home;
 
-    home = my_getenv(envlist, "HOME", 0, 0);
-    printf("%s: Is a directory\n", home);
+	home = my_getenv(envlist, "HOME", 0);
+	printf("%s: Is a directory\n", home);
 }

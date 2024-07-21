@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mel-atta <mel-atta@student.42.fr>          +#+  +:+       +#+        */
+/*   By: alounici <alounici@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 12:36:41 by mel-atta          #+#    #+#             */
-/*   Updated: 2024/07/13 12:20:20 by mel-atta         ###   ########.fr       */
+/*   Updated: 2024/07/21 13:27:04 by alounici         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,7 @@ int	ft_parse(t_cmd **commands, t_lexer *lexer)
 		|| ft_last_lexer(&lexer)->type == 1 || ft_last_lexer(&lexer)->type == 2
 		|| ft_last_lexer(&lexer)->type == 3 || ft_last_lexer(&lexer)->type == 4
 		|| ft_last_lexer(&lexer)->type == 5 || check_error(aux))
-	{
 		return (ft_error(&lexer), -1);
-	}
 	while (aux)
 	{
 		count_args = ft_count_args(aux);
@@ -79,10 +77,7 @@ int	ft_parse(t_cmd **commands, t_lexer *lexer)
 			return (1);
 		ft_add_cmd_back(commands, new);
 		if (create_cmd(&aux, &new, count_args) == -1)
-		{
-			free(new);
-			return (-1);
-		}
+			return (free(new), -1);
 		if (aux != NULL)
 			aux = aux->next;
 	}
