@@ -12,10 +12,9 @@ private:
 
 public:
     PhoneBook();
-
     void addContact(Contact &contact);
     void displayContacts();
-    void displayContactDetails();
+    void displayContactDetails(int index);
 
 };
 

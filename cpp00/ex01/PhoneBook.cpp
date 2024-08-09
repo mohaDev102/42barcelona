@@ -18,11 +18,20 @@ void PhoneBook::displayContacts()
     << "|" << "Nickname" << std::endl;
     for (int i = 0; i < contactCount; i++)
     {
-        std::cout << "|" << i << "|" << contacts[i].getFirstName() << std::endl;
+        std::cout << "|" << i << "|" << contacts[i].getFirstName() << contacts[i].getLastName() << contacts[i].getNickName() << std::endl;
     }
 }
 
-void PhoneBook::displayContactDetails()
+void PhoneBook::displayContactDetails(int index)
 {
-    // parecido al de arriba solo con mas datos
+    if (index < 0 || index >= contactCount)
+    {
+        std::cout << "Invalid index" << std::endl;
+        return ;
+    }
+    std::cout << "First Name: " << contacts[index].getFirstName() << std::endl;
+    std::cout << "Last Name: " << contacts[index].getLastName() << std::endl;
+    std::cout << "Nickname: " << contacts[index].getNickName() << std::endl;
+    std::cout << "Phone Number: " << contacts[index].getPhoneNumber() << std::endl;
+    std::cout << "Darkest Secret: " << contacts[index].getDarkestSecret() << std::endl;
 }
