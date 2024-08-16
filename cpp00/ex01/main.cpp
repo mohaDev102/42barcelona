@@ -12,13 +12,11 @@ int main()
     {
         std::cout << "Ingrese una Opcion (ADD, SEARCH, EXIT)";
         std::getline(std::cin, arg);
-
+    // en todas las opciones hay que controlar el eof para que no haya bug
         if (arg == "ADD")
         {
             Contact newContact;
-
             std::string input;
-
             std::cout << "Enter First Name: ";
             std::getline(std::cin, input);
             newContact.setFirstName(input);
@@ -30,6 +28,14 @@ int main()
             newContact.setNickName(input);
             std::cout << "Enter Phone Number: ";
             std::getline(std::cin, input);
+            // revisar esta parte
+            if (phoneBook.isPhoneNumberValid(input))
+            {
+                std::cout << "Invalid Phone Number";
+
+                std::cout << "Enter Phone Number: ";
+                std::getline(std::cin, input);
+            }
             newContact.setPhoneNumber(input);
             std::cout << "Enter Darkest Secret: ";
             std::getline(std::cin, input);

@@ -14,11 +14,16 @@ void PhoneBook::addContact(Contact &contact)
 
 void PhoneBook::displayContacts()
 {
-    std::cout << "Index" << "|" << "First Name" << "|"  << "Last Name" \
-    << "|" << "Nickname" << std::endl;
+    std::cout << std::setw(10) << std::right << "Index" << "|" 
+    << std::setw(10) << std::right << "First Name" << "|" 
+    << std::setw(10) << std::right << "Last Name" << "|"
+    << std::setw(10) << std::right << "Nickname" << std::endl;
     for (int i = 0; i < contactCount; i++)
     {
-        std::cout << "|" << i << "|" << contacts[i].getFirstName() << contacts[i].getLastName() << contacts[i].getNickName() << std::endl;
+        std::cout << std::setw(10) << std::right << i << "|"
+        << std::setw(10) << std::right << truncateText(contacts[i].getFirstName()) << "|"
+        << std::setw(10) << std::right << truncateText(contacts[i].getLastName()) << "|"
+        << std::setw(10) << std::right << truncateText(contacts[i].getNickName()) << std::endl;
     }
 }
 
@@ -35,3 +40,18 @@ void PhoneBook::displayContactDetails(int index)
     std::cout << "Phone Number: " << contacts[index].getPhoneNumber() << std::endl;
     std::cout << "Darkest Secret: " << contacts[index].getDarkestSecret() << std::endl;
 }
+
+std::string PhoneBook::truncateText(const std::string& value)
+{
+    if (value.length() > 10)
+        return value.substr(0, 9) + ".";
+    else
+        return value;
+}
+int PhoneBook::isPhoneNumberValid(std::string &phoneNumber)
+{
+    if (phoneNumber.length() == 9)
+        return (0);
+    return (1);
+}
+
