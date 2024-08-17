@@ -10,45 +10,102 @@ int main()
 
     while (true)
     {
-        std::cout << "Ingrese una Opcion (ADD, SEARCH, EXIT)";
+        std::cout << "Insert an Option (ADD, SEARCH, EXIT)";
         std::getline(std::cin, arg);
-    // en todas las opciones hay que controlar el eof para que no haya bug
+
         if (arg == "ADD")
         {
             Contact newContact;
             std::string input;
-            std::cout << "Enter First Name: ";
+
+			std::cout << "Enter First Name: ";
             std::getline(std::cin, input);
+            while (input.empty()) {
+                if (std::cin.eof()) {
+                    std::cout << "\nExiting" << std::endl;
+                    return (0);
+                }
+                std::cout << "First Name cannot be empty. Please enter again: ";
+                std::getline(std::cin, input);
+            }
             newContact.setFirstName(input);
+
+
             std::cout << "Enter Last Name: ";
             std::getline(std::cin, input);
+            while (input.empty()) {
+                if (std::cin.eof()) {
+                    std::cout << "\nExiting" << std::endl;
+                    return (0);
+                }
+                std::cout << "Last Name cannot be empty. Please enter again: ";
+                std::getline(std::cin, input);
+            }
             newContact.setLastName(input);
+
+
             std::cout << "Enter Nick Name: ";
             std::getline(std::cin, input);
+            while (input.empty()) {
+                if (std::cin.eof()) {
+                    std::cout << "\nExiting" << std::endl;
+                    return (0);
+                }
+                std::cout << "Nick Name cannot be empty. Please enter again: ";
+                std::getline(std::cin, input);
+            }
             newContact.setNickName(input);
+
+
             std::cout << "Enter Phone Number: ";
             std::getline(std::cin, input);
-            // revisar esta parte
-            if (phoneBook.isPhoneNumberValid(input))
-            {
-                std::cout << "Invalid Phone Number";
-
-                std::cout << "Enter Phone Number: ";
+            while (input.empty() || phoneBook.isPhoneNumberValid(input)) {
+                if (std::cin.eof()) {
+                    std::cout << "\nExiting" << std::endl;
+                    return (0);
+                }
+                std::cout << "Invalid or empty Phone Number. Please enter again: ";
                 std::getline(std::cin, input);
             }
             newContact.setPhoneNumber(input);
+
+
             std::cout << "Enter Darkest Secret: ";
             std::getline(std::cin, input);
+            while (input.empty()) {
+                if (std::cin.eof()) {
+                    std::cout << "\nExiting" << std::endl;
+                    return (0);
+                }
+                std::cout << "Darkest Secret cannot be empty. Please enter again: ";
+                std::getline(std::cin, input);
+            }
             newContact.setDarkestSecret(input);
             phoneBook.addContact(newContact);
         }
         else if (arg == "SEARCH")
         {
             phoneBook.displayContacts();
-            std::cout << "Enter the index of the contact to view details:";
-            std::getline(std::cin, arg);
-            int index = atoi(arg.c_str());
-            phoneBook.displayContactDetails(index);
+            while (1)
+            {
+                std::string input;
+                std::cout << "Enter the index of the contact to view details:";
+                if (std::getline(std::cin, input) && input.size()  != 1)
+                {
+                        break;
+                }
+                if (input.empty())
+                {
+                    std::cout << "No index entered.  Please enter a valid index." << std::endl;
+                    continue;
+                }
+                int index = atoi(input.c_str());
+                if (index >= 1 && index < 9)
+                {
+                    phoneBook.displayContactDetails(index -1);
+                    break;
+                }              
+            }
         }
         else if (arg == "EXIT")
         {
@@ -66,6 +123,5 @@ int main()
         }
         else
             std::cout << "Invalid argument, Seleccione una de las opciones en pantalla" << std::endl;
-        
     }
 }

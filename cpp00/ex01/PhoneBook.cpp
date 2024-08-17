@@ -20,7 +20,7 @@ void PhoneBook::displayContacts()
     << std::setw(10) << std::right << "Nickname" << std::endl;
     for (int i = 0; i < contactCount; i++)
     {
-        std::cout << std::setw(10) << std::right << i << "|"
+        std::cout << std::setw(10) << std::right << i + 1 << "|"
         << std::setw(10) << std::right << truncateText(contacts[i].getFirstName()) << "|"
         << std::setw(10) << std::right << truncateText(contacts[i].getLastName()) << "|"
         << std::setw(10) << std::right << truncateText(contacts[i].getNickName()) << std::endl;
@@ -29,11 +29,6 @@ void PhoneBook::displayContacts()
 
 void PhoneBook::displayContactDetails(int index)
 {
-    if (index < 0 || index >= contactCount)
-    {
-        std::cout << "Invalid index" << std::endl;
-        return ;
-    }
     std::cout << "First Name: " << contacts[index].getFirstName() << std::endl;
     std::cout << "Last Name: " << contacts[index].getLastName() << std::endl;
     std::cout << "Nickname: " << contacts[index].getNickName() << std::endl;
@@ -50,8 +45,15 @@ std::string PhoneBook::truncateText(const std::string& value)
 }
 int PhoneBook::isPhoneNumberValid(std::string &phoneNumber)
 {
-    if (phoneNumber.length() == 9)
-        return (0);
-    return (1);
+    size_t i = 0;
+    while (i <  phoneNumber.length())
+    {
+        if (!isdigit(phoneNumber[i]))
+            return (1);
+        i++;
+    }
+    if (phoneNumber.length() != 9)
+        return (1);
+    return (0);
 }
 
