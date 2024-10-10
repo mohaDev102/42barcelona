@@ -2,7 +2,7 @@
 
 ClapTrap::ClapTrap(const std::string &name) : name(name), hitPoint(10),
     energyPoints(10), attackDamage(0) {
-        std::cout << "ClapTrap" << name << " has been created!" << std::endl;
+        std::cout << "ClapTrap " << name << " has been created!" << std::endl;
 }
 
 ClapTrap::ClapTrap(const ClapTrap& other) : name(other.name), hitPoint(other.hitPoint),
@@ -25,7 +25,7 @@ ClapTrap& ClapTrap::operator=(const ClapTrap& other)
 
 ClapTrap::~ClapTrap()
 {
-    std::cout << "ClapTrap" << name << " has been destroyed!" << std::endl;
+    std::cout << "ClapTrap " << name << " has been destroyed!" << std::endl;
 }
 
 void ClapTrap::attack(const std::string &target)
