@@ -1,8 +1,14 @@
 #ifndef BUERAUCRAT_HPP
 #define BUERAUCRAT_HPP
 
+#include "Form.hpp"
 #include <iostream>
 #include <exception>
+
+#define MIN_GRADE 150
+#define MAX_GRADE 1
+
+class Form;
 
 class Bureaucrat
 {
@@ -19,6 +25,7 @@ public:
     int getGrade() const;
     void incrementGrade();
     void decrementGrade();
+    void signForm(Form& form);
 
     class GradeTooHighException : public std::exception
     {

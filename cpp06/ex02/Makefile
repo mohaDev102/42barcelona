@@ -1,11 +1,11 @@
 
-NAME = BureaucratSign
+NAME = Base
 
 FLAGS = -std=c++98 -Wall -Wextra -Werror -g -fsanitize=address
 
-SRC = main.cpp Bureaucrat.cpp AForm.cpp ShrubberyCreationForm.cpp RobotomyRequestForm.cpp PresidentialPardonForm.cpp
+SRC = main.cpp Base.cpp A.cpp B.cpp C.cpp
 OBJ = $(SRC:.cpp=.o)
-DEPS = Bureaucrat.hpp AForm.hpp ShrubberyCreationForm.hpp RobotomyRequestForm.hpp PresidentialPardonForm.hpp
+DEPS = Base.hpp A.hpp B.hpp C.hpp
 RM = rm -f
 
 all: $(NAME)

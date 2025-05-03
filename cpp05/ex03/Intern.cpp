@@ -22,15 +22,28 @@ Intern &Intern::operator=(const Intern &src)
     return *this;
 }
 
-Form* Intern::makeForm(std::string formName, std::string target)
+AForm *Intern::makeForm(std::string formName, std::string target)
 {
-    try
-    {
-        std::cout << "Intern creates" << formName << std::endl;
-    }
-    catch (std::exception &e)
-    {
-       std::cout << "Intern cannot create" << formName << std::endl;
-    }
 
+    const char *forms[3] = {"shrubbery", "robotomy", "presidential"};
+
+    int i = 0;
+    while (i < 3 && forms[i] != formName)
+        i++;
+    switch (i)
+    {
+    case 0:
+        std::cout << "Intern creates " << formName << " form" << std::endl;
+        return new ShrubberyCreationForm(target);
+        break;
+    case 1:
+        std::cout << "Intern creates " << formName << " form" << std::endl;
+        return new RobotomyRequestForm(target);
+        break;
+    case 2:
+        std::cout << "Intern creates " << formName << " form" << std::endl;
+        return new PresidentialPardonForm(target);
+        break;
+    }
+    return NULL;
 }
